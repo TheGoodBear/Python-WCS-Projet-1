@@ -1,6 +1,5 @@
 {
     " " : {
-        "Name" : "prairie",
         "Image" : " ",
         "Style" : "[;]",
         "Behaviors" : {
@@ -14,11 +13,9 @@
             "GivePoisonedFood" : 2,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : null
+        }
     },
     "S" : {
-        "Name" : "sable",
         "Image" : "░",
         "Style" : "[Y;]",
         "Behaviors" : {
@@ -32,11 +29,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : null
+        }
     },
     "+" : {
-        "Name" : "forêt",
         "Image" : "░",
         "Style" : "[G;]",
         "Behaviors" : {
@@ -50,11 +45,9 @@
             "GivePoisonedFood" : 4,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : null
+        }
     },
     "A" : {
-        "Name" : "arbre",
         "Image" : "♣",
         "Style" : "[G;]",
         "Behaviors" : {
@@ -68,14 +61,9 @@
             "GivePoisonedFood" : 20,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "",
-            "Sans bulldozer, aucune chance de passer à travers cet arbre."
-        ]
+        }
     },
     "M" : {
-        "Name" : "paroi rocheuse",
         "Image" : "▲",
         "Style" : "[W;]",
         "Behaviors" : {
@@ -89,16 +77,11 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "",
-            "Cette paroie rocheuse est bien trop haute pour être escaladée."
-        ]
+        }
     },
     "T" : {
-        "Name" : "tunnel",
-        "Image" : "▲",
-        "Style" : "[W;]",
+        "Image" : "",
+        "Style" : "[;]",
         "Behaviors" : {
             "CanWalk" : false,
             "Event" : null,
@@ -110,14 +93,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "Je m'engage prudemment dans le tunnel à la lumière vacillante de la torche.",
-            "Ce tunnel est beaucoup trop sombre pour m'y aventurer sans lumière."
-        ]
+        }
     },
     "m" : {
-        "Name" : "cascade",
         "Image" : "~",
         "Style" : "[C;]",
         "Behaviors" : {
@@ -131,14 +109,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 100,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "",
-            "À part pour me casser le cou, je ne vois pas l'intérêt d'escalader ces rochers glissants."
-        ]
+        }
     },
     "-" : {
-        "Name" : "eau peu profonde",
         "Image" : "~",
         "Style" : "[C;]",
         "Behaviors" : {
@@ -152,15 +125,13 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 100,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : null
+        }
     },
     "x" : {
-        "Name" : "eau saumâtre",
         "Image" : "~",
         "Style" : "[G;]",
         "Behaviors" : {
-            "CanWalk" : false,
+            "CanWalk" : true,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : -10,
@@ -170,14 +141,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 100
-        },
-        "Messages" : [
-            "",
-            "Bêêêrk ! Nager là-dedans va me rendre malade."
-        ]
+        }
     },
     "|" : {
-        "Name" : "eau profonde",
         "Image" : "~",
         "Style" : "[U;]",
         "Behaviors" : {
@@ -191,14 +157,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 100,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "",
-            "Cette eau est profonde et je ne sais pas quels prédateurs y habitent, mieux vaut ne pas m'y engager."
-        ]
+        }
     },
     "=" : {
-        "Name" : "eau salée",
         "Image" : "~",
         "Style" : "[U;]",
         "Behaviors" : {
@@ -212,14 +173,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 100
-        },
-        "Messages" : [
-            "",
-            "De l'eau salée (et profonde), aucun intérêt d'aller par là."
-        ]
+        }
     },
     "1" : {
-        "Name" : "Une statue de sphinx",
         "Image" : "☼",
         "Style" : "[B;W]",
         "Behaviors" : {
@@ -233,14 +189,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "Je m'approche de la statue du sphinx...",
-            ""
-        ]
+        }
     },
     "2" : {
-        "Name" : "Un petit temple",
         "Image" : "╦",
         "Style" : "[B;Y]",
         "Behaviors" : {
@@ -254,14 +205,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "Je pénètre doucement dans le temple...",
-            ""            
-        ]
+        }
     },
     "3" : {
-        "Name" : "Une clairière avec des singes",
         "Image" : "+",
         "Style" : "[B;G]",
         "Behaviors" : {
@@ -275,14 +221,9 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "Je m'approche du brouhaha émis par les singes...",
-            ""            
-        ]
+        }
     },
     "0" : {
-        "Name" : "Une grosse porte en bois",
         "Image" : " ",
         "Style" : "[;Y]",
         "Behaviors" : {
@@ -299,10 +240,6 @@
             "GivePoisonedFood" : 0,
             "GiveWater" : 0,
             "GivePoisonedWater" : 0
-        },
-        "Messages" : [
-            "Après avoir insérer les trois clés, la porte s'ouvre enfin !",
-            "Je ne vois pas comment ouvrir cette porte sans les trois clé appropriées."
-        ]
+        }
     }
 }

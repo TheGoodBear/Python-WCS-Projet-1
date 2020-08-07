@@ -2,28 +2,30 @@ Suivi indicatif du temps de développement de ce projet :
 Total = 
 
 1 - Initialisation du projet (création du repo GitHub, organisation des dossiers, rédaction des prérequis, etc.)
-10"
+10'
 
 2 - Création du Trello (incluant la définition de Done)
 1h
 
-3 - Création du diagramme de flux
+3 - Création des diagrammes de flux
 
 
 4 - Création des fichiers de configuration (txt et json)
-Carte : 1h30"
-Liste des éléments : 45"
-Liste des objets : 1h30"
-Liste des personnages : 5"
+Sous-total = 
+Carte : 1h30'
+Paramètres du jeu : 30'
+Liste des éléments : 45'
+Liste des objets : 1h30'
+Liste des personnages : 5'
 Vues : 
-Messages : 
+Messages : 2h
 
 5 - Codage et documentation du code
 Sous-total = 
 Défi 1 :
 Défi 2 :
 Défi 3 :
-Jeu principal : 5" + 
+Jeu principal : 15' 
 Utilities & RichConsole : 6h
 
 6 - Tests

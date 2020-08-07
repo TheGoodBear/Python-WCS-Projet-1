@@ -1,0 +1,96 @@
+{
+    "Game" : {
+        "MapFolder" : "\\Resources",
+        "MapFile" : "Map.txt",
+        "MapMaxWidth" : 100,
+        "MapMaxHeight" : 50,
+        "DashboardWidth" : 30
+    },
+    "Player" : {
+        "MaxHealth" : 100,
+        "MaxFood" : 100,
+        "MaxHydratation" : 100
+    },
+    "Challenge1" : {
+        "MinimumNumber" : 0,
+        "MaximumNumber" : 100,
+        "Rounds" : 3,
+        "MaxTries" : 20
+    },
+    "Challenge3" : {
+        "DelayBetweenAnswers" : 1,
+        "PlayerChance" : 80,
+        "Monkeys" : [
+            {
+                "Name" : "El Maestro",
+                "Image" : null,
+                "Style" : "[R;;]",
+                "ChanceMin" : 50,
+                "ChanceMax" : 80
+            },
+            {
+                "Name" : "Slow",
+                "Image" : null,
+                "Style" : "[C;;]",
+                "ChanceMin" : 10,
+                "ChanceMax" : 60
+            },
+            {
+                "Name" : "Rock",
+                "Image" : null,
+                "Style" : "[C;;]",
+                "ChanceMin" : 10,
+                "ChanceMax" : 60
+            },
+            {
+                "Name" : "Mambo",
+                "Image" : null,
+                "Style" : "[C;;]",
+                "ChanceMin" : 10,
+                "ChanceMax" : 60
+            },
+            {
+                "Name" : "Tango",
+                "Image" : null,
+                "Style" : "[C;;]",
+                "ChanceMin" : 10,
+                "ChanceMax" : 60
+            },
+            {
+                "Name" : "Salsa",
+                "Image" : null,
+                "Style" : "[M;;]",
+                "ChanceMin" : 20,
+                "ChanceMax" : 70
+            },
+            {
+                "Name" : "Cha-cha-cha",
+                "Image" : null,
+                "Style" : "[M;;]",
+                "ChanceMin" : 20,
+                "ChanceMax" : 70
+            },
+            {
+                "Name" : "Milonga",
+                "Image" : null,
+                "Style" : "[M;;]",
+                "ChanceMin" : 20,
+                "ChanceMax" : 70
+            },
+            {
+                "Name" : "Samba",
+                "Image" : null,
+                "Style" : "[M;;]",
+                "ChanceMin" : 20,
+                "ChanceMax" : 70
+            },
+            {
+                "Name" : "Rhumba",
+                "Image" : null,
+                "Style" : "[M;;]",
+                "ChanceMin" : 20,
+                "ChanceMax" : 70
+            }
+        ]
+    }
+}

@@ -1,9 +1,9 @@
 {
     "Joueur" : {
         "Name" : null,
-        "Image" : "☺",
+        "Images" : ["♂", "♀", "☺"],
         "Sex" : null,
-        "Style" : "[;]",
+        "Styles" : ["[C;]", "[M;]", "[W;]"],
         "Behavior" : null,
         "MaxHealth" : 100,
         "Health" : 100,

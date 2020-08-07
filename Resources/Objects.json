@@ -1,5 +1,5 @@
 {
-    "Sac à dos" : {
+    "Backpack" : {
         "Image" : " ",
         "Style" : "[;]",
         "Behaviors" : {
@@ -11,24 +11,18 @@
             "RequiredObjects" : null,
             "Capacity" : 20,
             "Contains" : [
-                "Ordinateur portable",
-                "Chargeur solaire",
-                "Couteau multi-fonctions",
-                "Bouteille en verre",
-                "Carte"
+                "LaptopComputer",
+                "SolarCharger",
+                "Knife",
+                "GlassBottle",
+                "Map"
             ],
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Je fouille dans mon sac...",
-            "CantUse" : "",
-            "Pick" : "",
-            "Drop" : "J'en ai besoin pour porter mes affaires."
         }
     },
-    "Clé en bronze" : {
+    "BronzeKey" : {
         "Image" : "♪",
         "Style" : "[;Y]",
         "Behaviors" : {
@@ -43,15 +37,9 @@
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "J'insère la clé dans la serrure en bronze.",
-            "CantUse" : "Il faut que je trouve une serrure adaptée.",
-            "Pick" : "Un peu lourde mais bien ouvragée.",
-            "Drop" : "Je me demande si c'est une bonne idée..."
         }
     },
-    "Clé en argent" : {
+    "SilverKey" : {
         "Image" : "♪",
         "Style" : "[W;]",
         "Behaviors" : {
@@ -66,15 +54,9 @@
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "J'insère la clé dans la serrure en argent.",
-            "CantUse" : "Il doit exister une serrure correspondant à cette clé.",
-            "Pick" : "Elle a la couleur de la lune.",
-            "Drop" : "Je devrai réféchir avant de la jeter..."
         }
     },
-    "Clé en or" : {
+    "GoldKey" : {
         "Image" : "♪",
         "Style" : "[Y;]",
         "Behaviors" : {
@@ -89,15 +71,9 @@
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "J'insère la clé dans la serrure en or.",
-            "CantUse" : "Il faut que je trouve la bonne serrure.",
-            "Pick" : "Elle brille comme le soleil.",
-            "Drop" : "Elle est magnifique, ce serait dommage de la perdre..."
         }
     },
-    "Ordinateur portable" : {
+    "LaptopComputer" : {
         "Image" : "◘",
         "Style" : "[;]",
         "Behaviors" : {
@@ -112,15 +88,9 @@
             "Health" : 10,
             "Satiety" : -2,
             "Thirst" : -2
-        },
-        "Messages" : {
-            "Use" : "Je me pose tranquillement pour discuter avec mes amis.",
-            "CantUse" : "Plus d'énergie, je dois le recharger.",
-            "Pick" : "Allez hop, dans le sac.",
-            "Drop" : "Et je fais comment pour communiquer maintenant ?"
         }
     },
-    "Chargeur solaire" : {
+    "SolarCharger" : {
         "Image" : "◘",
         "Style" : "[;]",
         "Behaviors" : {
@@ -130,22 +100,16 @@
             "Actions" : ["Use"],
             "RequiredMapElements" : null,
             "RequiredObjects" : [{
-                "Name" : "Ordinateur portable",
+                "Name" : "LaptopComputer",
                 "Capacity" : 5}],
             "Capacity" : null,
             "Contains" : null,
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Voilà, mon ordinateur est bien rechargé.",
-            "CantUse" : "À part pour charger l'ordinateur que j'ai perdu, je ne vois pas quoi en faire...",
-            "Pick" : "Je vais enfin pouvoir recharger mon ordinateur",
-            "Drop" : "Sans lui l'ordinateur ne tiendra pas longtemps."
         }
     },
-    "Couteau multi-fonctions" : {
+    "Knife" : {
         "Image" : "◘",
         "Style" : "[;]",
         "Behaviors" : {
@@ -160,15 +124,9 @@
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Allez je vais me tailler ce petit bout de bois.",
-            "CantUse" : "",
-            "Pick" : "On se sait jamais, ça peut servir.",
-            "Drop" : "De toutes manières je n'ai pas l'intention de me battre."
         }
     },
-    "Bouteille en verre" : {
+    "GlassBottle" : {
         "Image" : "◘",
         "Style" : "[U;]",
         "Behaviors" : {
@@ -189,15 +147,9 @@
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Ha ça rafraîchit !",
-            "CantUse" : "Zut, elle est vide, je dois trouver un endroit où la remplir.",
-            "Pick" : "Il vaut mieux que je puisse transporter de l'eau avec moi.",
-            "Drop" : "J'espère que je trouverai suffisament de points d'eau."
         }
     },
-    "Carte" : {
+    "Map" : {
         "Image" : "◘",
         "Style" : "[;]",
         "Behaviors" : {
@@ -212,15 +164,9 @@
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Voyons, où suis-je...",
-            "CantUse" : "",
-            "Pick" : "Ce me sera utile pour ne pas me perdre.",
-            "Drop" : "Rien à faire de cette paperasse, j'ai toujours mon légendaire sens de l'orientation avec moi :-)"
         }
     },
-    "Un gros fruit vert strié" : {
+    "BadFood1" : {
         "Image" : "¤",
         "Style" : "[G;]",
         "Behaviors" : {
@@ -235,15 +181,9 @@
             "Health" : -20,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Rhââ, c'est tout moisi à l'intérieur.",
-            "CantUse" : "",
-            "Pick" : "On dirait une grosse pastèque.",
-            "Drop" : "Je vais éviter de m'empoisoner."
         }
     },
-    "Une banane" : {
+    "GoodFood1" : {
         "Image" : "¤",
         "Style" : "[G;]",
         "Behaviors" : {
@@ -258,15 +198,9 @@
             "Health" : 0,
             "Satiety" : 20,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Miam, et en plus c'est du bio :-D",
-            "CantUse" : "",
-            "Pick" : "Ho, une banane.",
-            "Drop" : "Ça risque de me faire grossir."
         }
     },
-    "De jolies baies rouges" : {
+    "BadFood2" : {
         "Image" : "¤",
         "Style" : "[G;]",
         "Behaviors" : {
@@ -281,15 +215,9 @@
             "Health" : -10,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Pouââ, je préfère les groseilles.",
-            "CantUse" : "",
-            "Pick" : "Ça doit bien se grignoter.",
-            "Drop" : "En fait j'ai pas trop confiance."
         }
     },
-    "Des noix" : {
+    "GoodFood2" : {
         "Image" : "¤",
         "Style" : "[G;]",
         "Behaviors" : {
@@ -304,15 +232,9 @@
             "Health" : 0,
             "Satiety" : 10,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "J'adore ce petit croustillant.",
-            "CantUse" : "",
-            "Pick" : "Des noyers, ici ?",
-            "Drop" : "Mieux vaut les laisser, je suis allergique."
         }
     },
-    "Un magnifique champignon rouge à poids blancs" : {
+    "BadFood3" : {
         "Image" : "¤",
         "Style" : "[G;]",
         "Behaviors" : {
@@ -327,15 +249,9 @@
             "Health" : -10,
             "Satiety" : 0,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "Zut, j'aurai du prendre des cours de mycologie.",
-            "CantUse" : "",
-            "Pick" : "J'adore les champignons.",
-            "Drop" : "Et si il était vénéneux, hein ?"
         }
     },
-    "Des orties" : {
+    "GoodFood3" : {
         "Image" : "¤",
         "Style" : "[G;]",
         "Behaviors" : {
@@ -350,12 +266,6 @@
             "Health" : 5,
             "Satiety" : 5,
             "Thirst" : 0
-        },
-        "Messages" : {
-            "Use" : "C'est pas mauvais au goût, et surtout très bon pour la santé.",
-            "CantUse" : "",
-            "Pick" : "Le tout c'est de ne pas se piquer.",
-            "Drop" : "Bof, moi manger de l'herbe, et puis quoi encore."
         }
     }
 }
