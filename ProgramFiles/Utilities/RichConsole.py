@@ -35,14 +35,14 @@ class Format(Enum):
     PositionSuffix = "H"
     MoveUpSuffix = "A"
     MoveDownSuffix = "B"
-    MoveLeftSuffix = "C"
-    MoveRightSuffix = "D"
+    MoveRightSuffix = "C"
+    MoveLeftSuffix = "D"
     ClearScreen = "2J"
     CursorVisible = "?25h"
     CursorInvisible = "?25l"
 
 class Style(Enum):
-    Bold = {"Tag" : "SB", "Format" : "1"}         # note that this is very subtile to see...
+    Bold = {"Tag" : "SB", "Format" : "1"}         # note that this is very subtle to see...
     Underline = {"Tag" : "SU", "Format" : "4"}
     Inverse = {"Tag" : "SI", "Format" : "7"}
 
@@ -63,15 +63,12 @@ class Justify(Enum):
 
 class PrintSpeed(Enum):     # in ms
     Instant = 0
+    UltraFast = .01
     VeryFast = .02
-    Fast = .05
-    Normal = .1
-    Slow = .2
-    VerySlow = .4
-
-class _TagAction(Enum):
-    Replace = 0
-    Remove = 1
+    Fast = .04
+    Medium = .08
+    Slow = .15
+    VerySlow = .3
 
 
 # functions
@@ -88,151 +85,197 @@ def ClearConsole():
         os.system("clear")
 
 
-# def _EnableRichconsole():
-#     """
-#         Enable rich console formatting
-#         If not done before applying formatting it does not work (at least on windows)
-#     """
-#     global _RichConsoleEnabled
-#     _RichConsoleEnabled = True
-#     os.system("color 00")   # change console background color (in hexa)
-
-
 def ShowCursor(
     IsVisible = True):
     """
         Show or hide cursor
     """
-    # if (not _RichConsoleEnabled):
-    #     _EnableRichconsole()
 
     print(
         f"{Format.Prefix.value}{Format.CursorVisible.value if IsVisible else Format.CursorInvisible.value}", 
         end = "", 
         flush = True)
 
+    time.sleep(.01)
 
-def _ManageColorTags(
-    Text,
-    Action = _TagAction.Replace):
+
+def _ManageTags(
+    Text):
     """
-        Replaces (or remove) color tags with appropriate formatting syntax in text
-
-        Tags have following syntax
-            [Foreground color tag;Background color tag;Style]
-            ; between foreground color and background color is mandatory
-            ; before style is optional if style is omitted
-            if one color is ommited it remains the same
-            if both colors are omitted, they reset to console default
-            possible tags for colors are :
-            B - Black
-            R - Red
-            G - Green
-            Y - Yellow
-            U - Blue
-            M - Magenta
-            C - Cyan
-            W - White
-            possible tags for styles are :
-            SB - Bold (this is very subtile to see)
-            SU - Underline
-            SI - Inverted (foreground and background colors)
+        Create a list of formatting tags
+        Returns Text without formatting and a dictionary of formats
     """
 
-    NextTag = _FindTagInString(Text)
-    # while they are tags in text
-    while NextTag[0] >= 0:
+    RawText = ""
+    NumberOfCharactersToJump = 0
+    FormatDict = {}
+
+    # for each character in text
+    for Index, Character in enumerate(Text):
         
-        if NextTag[1] != "" and NextTag[2] != "":
-            # replace or remove tag
-            if Action == _TagAction.Remove:
-                Text = Text.replace(NextTag[1], "")
-            elif Action == _TagAction.Replace:
-                Text = Text.replace(NextTag[1], NextTag[2])
-                        
-        NextTag = _FindTagInString(Text, NextTag[0])
+        if NumberOfCharactersToJump > 0:
+            # jump the characters forming the last tag
+            NumberOfCharactersToJump -= 1
+            continue
 
-    return Text
+        if Character == "[":
+            # possible tag start
 
+            TagEnd = Text.find("]", Index) + 1
+            TagInString = Text[Index:TagEnd].upper()
+            TagValues = TagInString.replace("[","").replace("]","").split(";")
 
-def _FindTagInString(
-    OriginalString,
-    SearchStart = 0):
-    """
-        Replaces color tags in OriginalString by appropriate formattings
+            # possible tag detected
+            if (TagEnd >= 1 
+                and ((len(TagValues) == 2 and len(TagInString) >= 3 and len(TagInString) <= 5)
+                    or (len(TagValues) == 3 and len(TagInString) >= 6 and len(TagInString) <= 8))):
+                # tag seems valid
 
-        Tags have following syntax
-            [Foreground color tag;Background color tag;Style]
-            ; between foreground color and background color is mandatory
-            ; before style is optional if style is omitted
-            if one color is ommited it remains the same
-            if both colors are omitted, they reset to console default
-            possible tags for colors are :
-            B - Black
-            R - Red
-            G - Green
-            Y - Yellow
-            U - Blue
-            M - Magenta
-            C - Cyan
-            W - White
-            possible tags for styles are :
-            SB - Bold (this is very subtile to see)
-            SU - Underline
-            SI - Inverted (foreground and background colors)
-    """
+                # get colors
+                ForegroundColor = TagValues[0]
+                BackgroundColor = TagValues[1]
+                # get style if provided
+                FormatStyle = TagValues[2] if len(TagValues) == 3 else ""
+
+                # get format string                
+                FormatString = None
+                if ((ForegroundColor == "" or ForegroundColor in [MyColor.value["Tag"] for MyColor in Color]) 
+                and (BackgroundColor == "" or BackgroundColor in [MyColor.value["Tag"] for MyColor in Color])):
+                    # colors are valid
+                    if ForegroundColor == "" and BackgroundColor == "":
+                        # reset to default
+                        FormatString = f"{Format.Prefix.value}{Format.Reset.value}"
+                    elif ForegroundColor == "":
+                        # change only background color
+                        FormatString = f"{Format.Prefix.value}{Format.BackgroundPrefix.value}{[MyColor.value['Format'] for MyColor in Color if MyColor.value['Tag'] == BackgroundColor][0]}{Format.StyleAndColorSuffix.value}"
+                    elif BackgroundColor == "":
+                        # change only foreground color
+                        FormatString = f"{Format.Prefix.value}{Format.ForegroundPrefix.value}{[MyColor.value['Format'] for MyColor in Color if MyColor.value['Tag'] == ForegroundColor][0]}{Format.StyleAndColorSuffix.value}"
+                    else:
+                        # change both colors
+                        FormatString = f"{Format.Prefix.value}{Format.ForegroundPrefix.value}{[MyColor.value['Format'] for MyColor in Color if MyColor.value['Tag'] == ForegroundColor][0]};{Format.BackgroundPrefix.value}{[MyColor.value['Format'] for MyColor in Color if MyColor.value['Tag'] == BackgroundColor][0]}{Format.StyleAndColorSuffix.value}"
+
+                if FormatStyle in [MyStyle.value["Tag"] for MyStyle in Style]:
+                    # add style
+                    FormatString += f"{Format.Prefix.value}{[MyStyle.value['Format'] for MyStyle in Style if MyStyle.value['Tag'] == FormatStyle][0]}{Format.StyleAndColorSuffix.value}"
+
+                if FormatString != "":
+                    # add formatting to dictionary with position as key
+                    FormatDict[len(RawText)] = FormatString
+                    NumberOfCharactersToJump = len(TagInString) - 1
+
+            else:
+                # not a valid tag
+                # add character to raw text
+                RawText += Character
+
+        else:
+            # not tag
+            # add character to raw text
+            RawText += Character
     
-    TagInString = ""
-    TagReplacement = ""
+    return (RawText, FormatDict)
 
-    TagStart = OriginalString.find("[", SearchStart)
-    TagEnd = OriginalString.find("]", TagStart) + 1
-    TagInString = OriginalString[TagStart:TagEnd].upper()
-    TagValues = TagInString.replace("[","").replace("]","").split(";")
 
-    if TagStart >= 0:
-        # Possible tag detected
-        if (TagStart >= 0 and TagEnd >= TagStart 
-            and ((len(TagValues) == 2 and len(TagInString) >= 3 and len(TagInString) <= 5)
-                or (len(TagValues) == 3 and len(TagInString) >= 6 and len(TagInString) <= 8))):
-            # Tag seems valid
+def _WrapText(
+    Text,
+    FormatDict,
+    JustifyText,
+    MaxColumns,
+    MaxLines):
+    """
+        Split text in lines so it fits in specified area (MaxColumns and MaxLines)
+        while keeping formatting (via FormatDict)
+    """
 
-            # Get colors
-            ForegroundColor = TagValues[0]
-            BackgroundColor = TagValues[1]
-            # Get style if provided
-            FormatStyle = TagValues[2] if len(TagValues) == 3 else ""
-            
-            # Apply formatting
-            if ((ForegroundColor == "" or ForegroundColor in [MyColor.value["Tag"] for MyColor in Color]) 
-               and (BackgroundColor == "" or BackgroundColor in [MyColor.value["Tag"] for MyColor in Color])):
-                # Colors are valid
-                if ForegroundColor == "" and BackgroundColor == "":
-                    # Reset to default
-                    TagReplacement = f"{Format.Prefix.value}{Format.Reset.value}"
-                elif ForegroundColor == "":
-                    # Change only background color
-                    TagReplacement = f"{Format.Prefix.value}{Format.BackgroundPrefix.value}{[MyColor.value['Format'] for MyColor in Color if MyColor.value['Tag'] == BackgroundColor][0]}{Format.StyleAndColorSuffix.value}"
-                elif BackgroundColor == "":
-                    # Change only foreground color
-                    TagReplacement = f"{Format.Prefix.value}{Format.ForegroundPrefix.value}{[MyColor.value['Format'] for MyColor in Color if MyColor.value['Tag'] == ForegroundColor][0]}{Format.StyleAndColorSuffix.value}"
-                else:
-                    # Change both colors
-                    TagReplacement = f"{Format.Prefix.value}{Format.ForegroundPrefix.value}{[MyColor.value['Format'] for MyColor in Color if MyColor.value['Tag'] == ForegroundColor][0]};{Format.BackgroundPrefix.value}{[MyColor.value['Format'] for MyColor in Color if MyColor.value['Tag'] == BackgroundColor][0]}{Format.StyleAndColorSuffix.value}"
+    TextLines = []
+    CurrentCharacterIndex = 0
+    CurrentLine = ""
+    RemainingText = Text
 
-            if FormatStyle in [MyStyle.value["Tag"] for MyStyle in Style]:
-                # Style is valid
-                TagReplacement += f"{Format.Prefix.value}{[MyStyle.value['Format'] for MyStyle in Style if MyStyle.value['Tag'] == FormatStyle][0]}{Format.StyleAndColorSuffix.value}"
+    while len(RemainingText) > 0:
 
-            if TagReplacement != "":
-                # return formatting
-                return (TagStart, TagInString, TagReplacement)
+        if MaxColumns is not None:
+            # a square is specified
 
-            return (TagStart + 1, "", "")
+            WrapPosition = RemainingText.rfind(" ", 0, MaxColumns + 1) 
+            if WrapPosition == -1:
+                # no more wrapping
+                CurrentLine = RemainingText
+                RemainingText = ""
+            else:
+                # line wrapped
+                CurrentLine = RemainingText[:WrapPosition]
+                RemainingText = RemainingText[WrapPosition:].lstrip()
+                # adjust format indexes to compensate previous lstrip
+                FormatDict = {
+                    (Index - 1 
+                    if Index > CurrentCharacterIndex + len(CurrentLine)
+                    else Index)
+                    :Value
+                    for Index, Value 
+                    in FormatDict.items() 
+                    }
+        else:
+            # no wrapping
+            CurrentLine = RemainingText
+            RemainingText = ""
 
-        return (TagStart + 1, "", "")
-    else:
-        return (-1, "", "")
+        if MaxColumns is not None:
+            # justify text
+            CharactersBefore = 0
+            CharactersAfter = 0
+            if JustifyText == Justify.Left:
+                CharactersAfter = MaxColumns - len(CurrentLine)
+                # adjust format indexes to compensate justifying
+                FormatDict = {
+                    (Index + CharactersAfter 
+                    if Index > CurrentCharacterIndex
+                    else Index)
+                    :Value
+                    for Index, Value 
+                    in FormatDict.items() 
+                    }
+                CurrentLine = CurrentLine.ljust(MaxColumns)
+            if JustifyText == Justify.Right:
+                CharactersBefore = MaxColumns - len(CurrentLine)
+                # adjust format indexes to compensate justifying
+                FormatDict = {
+                    (Index + CharactersBefore 
+                    if Index > CurrentCharacterIndex + CharactersBefore
+                    else Index)
+                    :Value
+                    for Index, Value 
+                    in FormatDict.items() 
+                    }
+                CurrentLine = CurrentLine.rjust(MaxColumns)
+            elif JustifyText == Justify.Center:
+                Characters = (MaxColumns - len(CurrentLine)) // 2
+                CharactersBefore = Characters if Characters % 2 == 0 else Characters + 1
+                CharactersAfter = Characters
+                # adjust format indexes to compensate justifying
+                FormatDict = {
+                    (Index + CharactersBefore 
+                    if Index > CurrentCharacterIndex
+                    else Index)
+                    :Value
+                    for Index, Value 
+                    in FormatDict.items() 
+                    }
+                FormatDict = {
+                    (Index + CharactersAfter 
+                    if Index > CurrentCharacterIndex + len(CurrentLine) + CharactersBefore
+                    else Index)
+                    :Value
+                    for Index, Value 
+                    in FormatDict.items() 
+                    }
+                CurrentLine = CurrentLine.center(MaxColumns)
+
+        TextLines.append(CurrentLine)
+        CurrentCharacterIndex += len(CurrentLine)
+
+    return (TextLines, FormatDict)
 
 
 def Print(
@@ -241,7 +284,7 @@ def Print(
     Column = None, 
     JustifyText = Justify.Left,
     MaxColumns = None,
-    MaxLines = None,
+    MaxLines = 1,
     Speed = PrintSpeed.Instant,
     ClearScreenBefore = False, 
     JumpLineAfter = True,
@@ -271,7 +314,7 @@ def Print(
             C - Cyan
             W - White
             possible tags for styles are :
-            SB - Bold (this is very subtile to see)
+            SB - Bold (this is very subtle to see)
             SU - Underline
             SI - Inverted (foreground and background colors)
     """
@@ -287,39 +330,15 @@ def Print(
     # to make a beep
     BeepString = "" if not MakeBeep else "\a"
 
-    # split text according to square
-    TextLines = []
-    RemainingText = Text
-    while len(RemainingText) > 0:
-        if MaxColumns is not None:
-            RemainingTextWithoutTags = _ManageColorTags(RemainingText, _TagAction.Remove)
-            WrapPosition = (RemainingTextWithoutTags.rfind(" ", 0, MaxColumns + 1) 
-                + (len(RemainingText) - len(RemainingTextWithoutTags)))
-            if WrapPosition == -1:
-                TextLines.append(RemainingText)
-                RemainingText = ""
-            else:
-                TextLines.append(RemainingText[:WrapPosition])
-                RemainingText = RemainingText[WrapPosition + 1:]
-        else:
-            TextLines.append(RemainingText) 
-            RemainingText = ""
+    # remove tags from text and get format dictionary
+    (Text, FormatDict) = _ManageTags(Text)
 
-    # for each line
-    for LineNumber, Text in enumerate(TextLines):
-        # exit if text is too long
-        if LineNumber > 0 and LineNumber >= MaxLines :
-            # reset color and exit loop
-            print(
-                f"{Format.Prefix}{Format.Reset}", 
-                end = "", 
-                flush = True)
-            break
+    # wrap text to fit in specified area
+    (TextLines, FormatDict) = _WrapText(Text, FormatDict, JustifyText, MaxColumns, MaxLines)
 
-        # replace tags by appropriate color codes
-        Text = _ManageColorTags(Text)
-
-        if LineNumber == 0:
+    CurrentCharacterIndex = 0
+    for LineIndex, CurrentLine in enumerate(TextLines):
+        if LineIndex == 0:
             # absolute positioning
             if Line is None and Column is None:
                 # no positioning
@@ -333,31 +352,43 @@ def Print(
                 print(
                     f"{Format.Prefix.value}{int(Line)};{int(Column)}{Format.PositionSuffix.value}",
                     end = "")
+            LastLineLength = len(CurrentLine)
         else:
             # move cursor 1 line below
             MoveCursorString = f"{Format.Prefix.value}1{Format.MoveDownSuffix.value}"
-            # move cursor right is appropriate
+            # move cursor left is appropriate
             if Column is not None and str(int(Column)).isdigit():
-                MoveCursorString += f"{Format.Prefix.value}{MaxColumns}{Format.MoveRightSuffix.value}"
+                MoveCursorString += f"{Format.Prefix.value}{LastLineLength}{Format.MoveLeftSuffix.value}"
             print(MoveCursorString, end = "")
 
-        if MaxColumns is not None:
-            # justify text
-            if JustifyText == Justify.Left:
-                Text = Text.ljust(MaxColumns)
-            elif JustifyText == Justify.Right:
-                Text = Text.rjust(MaxColumns)
-            elif JustifyText == Justify.Center:
-                Text = Text.center(MaxColumns)
-
         # print text
-        if Speed == PrintSpeed.Instant:
-            print(BeepString + Text, end = "", flush = True)
-        else:
-            for Letter in list(Text):
-                print(BeepString + Letter, end = "", flush = True)
-                time.sleep(Speed.value)
-            print("", end = "", flush = True)
+        # if Speed == PrintSpeed.Instant:
+        #     print(BeepString + Text, end = "", flush = True)
+        # else:
+        for Letter in CurrentLine:
+            # print formatting if any at this position
+            
+            if CurrentCharacterIndex in FormatDict:
+                print(
+                    FormatDict.pop(CurrentCharacterIndex), 
+                    end = "", flush = True)
+            # print letter
+            print(BeepString + Letter, end = "", flush = True)
+            CurrentCharacterIndex += 1
+            # wait
+            time.sleep(Speed.value)
+            
+        print("", end = "", flush = True)
+
+        # exit loop if text exceeds square
+        if LineIndex + 1 == MaxLines:
+            if len(FormatDict) > 0:
+                # reset format if any formatting
+                print(
+                    f"{Format.Prefix.value}{Format.Reset.value}", 
+                    end = "", 
+                    flush = True)
+            break
 
     # jump line after printing if needed
     if JumpLineAfter:
@@ -367,6 +398,8 @@ def Print(
 
 # code to test rich console functions
 if __name__ == "__main__":
+
+    import timeit
 
     # variables
     PosX = 10
@@ -380,30 +413,76 @@ if __name__ == "__main__":
         Print(
             "[C;U] Test des fonctionnalités de RichConsole [;]",
             1, 1,
+            Speed = PrintSpeed.VeryFast,
             ClearScreenBefore = True,
             MakeBeep = True)
+        time.sleep(1)
+
+    def CursorTest():
+        ShowCursor(True)
+        Print(
+            "Curseur visible",
+            3, 1,
+            Speed = PrintSpeed.Medium)
+        ShowCursor(False)
+        time.sleep(1)
+        Print(
+            "Curseur invisible",
+            3, 30,
+            Speed = PrintSpeed.Medium)
 
     def SquareTest():
         Print(
+            "Texte dans un rectangle : 'Ce texte s'imprime centré dans un rectangle de 15x5 (avec une marge de 1 caractère à gauche et à droite).",
+            5, 0)
+        Print(
             "┌─────────────────┐ │                 │ │                 │ │                 │ │                 │ │                 │ └─────────────────┘",
-            3, 5,
+            6, 5,
             MaxColumns = 19,
             MaxLines = 7)
         Print(
-            "[G;]Ce texte s'imprime [Y;]centré[G;] dans un rectangle de 15x5 (avec une marge de 1 caractère à gauche et à droite).[;]",
-            4, 7,
+            "Ce texte s'imprime [Y;]justifié à gauche[;] dans un rectangle de 15x5 (avec une marge de 1 caractère à gauche et à droite).",
+            7, 7,
+            JustifyText = Justify.Left,
+            MaxColumns = 15,
+            MaxLines = 5,
+            Speed = PrintSpeed.UltraFast)
+
+        Print(
+            "┌─────────────────┐ │                 │ │                 │ │                 │ │                 │ │                 │ └─────────────────┘",
+            6, 25,
+            MaxColumns = 19,
+            MaxLines = 7)
+        ShowCursor()
+        Print(
+            "[M;]Ce texte s'imprime [Y;]centré[M;] dans un rectangle de 15x5 (avec une marge de 1 caractère à gauche et à droite).[;]",
+            7, 27,
             JustifyText = Justify.Center,
             MaxColumns = 15,
             MaxLines = 5,
-            Speed = PrintSpeed.Fast)
+            Speed = PrintSpeed.UltraFast)
+        ShowCursor(False)
+
+        Print(
+            "┌─────────────────┐ │                 │ │                 │ │                 │ │                 │ │                 │ └─────────────────┘",
+            6, 45,
+            MaxColumns = 19,
+            MaxLines = 7)
+        Print(
+            "Ce texte s'imprime [Y;]justifié à droite[;] dans un rectangle de 15x5 (avec une marge de 1 caractère à gauche et à droite).",
+            7, 47,
+            JustifyText = Justify.Right,
+            MaxColumns = 15,
+            MaxLines = 5,
+            Speed = PrintSpeed.UltraFast)
+
 
     def AnimationTest():
         Print(
             f"\nUn {FullShape} va se déplacer sur l'écran",
-            10, 0)
+            13, 0)
         PrintShape()
-        ShowCursor(False)
-        Print("[B;Y;SU] Entrée pour démarrer [;]", 12, 0)
+        Print("[B;Y;SU] Entrée pour démarrer [;]", 15, 0)
         Print("---------------------------------------------------", 28, 0)
         input()
         while PosX <= 40:
@@ -412,7 +491,7 @@ if __name__ == "__main__":
             MoveShape(0, 1)
         while PosX >= 3:
             MoveShape(-1, 0)
-        while PosY >= 15:
+        while PosY >= 18:
             MoveShape(0, -1)
         while PosY <= 25:
             MoveShape(1, .5)
@@ -450,9 +529,13 @@ if __name__ == "__main__":
         time.sleep(SleepTime)
 
     # code
-    input("\nTaper Entrée... ")
+    input("\nTaper Entrée pour démarrer la démo... ")
     TestIntro()
+    CursorTest()
     # ClearConsole()
+    # StartTime = time.time()
     SquareTest()
+    # EndTime = time.time()
+    # print("\n\nTemps pour le test Square : ", EndTime - StartTime)
     AnimationTest()
     TestEnd()
