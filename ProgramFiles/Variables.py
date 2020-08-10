@@ -4,6 +4,10 @@
     Global projet variables
 """
 
+# Game
+GameRunning = True
+ResourcesFolder = "Resources\\"
+
 # Layers
 MapLayer = None
 ObjectsLayer = None
@@ -15,6 +19,7 @@ CharactersData = None
 MapElementsData = None
 ObjectsData = None
 MessagesData = None
+CurrentView = "Start"
 ViewsData = None
 
 # Player

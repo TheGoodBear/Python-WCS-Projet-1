@@ -1,11 +1,12 @@
 # coding: utf-8
 
-# import modules
+# Imports modules
 import random
 import os
 import sys
+import json
 
-# additional code
+# Import application code
 
 
 # functions
@@ -236,6 +237,7 @@ def GetUserInput(
                 return MyData
 
 
+
 def ManageMessageHistory(
     Message, 
     MessageList, 
@@ -257,6 +259,90 @@ def ManageMessageHistory(
         MessagePrefix = "(" + str(len(MessageList) + 1) + ") "
     # return MessageList
     return MessageList.append(MessagePrefix + Message)
+
+
+
+def LoadJSONFile(
+    Path,
+    FileName):
+    """
+        Load a json file into a dictionary
+        .json extension is optional
+    """
+
+    if not FileName.endswith(".json"):
+        FileName += ".json"
+
+    try:
+
+        with open(Path + FileName, "r", encoding = "utf-8") as MyFile:
+            MyDict = json.load(MyFile)
+
+        return MyDict
+
+    except FileNotFoundError:
+        print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+
+
+
+def LoadViews(
+    Path,
+    FileName):
+    """
+        Load views from a txt file
+        and return a dictionary of views with list of lines
+
+        # <ViewName> marks a new view
+        ### marks a comment (ignore line)
+    """
+
+    Views = {}
+
+    try:
+        
+        with open(Path + FileName, "r", encoding="utf-8") as MyFile:
+            ViewName = ""
+            ViewLines = []
+        
+            for Line in MyFile:
+                if Line.startswith("###"):
+                    # comment
+                    continue
+                elif Line.startswith("# "):
+                    # new view
+                    # save current view in dictionary
+                    Views[ViewName] = ViewLines
+                    # reset view data
+                    ViewName = Line[2:].strip()
+                    ViewLines = []
+                else:
+                    # add line to ViewLines
+                    ViewLines.append(Line.replace("\n", ""))         
+
+        if ViewName != "":
+            # save last view
+            Views[ViewName] = ViewLines
+        
+        # print(Views)
+
+        return Views
+
+    except FileNotFoundError:
+        print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+
+
+def ReplacePlaceholdersWithData(
+    String,
+    DataDict):
+    """
+        Replace data placeholders (delimited by {}) in string
+        using data dictionary
+    """
+
+    for Key, Value in DataDict.items():
+        String = String.replace(f"{{{Key}}}", f"{Value}")
+
+    return String
 
 
 # def GetSymbolName(Symbol):
@@ -285,13 +371,13 @@ def ManageMessageHistory(
 if __name__ == "__main__":
     ClearConsole()
     print("Test de saisie utilisateur:")
-    # print(GetData("Saisir une chaine de caractères de 5 à 10 de longueur : ", Minimum=5, Maximum=10))
-    # print(GetData("Saisir une chaine de caractères (avec défaut='Vide') : ", DefaultValue="Vide"))
-    # print(GetData("Saisir une chaine de caractères (parmi liste) : ", PossibleValues=["Un", 2, "Trois", 4, "Cinq"]))
-    # print(GetData("Saisir une chaine de caractères (parmi liste avec random) : ", PossibleValues=["Un", 2, "Trois", 4, "Cinq"], DefaultValue="random"))
-    # print(GetData("Saisir un nombre entier (parmi liste) : ", ValueType="int", Minimum=5, PossibleValues=[2,4,6,8,10]))
-    # print(GetData("Saisir un nombre entier > 5 : ", ValueType="int", Minimum=5))
-    # print(GetData("Saisir un nombre entier entre 5 et 10 (avec défaut=8) : ", ValueType="int", Minimum=5, Maximum=10, DefaultValue=8))
-    # print(GetData("Saisir un nombre entier : ", ValueType="int"))
-    # print(GetData("Saisir un booléen : ", ValueType="bool"))
-    # print(GetData("Saisir un booléen (avec random) : ", ValueType="bool", DefaultValue="random"))
+    print(GetData("Saisir une chaine de caractères de 5 à 10 de longueur : ", Minimum=5, Maximum=10))
+    print(GetData("Saisir une chaine de caractères (avec défaut='Vide') : ", DefaultValue="Vide"))
+    print(GetData("Saisir une chaine de caractères (parmi liste) : ", PossibleValues=["Un", 2, "Trois", 4, "Cinq"]))
+    print(GetData("Saisir une chaine de caractères (parmi liste avec random) : ", PossibleValues=["Un", 2, "Trois", 4, "Cinq"], DefaultValue="random"))
+    print(GetData("Saisir un nombre entier (parmi liste) : ", ValueType="int", Minimum=5, PossibleValues=[2,4,6,8,10]))
+    print(GetData("Saisir un nombre entier > 5 : ", ValueType="int", Minimum=5))
+    print(GetData("Saisir un nombre entier entre 5 et 10 (avec défaut=8) : ", ValueType="int", Minimum=5, Maximum=10, DefaultValue=8))
+    print(GetData("Saisir un nombre entier : ", ValueType="int"))
+    print(GetData("Saisir un booléen : ", ValueType="bool"))
+    print(GetData("Saisir un booléen (avec random) : ", ValueType="bool", DefaultValue="random"))
