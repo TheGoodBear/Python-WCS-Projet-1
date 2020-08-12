@@ -1,15 +1,16 @@
 {
-    "Joueur" : {
+    "Player" : {
         "Name" : null,
-        "Images" : ["♂", "♀", "☺"],
+        "Image" : "☺",
         "Sex" : null,
-        "Styles" : ["[C;]", "[M;]", "[W;]"],
         "Behavior" : null,
         "MaxHealth" : 100,
         "Health" : 100,
         "MaxSatiety" : 100,
         "Satiety" : 100,
         "MaxThirst" : 100,
-        "Thirst" : 100
+        "Thirst" : 100,
+        "TotalMovements" : 0,
+        "TotalActions" : 0
     }
 }

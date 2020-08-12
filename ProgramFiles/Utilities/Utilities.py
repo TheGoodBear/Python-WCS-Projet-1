@@ -266,10 +266,13 @@ def LoadJSONFile(
     Path,
     FileName):
     """
-        Load a json file into a dictionary
+        Load a json file a return a dictionary
         .json extension is optional
     """
 
+    MyDict = None
+
+    # add extension if needed
     if not FileName.endswith(".json"):
         FileName += ".json"
 
@@ -278,8 +281,47 @@ def LoadJSONFile(
         with open(Path + FileName, "r", encoding = "utf-8") as MyFile:
             MyDict = json.load(MyFile)
 
+        # print(MyDict)
         return MyDict
 
+    except FileNotFoundError:
+        print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+
+
+
+def LoadMap(
+    Path,
+    FileName):
+    """
+        Load a map from a text file
+        and return a 2D list
+    """
+
+    MapData = []
+
+    try:
+
+        with open(Path + FileName, "r", encoding="utf-8") as MyFile:
+
+            for Line in MyFile:
+                if Line.startswith("#"):
+                    # comment
+                    continue
+                
+                Columns = []
+                for Character in Line:
+                    # ignore line ends
+                    if Character == "\n":
+                        continue
+                    # add character to map
+                    Columns.append(Character)
+                
+                # add line to map
+                MapData.append(Columns)
+        
+        # print(MapData)
+        return MapData
+            
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
 
@@ -289,7 +331,7 @@ def LoadViews(
     Path,
     FileName):
     """
-        Load views from a txt file
+        Load views from a text file
         and return a dictionary of views with list of lines
 
         # <ViewName> marks a new view
@@ -324,25 +366,24 @@ def LoadViews(
             Views[ViewName] = ViewLines
         
         # print(Views)
-
         return Views
 
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
 
 
-def ReplacePlaceholdersWithData(
-    String,
-    DataDict):
-    """
-        Replace data placeholders (delimited by {}) in string
-        using data dictionary
-    """
+# def ReplacePlaceholdersWithData(
+#     String,
+#     DataDict):
+#     """
+#         Replace data placeholders (delimited by {}) in string
+#         using data dictionary
+#     """
 
-    for Key, Value in DataDict.items():
-        String = String.replace(f"{{{Key}}}", f"{Value}")
+#     for Key, Value in DataDict.items():
+#         String = String.replace(f"{{{Key}}}", f"{Value}")
 
-    return String
+#     return String
 
 
 # def GetSymbolName(Symbol):

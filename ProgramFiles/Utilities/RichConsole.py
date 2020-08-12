@@ -57,9 +57,10 @@ class Color(Enum):
     White = {"Tag" : "W", "Format" : "7"}
 
 class Justify(Enum):
-    Left = 0
-    Center = 1
-    Right = 2
+    No = 0
+    Left = 1
+    Center = 2
+    Right = 3
 
 class PrintSpeed(Enum):     # in ms
     Instant = 0
@@ -72,17 +73,41 @@ class PrintSpeed(Enum):     # in ms
 
 
 # functions
-def ClearConsole():
+def ClearConsole(
+    Line = None, 
+    Column = None,
+    Width = None,
+    Height = None,
+    Character = " ",
+    ForeColor = Color.White,
+    BackColor = Color.Black):
     """
-        Clear the console depending on OS
+        Clear the console 
+            - depending on OS (for full console)
+            - or in a specified square with specified character and colors
     """
 
-    if "win" in sys.platform.lower():
-        # for windows
-        os.system("cls")
-    elif "linux" in sys.platform.lower():
-        # for linux
-        os.system("clear")
+    if Line is None or Column is None or Width is None or Height is None:
+        
+        # full Console
+        if "win" in sys.platform.lower():
+            # for windows
+            os.system("cls")
+        elif "linux" in sys.platform.lower():
+            # for linux
+            os.system("clear")
+
+    else:
+
+        # specified square
+        for CurrentLine in range(Height):
+            BlankLine = (
+                f"{Format.Prefix.value}{Format.ForegroundPrefix.value}{ForeColor.value['Format']};{Format.BackgroundPrefix.value}{BackColor.value['Format']}{Format.StyleAndColorSuffix.value}"
+                + "".ljust(Width, Character)
+                + f"{Format.Prefix.value}{Format.Reset.value}")
+            print(
+                f"{Format.Prefix.value}{Line + CurrentLine};{Column}{Format.PositionSuffix.value}"
+                + BlankLine, end = "")
 
 
 def ShowCursor(
@@ -99,6 +124,19 @@ def ShowCursor(
     time.sleep(.01)
 
 
+def PlaceCursorAt(
+    Line = 1,
+    Column = 1):
+    """
+        Place cursor at specified position
+    """
+
+    print(
+        f"{Format.Prefix.value}{Line};{Column}{Format.PositionSuffix.value}", 
+        end = "", 
+        flush = True)
+
+
 def _ManageNewLines(
     Text,
     Column = 1):
@@ -107,23 +145,20 @@ def _ManageNewLines(
     """
 
     TextLines = []
-    FormatDict = {}
-    FormatDictIndex = 0
 
     RemainingText = Text
     while RemainingText.find("\n") >= 0:
         NewLineIndex = RemainingText.find("\n")
-        TextLines.append(RemainingText[:NewLineIndex])
-        RemainingText = RemainingText[NewLineIndex:]
-        FormatDictIndex += len(TextLines[len(TextLines) - 1])
-        FormatDict[FormatDictIndex] = \
-            f"{Format.Prefix.value}[Line];{int(Column)}{Format.PositionSuffix.value}"
+        AppendLine = RemainingText[:NewLineIndex]
+        if AppendLine == "":
+            AppendLine = " "
+        TextLines.append(AppendLine)
+        RemainingText = RemainingText[NewLineIndex + 1:]
 
     # add last text to text lines
-    if RemainingText != "":
-        TextLines.append(RemainingText)
+    TextLines.append(RemainingText)
 
-    return (TextLines, FormatDict)
+    return TextLines
 
 
 def _ManageTags(
@@ -134,7 +169,7 @@ def _ManageTags(
         Returns Text without formatting and a dictionary of formats
     """
 
-    CharacterIndex = 0
+    CurrentCharacterIndex = 0
     NewTextLines = []
 
     # for each line in TextLines
@@ -143,7 +178,7 @@ def _ManageTags(
         NumberOfCharactersToJump = 0
         
         # for each character in text line
-        for Index, Character in enumerate(TextLine):
+        for CharacterIndex, Character in enumerate(TextLine):
             
             if NumberOfCharactersToJump > 0:
                 # jump the characters forming the last tag
@@ -153,8 +188,8 @@ def _ManageTags(
             if Character == "[":
                 # possible tag start
 
-                TagEnd = TextLine.find("]", Index) + 1
-                TagInString = TextLine[Index:TagEnd].upper()
+                TagEnd = TextLine.find("]", CharacterIndex) + 1
+                TagInString = TextLine[CharacterIndex:TagEnd].upper()
                 TagValues = TagInString.replace("[","").replace("]","").split(";")
 
                 # possible tag detected
@@ -193,8 +228,18 @@ def _ManageTags(
 
                     if FormatString != "":
                         # add formatting to dictionary with position as key
-                        FormatDict[CharacterIndex + len(RawText)] = FormatString
+                        FormatDict[CurrentCharacterIndex + len(RawText)] = FormatString
                         NumberOfCharactersToJump = len(TagInString) - 1
+                        # adjust format indexes to compensate tag
+                        FormatDict = {
+                            (Index - NumberOfCharactersToJump - 1
+                            if Index > CurrentCharacterIndex + len(RawText)
+                            else Index)
+                            :Value
+                            for Index, Value 
+                            in FormatDict.items() 
+                            }
+
 
                 else:
                     # not a valid tag
@@ -208,7 +253,7 @@ def _ManageTags(
 
         # update TextLines
         NewTextLines.append(RawText)
-        CharacterIndex += len(RawText)
+        CurrentCharacterIndex += len(RawText)
     
     return (NewTextLines, FormatDict)
 
@@ -266,22 +311,23 @@ def _WrapText(
                 CharactersAfter = 0
                 if JustifyText == Justify.Left:
                     CharactersAfter = MaxColumns - len(CurrentLine)
-                    # adjust format indexes to compensate justifying
-                    FormatDict = {
-                        (Index + CharactersAfter 
-                        if Index > CurrentCharacterIndex
-                        else Index)
-                        :Value
-                        for Index, Value 
-                        in FormatDict.items() 
-                        }
-                    CurrentLine = CurrentLine.ljust(MaxColumns)
+                    if CharactersAfter > 0:
+                        # adjust format indexes to compensate justifying
+                        FormatDict = {
+                            (Index + CharactersAfter 
+                            if Index >= CurrentCharacterIndex + len(CurrentLine)
+                            else Index)
+                            :Value
+                            for Index, Value 
+                            in FormatDict.items() 
+                            }
+                        CurrentLine = CurrentLine.ljust(MaxColumns)
                 if JustifyText == Justify.Right:
                     CharactersBefore = MaxColumns - len(CurrentLine)
                     # adjust format indexes to compensate justifying
                     FormatDict = {
                         (Index + CharactersBefore 
-                        if Index > CurrentCharacterIndex + CharactersBefore
+                        if Index >= CurrentCharacterIndex
                         else Index)
                         :Value
                         for Index, Value 
@@ -289,13 +335,13 @@ def _WrapText(
                         }
                     CurrentLine = CurrentLine.rjust(MaxColumns)
                 elif JustifyText == Justify.Center:
-                    Characters = (MaxColumns - len(CurrentLine)) // 2
-                    CharactersBefore = Characters if Characters % 2 == 0 else Characters + 1
-                    CharactersAfter = Characters
+                    Characters = (MaxColumns - len(CurrentLine))
+                    CharactersBefore = Characters // 2
+                    CharactersAfter = Characters // 2 if Characters % 2 == 0 else (Characters // 2) + 1
                     # adjust format indexes to compensate justifying
                     FormatDict = {
                         (Index + CharactersBefore 
-                        if Index > CurrentCharacterIndex
+                        if Index >= CurrentCharacterIndex
                         else Index)
                         :Value
                         for Index, Value 
@@ -303,7 +349,7 @@ def _WrapText(
                         }
                     FormatDict = {
                         (Index + CharactersAfter 
-                        if Index > CurrentCharacterIndex + len(CurrentLine) + CharactersBefore
+                        if Index >= CurrentCharacterIndex + len(CurrentLine) + CharactersBefore
                         else Index)
                         :Value
                         for Index, Value 
@@ -321,7 +367,7 @@ def Print(
     Text = "", 
     Line = None, 
     Column = None, 
-    JustifyText = Justify.Left,
+    JustifyText = Justify.No,
     MaxColumns = None,
     MaxLines = None,
     Speed = PrintSpeed.Instant,
@@ -336,6 +382,7 @@ def Print(
         Can be justify in a square (MaxColumns/MaxLines) with word wrap (from Justify enum)
         Speed can be specified (from PrintSpeed enum)
         Optionally clears screen before printing
+        Returns the number of printed lines
         
         Text can contain tags to change colors during printing with following syntax
         Tags have following syntax
@@ -374,7 +421,7 @@ def Print(
     FormatDict = {}
 
     # manage new lines (\n)
-    (TextLines, FormatDict) = _ManageNewLines(Text, Column)
+    TextLines = _ManageNewLines(Text, Column)
 
     # remove tags from text and get format dictionary
     (TextLines, FormatDict) = _ManageTags(TextLines, FormatDict)
@@ -416,20 +463,25 @@ def Print(
             # print formatting if any at this position
             
             if CurrentCharacterIndex in FormatDict:
+                # apply formatting
+                # and replace [Line] with current value (for new position on new line)
                 print(
-                    FormatDict.pop(CurrentCharacterIndex), 
+                    FormatDict.pop(
+                        CurrentCharacterIndex).replace(
+                            "[Line]", 
+                            str((Line if Line is not None else 0) + LineIndex)), 
                     end = "", flush = True)
 
             # print letter
-            if Letter != "\n":
-                print(BeepString + Letter, end = "", flush = True)
-            else:
-                print(BeepString + Letter, end = "", flush = True)
+            print(BeepString + Letter, end = "", flush = True)
             CurrentCharacterIndex += 1
             
             # wait
             time.sleep(Speed.value)
-            
+
+        # if MaxColumns == None:
+        #     print(f"{Format.Prefix.value}{Line+LineIndex};{Column}{Format.PositionSuffix.value}")
+        # else:
         print("", end = "", flush = True)
 
         # exit loop if text exceeds square
@@ -453,6 +505,9 @@ def Print(
     if JumpLineAfter:
         print()
 
+    # return the number of printed lines 
+    return len(TextLines)
+
 
 
 # code to test rich console functions
@@ -462,7 +517,7 @@ if __name__ == "__main__":
 
     # variables
     PosX = 10
-    PosY = 17
+    PosY = 21
     Shape = "<-O->"
     ShapeColor = "[G;]"
     FullShape = ShapeColor + Shape + "[;]"
@@ -478,7 +533,7 @@ if __name__ == "__main__":
         time.sleep(1)
 
     def _CursorTest():
-        ShowCursor(True)
+        ShowCursor()
         Print(
             "Curseur visible",
             3, 1,
@@ -492,73 +547,71 @@ if __name__ == "__main__":
 
     def _SquareTest():
         Print(
-            "Texte dans un rectangle : \"Ce texte s'imprime justifé à gauche/centré/justifié à droite dans un rectangle de 20x6\n(avec une marge de 1 caractère à gauche et à droite).\"",
-            5, 0)
+            "Texte dans un rectangle : \"[M;]Ce texte s'imprime [Y;]justifié à gauche[M;]/[Y;]centré[M;]/[Y;]justifié à droite[M;] dans un rectangle de [B;W]20[M;B]x[B;W]6[M;B].\nAvec une [G;]marge[M;] de 1 caractère à gauche et à droite.[;]\"",
+            5, 1)
+
         Print(
             "┌──────────────────────┐ │                      │ │                      │ │                      │ │                      │ │                      │ │                      │ └──────────────────────┘",
-            6, 5,
+            8, 5,
             MaxColumns = 24,
             MaxLines = 8)
         Print(
-            "Ce texte s'imprime [Y;]justifié à gauche[;] dans un rectangle de 20x6\n(avec une marge de 1 caractère à gauche et à droite).",
-            7, 7,
+            "[M;]Ce texte s'imprime [Y;]justifié à gauche[M;] dans un rectangle de [B;W]20[M;B]x[B;W]6[M;B].\nAvec une [G;]marge[M;] de 1 caractère à gauche et à droite.[;]",
+            9, 7,
             JustifyText = Justify.Left,
             MaxColumns = 20,
             MaxLines = 6,
             Speed = PrintSpeed.UltraFast)
 
         Print(
-            "┌──────────────────────┐ │                 │ │                 │ │                 │ │                 │ │                 │ └──────────────────────┘",
-            6, 30,
+            "┌──────────────────────┐ │                      │ │                      │ │                      │ │                      │ │                      │ │                      │ └──────────────────────┘",
+            8, 35,
             MaxColumns = 24,
             MaxLines = 8)
-        ShowCursor()
         Print(
-            "[M;]Ce texte s'imprime [Y;]centré[M;] dans un rectangle de 20x6\n(avec une marge de 1 caractère à gauche et à droite).[;]",
-            7, 32,
+            "[M;]Ce texte s'imprime [Y;]centré[M;] dans un rectangle de [B;W]20[M;B]x[B;W]6[M;B].\nAvec une [G;]marge[M;] de 1 caractère à gauche et à droite.[;]",
+            9, 37,
             JustifyText = Justify.Center,
             MaxColumns = 20,
             MaxLines = 6,
             Speed = PrintSpeed.UltraFast)
-        ShowCursor(False)
 
         Print(
-            "┌──────────────────────┐ │                 │ │                 │ │                 │ │                 │ │                 │ └──────────────────────┘",
-            6, 50,
+            "┌──────────────────────┐ │                      │ │                      │ │                      │ │                      │ │                      │ │                      │ └──────────────────────┘",
+            8, 65,
             MaxColumns = 24,
             MaxLines = 8)
         Print(
-            "Ce texte s'imprime [Y;]justifié à droite[;] dans un rectangle de 20x6\n(avec une marge de 1 caractère à gauche et à droite).",
-            7, 52,
+            "[M;]Ce texte s'imprime [Y;]justifié à droite[M;] dans un rectangle de [B;W]20[M;B]x[B;W]6[M;B].\nAvec une [G;]marge[M;] de 1 caractère à gauche et à droite.[;]",
+            9, 67,
             JustifyText = Justify.Right,
             MaxColumns = 20,
             MaxLines = 6,
             Speed = PrintSpeed.UltraFast)
 
-
     def _AnimationTest():
         Print(
             f"\nUn {FullShape} va se déplacer sur l'écran",
-            13, 0)
+            17, 0)
         _PrintShape()
-        Print("[B;Y;SU] Entrée pour démarrer [;]", 15, 0)
-        Print("---------------------------------------------------", 28, 0)
+        Print("[B;Y;SU] Entrée pour démarrer [;]", 19, 0)
+        Print("---------------------------------------------------", 32, 0)
         input()
         while PosX <= 40:
             _MoveShape(1, 0)
-        while PosY <= 25:
+        while PosY <= 30:
             _MoveShape(0, 1)
         while PosX >= 3:
             _MoveShape(-1, 0)
-        while PosY >= 18:
+        while PosY >= 24:
             _MoveShape(0, -1)
-        while PosY <= 25:
+        while PosY <= 28:
             _MoveShape(1, .5)
 
     def _TestEnd():
         Print(
             "[;]Et voilà, [U;]un [G;]petit [R;]tour[;] et c'est fini [Y;]:-)[;]",
-            Line = 29, Column = 1)
+            Line = 33, Column = 1)
         Print("À [U;]pluche[;] !")
         ShowCursor()
         print("...\n")
@@ -588,10 +641,10 @@ if __name__ == "__main__":
         time.sleep(SleepTime)
 
     # code
+    ClearConsole()
     # input("\nTaper Entrée pour démarrer la démo... ")
-    _TestIntro()
-    _CursorTest()
-    # ClearConsole()
+    # _TestIntro()
+    # _CursorTest()
     # StartTime = time.time()
     _SquareTest()
     # EndTime = time.time()

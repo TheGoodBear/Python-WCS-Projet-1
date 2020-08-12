@@ -19,12 +19,6 @@ CharactersData = None
 MapElementsData = None
 ObjectsData = None
 MessagesData = None
-CurrentView = "Start"
 ViewsData = None
 
 # Player
-CurrentHealth = 0
-CurrentFood = 0
-CurrentWater = 0
-TotalMovements = 0
-TotalActions = 0
