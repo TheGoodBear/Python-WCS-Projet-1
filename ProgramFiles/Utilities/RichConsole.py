@@ -327,7 +327,7 @@ def _WrapText(
                     # adjust format indexes to compensate justifying
                     FormatDict = {
                         (Index + CharactersBefore 
-                        if Index >= CurrentCharacterIndex
+                        if Index > CurrentCharacterIndex
                         else Index)
                         :Value
                         for Index, Value 
@@ -341,7 +341,7 @@ def _WrapText(
                     # adjust format indexes to compensate justifying
                     FormatDict = {
                         (Index + CharactersBefore 
-                        if Index >= CurrentCharacterIndex
+                        if Index > CurrentCharacterIndex
                         else Index)
                         :Value
                         for Index, Value 

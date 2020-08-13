@@ -294,7 +294,9 @@ def LoadMap(
     FileName):
     """
         Load a map from a text file
-        and return a 2D list
+        and return 2D lists for map and blank layers
+
+        Blank layer (for example for objects and characters) is initialized matching map dimensions
     """
 
     MapData = []
@@ -303,24 +305,34 @@ def LoadMap(
 
         with open(Path + FileName, "r", encoding="utf-8") as MyFile:
 
+            NumberOfLines = 0
+            NumberOfColumns = 0
             for Line in MyFile:
                 if Line.startswith("#"):
                     # comment
                     continue
                 
                 Columns = []
+                NumberOfColumnsInThisLine = 0
                 for Character in Line:
                     # ignore line ends
                     if Character == "\n":
                         continue
                     # add character to map
                     Columns.append(Character)
-                
+                    NumberOfColumnsInThisLine += 1
+                                    
                 # add line to map
                 MapData.append(Columns)
-        
+                # update counters
+                NumberOfLines += 1
+                NumberOfColumns = max(NumberOfColumns, NumberOfColumnsInThisLine)
+
+        # initialize blank layer
+        BlankLayer = [["" for X in range(NumberOfColumns)] for Y in range(NumberOfLines)]
+
         # print(MapData)
-        return MapData
+        return MapData, BlankLayer
             
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")

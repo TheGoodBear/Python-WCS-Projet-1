@@ -1,15 +1,18 @@
 {
     "Player" : {
-        "Name" : null,
+        "Name" : "Alain",
         "Image" : "☺",
-        "Sex" : null,
+        "Sex" : "H",
         "Behavior" : null,
         "MaxHealth" : 100,
         "Health" : 100,
+        "MaxHydration" : 100,
+        "Hydration" : 100,
         "MaxSatiety" : 100,
         "Satiety" : 100,
-        "MaxThirst" : 100,
-        "Thirst" : 100,
+        "X" : 9,
+        "Y" : 2,
+        "Direction" : "E",
         "TotalMovements" : 0,
         "TotalActions" : 0
     }

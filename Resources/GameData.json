@@ -6,40 +6,62 @@
         "Language" : "fr",
         "ViewDataFile" : "Views",
         "MapFile" : "Map",
-        "WindowWidth" : 133,
+        "WindowWidth" : 143,
         "WindowHeight" : 53,
         "MapMaxWidth" : 100,
         "MapMaxHeight" : 50,
-        "DashboardWidth" : 30,
+        "DashboardWidth" : 40,
         "CurrentView" : "Start",
-        "SexPossibleValues" : {"F" : "[M;]", "H" : "[C;]", "A" : "[W;]"}
+        "Sex" : {
+            "F" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
+            "H" : {"Color" : "[C;;SB]", "Symbol" : "♂"},
+            "A" : {"Color" : "[Y;;SB]", "Symbol" : "¤"}
+        },
+        "VitalSigns" : {
+            "BarLength" : 25,
+            "Health" : {"Color" : "[R;]", "Symbol" : "◘"},
+            "Hydration" : {"Color" : "[U;]", "Symbol" : "◘"},
+            "Satiety" : {"Color" : "[G;]", "Symbol" : "◘"}
+        },
+        "Directions" : {
+            "N" : {"Symbol" : "▲", "DeltaX" : 0, "DeltaY" : -1},
+            "E" : {"Symbol" : "►", "DeltaX" : 1, "DeltaY" : 0},
+            "S" : {"Symbol" : "▼", "DeltaX" : 0, "DeltaY" : 1},
+            "W" : {"Symbol" : "◄", "DeltaX" : -1, "DeltaY" : 0}
+        }
     },
     "Views" : {
         "Start" : {
-            "WindowViewPort" : {"Y" : 7, "X" : 28, "Width" : 80, "Height" : 40},
-            "TitleViewPort" : {"Y" : 8, "X" : 29, "Width" : 78, "Height" : 1},
-            "TextViewPort" : {"Y" : 10, "X" : 30, "Width" : 76, "Height" : 34},
-            "AskViewPort" : {"Y" : 45, "X" : 30, "Width" : 76, "Height" : 1}
+            "WindowViewPort" : {"Y" : 7, "X" : 33, "Width" : 80, "Height" : 40},
+            "TitleViewPort" : {"Y" : 8, "X" : 34, "Width" : 78, "Height" : 1},
+            "TextViewPort" : {"Y" : 10, "X" : 35, "Width" : 76, "Height" : 34},
+            "AskViewPort" : {"Y" : 45, "X" : 35, "Width" : 76, "Height" : 1}
             },
         "Main" : {
             "WindowViewPort" : {"Y" : 1, "X" : 1, "Width" : 133, "Height" : 52},
             "MapViewPort" : {"Y" : 2, "X" : 2, "Width" : 100, "Height" : 50},
-            "DashboardViewPort" : {"Y" : 2, "X" : 101, "Width" : 30, "Height" : 50}
+            "DashboardViewPort" : {"Y" : 2, "X" : 103, "Width" : 40, "Height" : 50},
+            "TitleViewPort" : {"Y" : 2, "X" : 103, "Width" : 40, "Height" : 1},
+            "PlayerViewPort" : {"Y" : 5, "X" : 103, "Width" : 40, "Height" : 1},
+            "VitalSignsViewPort" : {"Y" : 6, "X" : 103, "Width" : 40, "Height" : 3},
+            "CountersViewPort" : {"Y" : 10, "X" : 103, "Width" : 40, "Height" : 1},
+            "BackpackTitleViewPort" : {"Y" : 12, "X" : 103, "Width" : 40, "Height" : 1},
+            "BackpackItemsViewPort" : {"Y" : 13, "X" : 103, "Width" : 40, "Height" : 10},
+            "EnvironmentViewPort" : {"Y" : 24, "X" : 103, "Width" : 40, "Height" : 3},
+            "AskActionViewPort" : {"Y" : 28, "X" : 103, "Width" : 40, "Height" : 1},
+            "ActionHistoryTitleViewPort" : {"Y" : 30, "X" : 103, "Width" : 40, "Height" : 1},
+            "ActionHistoryViewPort" : {"Y" : 31, "X" : 103, "Width" : 40, "Height" : 9},
+            "MessageViewPort" : {"Y" : 41, "X" : 103, "Width" : 40, "Height" : 10}
             },
         "Challenge" : {
             "WindowViewPort" : {"Y" : 1, "X" : 1, "Width" : 133, "Height" : 52},
-            "DashboardViewPort" : {"Y" : 2, "X" : 101, "Width" : 30, "Height" : 50},
+            "DashboardViewPort" : {"Y" : 2, "X" : 101, "Width" : 40, "Height" : 50},
             "ChallengeViewPort" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 40},
             "ChallengeTitleViewPort" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
             "ChallengeTextViewPort" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 34},
             "ChallengeAskViewPort" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
             }
         },
-    "Player" : {
-        "MaxHealth" : 100,
-        "MaxFood" : 100,
-        "MaxHydratation" : 100
-    },
     "Challenge1" : {
         "MinimumNumber" : 0,
         "MaximumNumber" : 100,

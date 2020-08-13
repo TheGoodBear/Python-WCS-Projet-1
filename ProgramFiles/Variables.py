@@ -7,6 +7,7 @@
 # Game
 GameRunning = True
 ResourcesFolder = "Resources\\"
+CurrentMessage = "NONE"
 
 # Layers
 MapLayer = None
@@ -20,3 +21,4 @@ MapElementsData = None
 ObjectsData = None
 MessagesData = None
 ViewsData = None
+ActionsHistory = []

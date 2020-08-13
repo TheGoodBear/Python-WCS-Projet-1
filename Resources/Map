@@ -3,14 +3,14 @@
 MMMMMMMMMMAAAMMMMMMMMMMMMMmmMMMMTTTMMMMMMMMMMMMMMMMMMMMMM   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMmmMMTTMMMMMMMMMMMMMMMMMMMMM  M A MMMMMMMMMMMMMMMMMMMM  MMMMMMM 
 MMMMMMMMMMMMMMMMMMMMMMMMMMM--|MTMMMMMMMMMMMMMMMMMMMMM  MM M MMMMMMMMMMMMMMMMMMMM   MMMMMM 
-MMMMMM AAA                  -||       MMM                                           MMMMM
-MMMMMM       A              |||        MMMM                      A      ++++A+++       MMM
-MMMM              x x       |||          MM       +++++      A        +++++++++++     MMM
+MMMMMM AAA                  -||       MMM                    A                      MMMMM
+MMMMMM       A              |||        MMMM                 AAA  A      ++++A+++       MMM
+MMMM              x x       |||          MM       +++++     AA        +++++++++++     MMM
 MMM    A           x       |||||                    +++++              ++A+++A+++A    MMMM
-MMMM              +++    ||||||||                +++++++++  A          +++A+++A+++    MMMM
+MMMM              +x+    ||||||||                +++++++++  A          +++A+++A+++    MMMM
 MMMM             +A+A+     ||||||||                 ++++++++               +++A+A++    2MM
 MMMMM       A     +++         ---                    +++     A          +++A+++A+++  AMMMM
-MMMMM     ++++++  +++      A   ||||                          MM          ++A+A++A+    MMMM
+MMMMM     ++++++  +x+      A   ||||                          MM          ++A+A++A+    MMMM
 MMMMMMM           +x+     +++    |||||||                   MMMM      ++A+++A+++A+++   MMM
 MMMMMMM     xxxA   +x+              AA||||||               M+--MM     +++++A++A++A+   MMM 
 MMMMMM       xxxx   +x+  A            AAA||||||            +---AM        ++++A+++A+    MMM
@@ -18,10 +18,10 @@ MMMMMM                +x+                 AAA||||||        ----A          +A++A+
 MMMMMAA        +x+      +x+       A           AA|||A        A++              +A++    MMMM 
 MMMMMMA      +x+ +x+      +x+                 AA|||A                         +A++     MMMM
 MMM  AAA    +x+    +x+      +x+               AA|||A          MM++           +A++  MM MMMM
-MMMM       +x+      +x+  A   +x+            AA|||A           MM++xxx         +A++ MM  MMMM
+MMMM       +x+      +x+  A   +x+            AA|||            MM++xxx         +A++ MM  MMMM
 MMMMMM     +x+  ++   +x+     +x+      A      AA|||A         MMxxxxx         +A++  MMMAMMMM
-MMMMMM     +x+  +++  +x+    +x+              AA|||A          MMxxx           +AMMMMMMMMMMM
-MMMMMM +++  +  ++++   +x+ +x+                 AA|||A           xxx          +AMMMMMMMMMMM
+MMMMMM     +x+  +++  +x+    +x+                |||A          MMxxx           +AMMMMMMMMMMM
+MMMMMM +++  +  ++++   +x+ +x+                   |||A           xxx          +AMMMMMMMMMMM
 MMMMMM  ++     +++++    +x+                  AA|||A                          +A++ MMMMMMMM
  MMMMMM  +    +++++++       A       A  ++    AA|||A                         +A++ MMMMMMMM=
   MMMMMM    A  +A+  A    A +++++   ++++++    AA|||A       A                +A++    MMMMM==
@@ -30,7 +30,7 @@ MMMMM      +++A++AAA++AAAA+++AAAA+++++++++AA|||A        AAA                     
 MMMM       +++++AAA++++AA+++++++++++A++++AA|||A                      A        MMMMMM======
 MMMMMM   ++++AA+++++++++++AAA+++AAA+++++++-----                            AMMMM==========
 MMMMMM     ++++++AAAA+++AAAAAA++++AA++A+++A|||A+            MMM           AMMMMMMM========
-MMMMM     ++++AAAAA+++++  +AAAAA+++++++++AA|||A           MMMMMM         MMMM====MM=======
+MMMMM     ++++AAAAA+++++   AAAAA+++++++++AA|||            MMMMMM         MMMM====MM=======
 MMMMMM      +++++AAAAA+ A3  +++AA++A++++++AA|||A++         MMMMM      MMMMMMS=====MM======
  MMMMM     ++++AAAAA++++  AAA++++++++++++AA|||A+++    MM   +AMMMMMM SS MMMSS=====MM=======
 MMMMMM   +A+++++++AAAA++ AAA+++++A++AA++++AA|||A+++++ MMM  MMMMMSSSSSSSSSSSSS=============

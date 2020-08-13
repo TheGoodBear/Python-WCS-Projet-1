@@ -129,7 +129,7 @@
     },
     "x" : {
         "Image" : "~",
-        "Style" : "[G;]",
+        "Style" : "[Y;]",
         "Behaviors" : {
             "CanWalk" : true,
             "Event" : null,
@@ -177,7 +177,7 @@
     },
     "1" : {
         "Image" : "☼",
-        "Style" : "[B;W]",
+        "Style" : "[B;R]",
         "Behaviors" : {
             "CanWalk" : true,
             "Event" : "Challenge1",
@@ -193,7 +193,7 @@
     },
     "2" : {
         "Image" : "╦",
-        "Style" : "[B;Y]",
+        "Style" : "[B;R]",
         "Behaviors" : {
             "CanWalk" : true,
             "Event" : "Challenge2",
@@ -209,7 +209,7 @@
     },
     "3" : {
         "Image" : "+",
-        "Style" : "[B;G]",
+        "Style" : "[B;R]",
         "Behaviors" : {
             "CanWalk" : true,
             "Event" : "Challenge3",
@@ -225,7 +225,7 @@
     },
     "0" : {
         "Image" : " ",
-        "Style" : "[;Y]",
+        "Style" : "[;R]",
         "Behaviors" : {
             "CanWalk" : true,
             "Event" : "Exit",

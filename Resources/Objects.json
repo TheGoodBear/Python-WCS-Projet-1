@@ -9,7 +9,7 @@
             "Actions" : ["Open"],
             "RequiredMapElements" : null,
             "RequiredObjects" : null,
-            "Capacity" : 20,
+            "Capacity" : 10,
             "Contains" : [
                 "LaptopComputer",
                 "SolarCharger",
@@ -128,7 +128,7 @@
     },
     "GlassBottle" : {
         "Image" : "◘",
-        "Style" : "[U;]",
+        "Style" : "[C;]",
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,

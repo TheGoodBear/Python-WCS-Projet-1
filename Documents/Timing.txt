@@ -22,11 +22,11 @@ Messages : 2h
 
 5 - Codage et documentation du code
 Sous-total = 
-Jeu principal : 15' 
+Jeu principal : 8h15' 
 Défi 1 :
 Défi 2 :
 Défi 3 :s
-Utilities & RichConsole : 8h
+Utilities & RichConsole : 10h
 
 6 - Tests
-3h
+5h
