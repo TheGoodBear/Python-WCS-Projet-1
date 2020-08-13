@@ -205,7 +205,7 @@ def GetUserInput(
                     [str(PossibleValue) for PossibleValue in PossibleValues] 
                     if StringCaseSensitive 
                     else [str(PossibleValue).lower() for PossibleValue in PossibleValues])
-                if not MyData in MyPossibleValues:
+                if not MyDataToCompare in MyPossibleValues:
                     if DefaultValue == None:
                         # no default value specified, so ask again
                         print(f"Merci de rentrer une valeur parmi les suivantes : {PossibleValues}")

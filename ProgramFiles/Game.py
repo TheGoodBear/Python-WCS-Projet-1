@@ -43,6 +43,9 @@ def Run():
     """
 
     ShowView(Var.GameData["Game"]["CurrentView"])
+    Var.GameData["Game"]["CurrentView"] = "Main"
+    ShowView(Var.GameData["Game"]["CurrentView"])
+    ShowMap()
     # while Var.GameRunning:
     #     pass
 
@@ -75,84 +78,103 @@ def ShowView(
 
     # show view template
     RC.ClearConsole()
-    LineOffset = Var.GameData["Views"][ViewName]["LineOffset"]
+    LineOffset = 0
     for Index, Line in enumerate(Var.ViewsData[ViewName]):
-        RC.Print(Line, LineOffset + Index, 1, 
+        RC.Print(Line, 
+            Var.GameData["Views"][ViewName]["WindowViewPort"]["Y"] + Index, 1, 
             JustifyText = RC.Justify.Center, 
             MaxColumns = Var.GameData["Game"]["WindowWidth"])
 
     # show view content
     if ViewName == "Start":
 
-        Title = (Var.MessagesData["Game"]["FullTitle"]
+        # title
+        Message = (Var.MessagesData["Game"]["FullTitle"]
             .replace("{Title}", Var.MessagesData["Game"]["Title"])
             .replace("{VersionNumber}", Var.GameData["Game"]["VersionNumber"])
             .replace("{VersionDate}", Var.GameData["Game"]["VersionDate"]))
-        RC.Print(f"{Title}",
-            Var.GameData["Views"][ViewName]["TitleY"], Var.GameData["Views"][ViewName]["TitleX"],
+        RC.Print(f"{Message}",
+            Var.GameData["Views"][ViewName]["TitleViewPort"]["Y"], Var.GameData["Views"][ViewName]["TitleViewPort"]["X"],
             JustifyText = RC.Justify.Center,
-            MaxColumns = Var.GameData["Views"][ViewName]["TitleMaxWidth"],
+            MaxColumns = Var.GameData["Views"][ViewName]["TitleViewPort"]["Width"],
             Speed = RC.PrintSpeed.UltraFast)
 
+        # viewports data
+        TextY = Var.GameData["Views"][ViewName]["TextViewPort"]["Y"]
+        TextX = Var.GameData["Views"][ViewName]["TextViewPort"]["X"]
+        TextWidth = Var.GameData["Views"][ViewName]["TextViewPort"]["Width"]
+        TextHeight = Var.GameData["Views"][ViewName]["TextViewPort"]["Height"]
+        AskY = Var.GameData["Views"][ViewName]["AskViewPort"]["Y"]
+        AskX = Var.GameData["Views"][ViewName]["AskViewPort"]["X"]
+        AskWidth = Var.GameData["Views"][ViewName]["AskViewPort"]["Width"]
+        AskHeight = Var.GameData["Views"][ViewName]["AskViewPort"]["Height"]
+
+        # text page 1
         LineOffset = 0
         if Var.MessagesData["Game"]["Image"] is not None:
             LineOffset += RC.Print(Var.MessagesData["Game"]["Image"],
-                Var.GameData["Views"][ViewName]["ImageY"], Var.GameData["Views"][ViewName]["ImageX"],
+                TextY, TextX,
                 JustifyText = RC.Justify.Center,
-                MaxColumns = Var.GameData["Views"][ViewName]["ImageMaxWidth"],
+                MaxColumns = TextWidth,
                 Speed = RC.PrintSpeed.UltraFast)
 
         RC.Print(Var.MessagesData["Game"]["History"],          
-            Var.GameData["Views"][ViewName]["HistoryY"] + LineOffset, Var.GameData["Views"][ViewName]["HistoryX"],
+            TextY + LineOffset, TextX,
             JustifyText = RC.Justify.Left, 
-            MaxColumns = Var.GameData["Views"][ViewName]["HistoryMaxWidth"])
+            MaxColumns = TextWidth)
         RC.Print(Var.MessagesData["Game"]["AskContinue"],          
-            Var.GameData["Views"][ViewName]["AskContinueY"], Var.GameData["Views"][ViewName]["AskContinueX"],
+            AskY, AskX,
             JustifyText = RC.Justify.Left, 
-            MaxColumns = Var.GameData["Views"][ViewName]["AskContinueMaxWidth"])
-        RC.PlaceCursorAt(
-            Var.GameData["Views"][ViewName]["AskContinueY"],
-            Var.GameData["Views"][ViewName]["AskContinueX"] + len(Var.MessagesData["Game"]["AskContinue"]))
+            MaxColumns = AskWidth,
+            Speed = RC.PrintSpeed.Fast)
+        RC.PlaceCursorAt(AskY, AskX + len(Var.MessagesData["Game"]["AskContinue"]))
         input("")
+
+        # clear text between pages
+        RC.ClearConsole(TextY, TextX, TextWidth, TextHeight)
+        RC.ClearConsole(AskY, AskX, AskWidth, AskHeight)
+
+        # text page 2
         LineOffset = 0
-
-        RC.ClearConsole(
-            Var.GameData["Views"][ViewName]["MainViewPort"]["Y"],
-            Var.GameData["Views"][ViewName]["MainViewPort"]["X"],
-            Var.GameData["Views"][ViewName]["MainViewPort"]["Width"],
-            Var.GameData["Views"][ViewName]["MainViewPort"]["Height"])
-
         LineOffset += 1 + RC.Print(Var.MessagesData["Game"]["Rules"],          
-            Var.GameData["Views"][ViewName]["RulesY"] + LineOffset, Var.GameData["Views"][ViewName]["RulesX"],
+            TextY + LineOffset, TextX,
             JustifyText = RC.Justify.Left, 
-            MaxColumns = Var.GameData["Views"][ViewName]["RulesMaxWidth"])
+            MaxColumns = TextWidth)
         
-        RC.PlaceCursorAt(
-            LineOffset + Var.GameData["Views"][ViewName]["AskNameY"],
-            Var.GameData["Views"][ViewName]["AskNameX"])
-        Var.CharactersData["Player"]["Name"] = Util.GetUserInput(Var.MessagesData["Game"]["AskName"])
-        LineOffset += 1 + RC.Print(Var.MessagesData["Game"]["Hello"].replace("{Name}", Var.CharactersData["Player"]["Name"]),
-            Var.GameData["Views"][ViewName]["HelloY"] + LineOffset, Var.GameData["Views"][ViewName]["HelloX"],
+        RC.PlaceCursorAt(TextY + LineOffset, TextX)
+        Var.CharactersData["Player"]["Name"] = Util.GetUserInput(
+            Var.MessagesData["Game"]["AskName"])
+        Message = (Var.MessagesData["Game"]["Hello"]
+            .replace("{Name}", Var.CharactersData["Player"]["Name"]))
+        LineOffset += 1 + RC.Print(Message,
+            TextY + LineOffset, TextX,
             JustifyText = RC.Justify.Left, 
-            MaxColumns = Var.GameData["Views"][ViewName]["HelloMaxWidth"])
+            MaxColumns = TextWidth)
 
         LineOffset += 1 + RC.Print(Var.MessagesData["Game"]["AskSex1"], 
-            Var.GameData["Views"][ViewName]["AskSex1Y"] + LineOffset, Var.GameData["Views"][ViewName]["AskSex1X"],
+            TextY + LineOffset, TextX,
             JustifyText = RC.Justify.Left, 
-            MaxColumns = Var.GameData["Views"][ViewName]["AskSex1MaxWidth"])
-        RC.PlaceCursorAt(
-            LineOffset + Var.GameData["Views"][ViewName]["AskSex2Y"],
-            Var.GameData["Views"][ViewName]["AskSex2X"])
-        Var.CharactersData["Player"]["Sex"] = Util.GetUserInput(Var.MessagesData["Game"]["AskSex2"], PossibleValues = Var.GameData["Game"]["SexPossibleValues"].keys())
-        LineOffset += RC.Print(Var.MessagesData["Game"]["Hello2"],          
-            Var.GameData["Views"][ViewName]["Hello2Y"] + LineOffset, Var.GameData["Views"][ViewName]["Hello2X"],
+            MaxColumns = TextWidth)
+        RC.PlaceCursorAt(TextY + LineOffset, TextX)
+        Var.CharactersData["Player"]["Sex"] = Util.GetUserInput(
+            Var.MessagesData["Game"]["AskSex2"], 
+            PossibleValues = list(Var.GameData["Game"]["SexPossibleValues"].keys())).upper()
+        Message = (Var.MessagesData["Game"]["Hello2"]
+            .replace("{ColoredName}", 
+                Var.GameData["Game"]["SexPossibleValues"][Var.CharactersData["Player"]["Sex"]] + Var.CharactersData["Player"]["Name"] + "[;]")
+            .replace("{Symbol}", 
+                Var.GameData["Game"]["SexPossibleValues"][Var.CharactersData["Player"]["Sex"]] + Var.CharactersData["Player"]["Image"] + "[;]"))
+        LineOffset += RC.Print(Message,          
+            TextY + LineOffset, TextX,
             JustifyText = RC.Justify.Left, 
-            MaxColumns = Var.GameData["Views"][ViewName]["Hello2MaxWidth"])
+            MaxColumns = TextWidth)
 
         RC.Print(Var.MessagesData["Game"]["AskReady"],          
-            Var.GameData["Views"][ViewName]["AskReadyY"], Var.GameData["Views"][ViewName]["AskReadyX"],
+            AskY, AskX,
             JustifyText = RC.Justify.Left, 
-            MaxColumns = Var.GameData["Views"][ViewName]["AskReadyMaxWidth"])
+            MaxColumns = AskWidth,
+            Speed = RC.PrintSpeed.Fast)
+        RC.PlaceCursorAt(AskY, AskX + len(Var.MessagesData["Game"]["AskReady"]))
         input("")
    
     elif ViewName == "Main":

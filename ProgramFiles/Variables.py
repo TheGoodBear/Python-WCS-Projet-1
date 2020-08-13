@@ -20,5 +20,3 @@ MapElementsData = None
 ObjectsData = None
 MessagesData = None
 ViewsData = None
-
-# Player
