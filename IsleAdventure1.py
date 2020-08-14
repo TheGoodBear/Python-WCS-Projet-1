@@ -18,4 +18,3 @@ def Main():
 # Program starts here
 if __name__ == "__main__":
     Main()
-    input()

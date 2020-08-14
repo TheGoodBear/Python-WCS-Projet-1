@@ -13,9 +13,9 @@
         "DashboardWidth" : 40,
         "CurrentView" : "Start",
         "Sex" : {
-            "F" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
-            "H" : {"Color" : "[C;;SB]", "Symbol" : "♂"},
-            "A" : {"Color" : "[Y;;SB]", "Symbol" : "¤"}
+            "Female" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
+            "Male" : {"Color" : "[C;;SB]", "Symbol" : "♂"},
+            "Other" : {"Color" : "[Y;;SB]", "Symbol" : "¤"}
         },
         "VitalSigns" : {
             "BarLength" : 25,
@@ -28,7 +28,19 @@
             "E" : {"Symbol" : "►", "DeltaX" : 1, "DeltaY" : 0},
             "S" : {"Symbol" : "▼", "DeltaX" : 0, "DeltaY" : 1},
             "W" : {"Symbol" : "◄", "DeltaX" : -1, "DeltaY" : 0}
-        }
+        },
+        "Actions" : {
+            "Walk" : {"NumberParameter" : "Optional"},
+            "TurnLeft" : {"NumberParameter" : null},
+            "TurnRight" : {"NumberParameter" : null},
+            "UseObject" : {"NumberParameter" : "Mandatory"},
+            "DropObject" : {"NumberParameter" : "Mandatory"},
+            "PickUp" : {"NumberParameter" : null},
+            "Rest" : {"NumberParameter" : "Optional"},
+            "GetHelp" : {"NumberParameter" : null},
+            "Quit" : {"NumberParameter" : null}
+        },
+        "WaitOnActionError" : 2
     },
     "Views" : {
         "Start" : {

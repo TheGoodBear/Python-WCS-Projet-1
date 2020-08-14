@@ -7,7 +7,8 @@
 # Game
 GameRunning = True
 ResourcesFolder = "Resources\\"
-CurrentMessage = "NONE"
+CurrentMessage = "Pas de messages"
+LastPlayerCommand = None
 
 # Layers
 MapLayer = None

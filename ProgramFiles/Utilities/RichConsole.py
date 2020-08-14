@@ -382,7 +382,7 @@ def Print(
         Can be justify in a square (MaxColumns/MaxLines) with word wrap (from Justify enum)
         Speed can be specified (from PrintSpeed enum)
         Optionally clears screen before printing
-        Returns the number of printed lines
+        Returns the number of printed lines and the length of the last line
         
         Text can contain tags to change colors during printing with following syntax
         Tags have following syntax
@@ -505,8 +505,10 @@ def Print(
     if JumpLineAfter:
         print()
 
-    # return the number of printed lines 
-    return len(TextLines)
+    # return the number of printed lines and the length of last line 
+    return (
+        len(TextLines), 
+        len(TextLines[-1:][0].strip()) + 1 if len(TextLines) > 0 else 0)
 
 
 

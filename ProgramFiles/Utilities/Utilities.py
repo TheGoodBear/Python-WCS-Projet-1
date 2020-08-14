@@ -1,10 +1,12 @@
 # coding: utf-8
 
 # Imports modules
-import random
 import os
 import sys
+import time
+import random
 import json
+import ProgramFiles.Utilities.RichConsole as RC
 
 # Import application code
 
@@ -18,7 +20,10 @@ def GetUserInput(
     PossibleValues = None,
     DefaultValue = None,
     Trim = True,
-    StringCaseSensitive = False):
+    StringCaseSensitive = False,
+    SpecificErrorMessage = None,
+    ErrorMessageLineOffset = 1,
+    RichConsoleParameters = None):
     """
         Get an input from the user
         Entry must be of ValueType (str for any)
@@ -35,12 +40,32 @@ def GetUserInput(
                 - if integer or other string set as default value
             Trim : if yes, input is trimmed (no spaces before and after) before managing
             StringCaseSensitive : if false, string comparison on lists are not case sensitive
+            ErrorMessage can be defined (else default is used) with LineOffset from input
+
+            Can optionally use RichConsole with 3 parameters in list [Line, Column, MaxColumns]
     """
+
+    MyData = None
 
     # Do until user entry is valid (and encounter a return)
     while True:
         # ask for user entry
-        MyData = input(Message)    
+
+        ErrorMessage = ""
+
+        if RichConsoleParameters is None:
+            MyData = input(Message) 
+        else: 
+            (NbLines, LineLength) = RC.Print(
+                Message, 
+                RichConsoleParameters[0], 
+                RichConsoleParameters[1],
+                RC.Justify.Left, 
+                RichConsoleParameters[2])
+            RC.PlaceCursorAt(
+                RichConsoleParameters[0], 
+                RichConsoleParameters[1] + LineLength)
+            MyData = input()
 
         # trim input if specified
         if Trim:
@@ -64,7 +89,7 @@ def GetUserInput(
                         return DefaultValue
                     else:
                         # ask again
-                        print(f"Merci de rentrer un nombre parmi les suivants : {PossibleValues}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre parmi les suivants : {PossibleValues}")
                 elif ((Minimum is not None and int(MyData) < Minimum) 
                     or (Maximum is not None and int(MyData) > Maximum)):
                     # not between min and max
@@ -76,7 +101,7 @@ def GetUserInput(
                         return DefaultValue
                     else:
                         # ask again
-                        print(f"Merci de rentrer un nombre entier compris entre {'- infini' if Minimum is None else Minimum} et {'infini' if Maximum is None else Maximum}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre entier compris entre {'- infini' if Minimum is None else Minimum} et {'infini' if Maximum is None else Maximum}")
                 else:
                     # return value
                     return int(MyData)
@@ -92,7 +117,7 @@ def GetUserInput(
                         return DefaultValue
                     else:
                         # ask again
-                        print(f"Merci de rentrer un nombre parmi les suivants : {PossibleValues}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre parmi les suivants : {PossibleValues}")
                 elif Minimum is not None and Maximum is not None:
                     # if min and max
                     if str(DefaultValue).lower() == "random":
@@ -103,10 +128,10 @@ def GetUserInput(
                         return DefaultValue
                     else:
                         # ask again
-                        print(f"Merci de rentrer un nombre entier compris entre {'- infini' if Minimum is None else Minimum} et {'infini' if Maximum is None else Maximum}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre entier compris entre {'- infini' if Minimum is None else Minimum} et {'infini' if Maximum is None else Maximum}")
                 else:
                     # ask again
-                    print(f"Merci de rentrer un nombre entier")
+                    ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre entier")
 
         if ValueType.lower() == "float":
             # expect any number
@@ -125,7 +150,7 @@ def GetUserInput(
                         return DefaultValue
                     else:
                         # ask again
-                        print(f"Merci de rentrer un nombre parmi les suivants : {PossibleValues}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre parmi les suivants : {PossibleValues}")
                 elif ((Minimum is not None and int(MyData) < Minimum) 
                     or (Maximum is not None and int(MyData) > Maximum)):
                     # not between min and max
@@ -137,7 +162,7 @@ def GetUserInput(
                         return DefaultValue
                     else:
                         # ask again
-                        print(f"Merci de rentrer un nombre compris entre {'- infini' if Minimum is None else Minimum} et {'infini' if Maximum is None else Maximum}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre compris entre {'- infini' if Minimum is None else Minimum} et {'infini' if Maximum is None else Maximum}")
                 else:
                     # return value
                     return float(MyData)
@@ -153,7 +178,7 @@ def GetUserInput(
                         return DefaultValue
                     else:
                         # ask again
-                        print(f"Merci de rentrer un nombre parmi les suivants : {PossibleValues}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre parmi les suivants : {PossibleValues}")
                 elif Minimum is not None and Maximum is not None:
                     # if min and max
                     if str(DefaultValue).lower() == "random":
@@ -164,10 +189,10 @@ def GetUserInput(
                         return DefaultValue
                     else:
                         # ask again
-                        print(f"Merci de rentrer un nombre compris entre {'- infini' if Minimum is None else Minimum} et {'infini' if Maximum is None else Maximum}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre compris entre {'- infini' if Minimum is None else Minimum} et {'infini' if Maximum is None else Maximum}")
                 else:
                     # ask again
-                    print(f"Merci de rentrer un nombre")
+                    ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un nombre")
 
         if ValueType.lower() == "bool" or ValueType.lower() == "boolean":
             # expect a boolean 
@@ -183,7 +208,7 @@ def GetUserInput(
                 # user entry is not an expected value
                 if DefaultValue == None:
                     # no default value specified, so ask again
-                    print(f"Merci de rentrer un booléen (oui/vrai ou non/faux)")
+                    ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer un booléen (oui/vrai ou non/faux)")
                 elif str(DefaultValue).lower() == "random" :
                     # draw random between True and False
                     MyData = random.randint(1, 2)
@@ -208,12 +233,15 @@ def GetUserInput(
                 if not MyDataToCompare in MyPossibleValues:
                     if DefaultValue == None:
                         # no default value specified, so ask again
-                        print(f"Merci de rentrer une valeur parmi les suivantes : {PossibleValues}")
+                        ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer une valeur parmi les suivantes : {PossibleValues}")
                     elif str(DefaultValue).lower() == "random" :
                         # draw an random value in possible values
                         MyData = PossibleValues[random.randint(0, len(PossibleValues)-1)]
-                        # return value
+                        # return random value
                         return MyData
+                    # else:
+                    #     # return default value
+                    #     return MyData
                 else:
                     # value is in possible values
                     return MyData
@@ -221,20 +249,35 @@ def GetUserInput(
                 if ((Minimum is not None and len(MyData) < Minimum) 
                     or (Maximum is not None and len(MyData) > Maximum)):
                     # check between min and max
-                    print(f"Merci de rentrer une chaine de caractères de {Minimum} à {Maximum} caractères de long")
+                    ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer une chaine de caractères de {Minimum} à {Maximum} caractères de long.")
                 else:
                     # return value
                     return MyData
             elif MyData == "":
                 if DefaultValue == None:
                     # no default value specified, so ask again
-                    print(f"Merci de rentrer quelque chose")
+                    ErrorMessage = SpecificErrorMessage if SpecificErrorMessage is not None else (f"Merci de rentrer quelque chose.")
                 else:
                     # return default value
                     return DefaultValue
             else:
                 # return value
                 return MyData
+
+        # prints error message if any
+        if ErrorMessage is not None:
+            if RichConsoleParameters is None:
+                print(ErrorMessage)
+            else: 
+                RC.Print(
+                    ErrorMessage, 
+                    RichConsoleParameters[0] + ErrorMessageLineOffset, 
+                    RichConsoleParameters[1],
+                    RC.Justify.Left, 
+                    RichConsoleParameters[2])
+                # if error message print on same line as input, wait 2s before asking again
+                if ErrorMessageLineOffset == 0:
+                    time.sleep(2)
 
 
 
