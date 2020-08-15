@@ -332,50 +332,69 @@ def LoadJSONFile(
 
 
 
-def LoadMap(
+def LoadMaps(
     Path,
     FileName):
     """
-        Load a map from a text file
-        and return 2D lists for map and blank layers
+        Load map from a text file
+        and return a dictionnary of 2D lists for map and blank layers
 
         Blank layer (for example for objects and characters) is initialized matching map dimensions
     """
 
+    MapsData = {}
     MapData = []
 
     try:
 
         with open(Path + FileName, "r", encoding="utf-8") as MyFile:
 
+            MapName = None
             NumberOfLines = 0
             NumberOfColumns = 0
             for Line in MyFile:
-                if Line.startswith("#"):
+                if Line.startswith("###"):
                     # comment
                     continue
-                
-                Columns = []
-                NumberOfColumnsInThisLine = 0
-                for Character in Line:
-                    # ignore line ends
-                    if Character == "\n":
-                        continue
-                    # add character to map
-                    Columns.append(Character)
-                    NumberOfColumnsInThisLine += 1
-                                    
-                # add line to map
-                MapData.append(Columns)
-                # update counters
-                NumberOfLines += 1
-                NumberOfColumns = max(NumberOfColumns, NumberOfColumnsInThisLine)
+                elif Line.startswith("# "):
+                    # new map
+                    if MapName is not None:
+                        # save current map in dictionary
+                        MapsData[MapName]["Map"] = MapData
+                        # initialize blank layer
+                        BlankLayer = [["" for X in range(NumberOfColumns)] for Y in range(NumberOfLines)]
+                        # add blank layer to dictionary
+                        MapsData[MapName]["Objects"] = BlankLayer
+                    # reset map data
+                    MapName = Line[2:].strip()
+                    MapData = []
+                else:
+                    Columns = []
+                    NumberOfColumnsInThisLine = 0
+                    for Character in Line:
+                        # ignore line ends
+                        if Character == "\n":
+                            continue
+                        # add character to map
+                        Columns.append(Character)
+                        NumberOfColumnsInThisLine += 1
+                                        
+                    # add line to map
+                    MapData.append(Columns)
+                    # update counters
+                    NumberOfLines += 1
+                    NumberOfColumns = max(NumberOfColumns, NumberOfColumnsInThisLine)
 
-        # initialize blank layer
-        BlankLayer = [["" for X in range(NumberOfColumns)] for Y in range(NumberOfLines)]
+        if MapData is not None:
+            # save current map in dictionary
+            MapsData[MapName]["Map"] = MapData
+            # initialize blank layer
+            BlankLayer = [["" for X in range(NumberOfColumns)] for Y in range(NumberOfLines)]
+            # add blank layer to dictionary
+            MapsData[MapName]["Objects"] = BlankLayer
 
-        # print(MapData)
-        return MapData, BlankLayer
+        # print(MapsData)
+        return MapsData
             
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
@@ -407,8 +426,9 @@ def LoadViews(
                     continue
                 elif Line.startswith("# "):
                     # new view
-                    # save current view in dictionary
-                    Views[ViewName] = ViewLines
+                    if ViewName != "":
+                        # save current view in dictionary
+                        Views[ViewName] = ViewLines
                     # reset view data
                     ViewName = Line[2:].strip()
                     ViewLines = []

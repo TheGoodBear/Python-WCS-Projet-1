@@ -151,7 +151,7 @@
         "MoveOn" : "Je m'engage prudemment dans le tunnel à la lumière vacillante de la torche.",
         "CantMoveOn" : "Ce tunnel est beaucoup trop sombre pour m'y aventurer sans lumière."
     },
-    "m" : {
+    "I" : {
         "Category" : "MapElement",
         "Name" : "Une cascade",
         "MoveOn" : "",
@@ -163,7 +163,7 @@
         "MoveOn" : "Brrr, elle est fraîche, ça fait du bien.",
         "CantMoveOn" : ""
     },
-    "x" : {
+    "H" : {
         "Category" : "MapElement",
         "Name" : "De l'eau saumâtre",
         "MoveOn" : "Bêêêrk ! Nager là-dedans va me rendre malade.",
@@ -205,6 +205,13 @@
         "MoveOn" : "Après avoir insérer les trois clés, la porte s'ouvre enfin !",
         "CantMoveOn" : "Je ne vois pas comment ouvrir cette porte sans les trois clé appropriées."
     },
+
+
+
+
+
+
+    
     "Backpack" : {
         "Category" : "Object",
         "Name" : "Sac à dos",

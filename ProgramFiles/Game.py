@@ -24,7 +24,8 @@ def Initialization():
     # load characters data
     Var.CharactersData = Util.LoadJSONFile(Var.ResourcesFolder, "Characters")
     # load map data and prepare layers
-    Var.MapLayer, BlankLayer = Util.LoadMap(Var.ResourcesFolder, "Map")
+    MapsData = Util.LoadMaps(Var.ResourcesFolder, "Maps")
+    GetCurrentMapLayers()
     Var.ObjectsLayer = list(BlankLayer)
     Var.CharactersLayer = list(BlankLayer)
     # update Map viewport so it matches map size
@@ -169,7 +170,6 @@ def ShowView(
             JustifyText = RC.Justify.Left, 
             MaxColumns = TextVP["Width"])[0]
         
-        # RC.PlaceCursorAt(TextVP["Y"] + LineOffset, TextVP["X"])
         RC.ShowCursor()
         Var.CharactersData["Player"]["Name"] = Util.GetUserInput(
             Var.MessagesData["Game"]["AskName"],
@@ -354,10 +354,11 @@ def ShowView(
         # environement view part
         if ViewParts is None or "Environment" in ViewParts:
             LineOffset = 0
+            CurrentMap = Var.CharactersData['Player']['CurrentMap']
             Message = (Var.MessagesData["Dashboard"]["PlayerOrientation"]
                 .replace(
                     "{DirectionName}", 
-                    f"{Var.MessagesData['Dashboard']['Directions'][Var.CharactersData['Player']['Direction']]}")
+                    f"{Var.MessagesData['Dashboard']['Directions'][Var.CharactersData['Player']['Maps'][CurrentMap]['Direction']]}")
                 .replace(
                     "{DirectionSymbol}", 
                     f"{Var.GameData['Game']['Directions'][Var.CharactersData['Player']['Direction']]['Symbol']}"))
@@ -365,9 +366,9 @@ def ShowView(
                 EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = EnvironmentVP["Width"])[0]
-            OnElement = (Var.MapLayer
-                [Var.CharactersData['Player']['Y']]
-                [Var.CharactersData['Player']['X']])
+            OnElement = (Var.MapLayer[CurrentMap]
+                [Var.CharactersData['Player']['Maps'][CurrentMap]['Y']]
+                [Var.CharactersData['Player']['Maps'][CurrentMap]['X']])
             Message = (Var.MessagesData["Dashboard"]["PlayerWalksOn"]
                 .replace(
                     "{Element}", 
@@ -377,13 +378,13 @@ def ShowView(
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = EnvironmentVP["Width"])[0]
             SeenElement = (
-                Var.MapLayer[
-                    Var.CharactersData['Player']['Y'] 
+                Var.MapLayer[CurrentMap][
+                    Var.CharactersData['Player']['Maps'][CurrentMap]['Y'] 
                     + Var.GameData['Game']['Directions']
-                        [Var.CharactersData['Player']['Direction']]['DeltaY']]
-                    [Var.CharactersData['Player']['X'] 
+                        [Var.CharactersData['Player']['Maps'][CurrentMap]['Direction']]['DeltaY']]
+                    [Var.CharactersData['Player']['Maps'][CurrentMap]['X'] 
                     + Var.GameData['Game']['Directions']
-                        [Var.CharactersData['Player']['Direction']]['DeltaX']])
+                        [Var.CharactersData['Player']['Maps'][CurrentMap]['Direction']]['DeltaX']])
             Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
                 .replace(
                     "{Element}", 
@@ -432,11 +433,20 @@ def ShowView(
 
 
 
+def GetCurrentMapLayers():
+    """
+        Get current map layers
+    """
+
+    Var.MapLayer = Var.MapsData[Var.CharactersData["Player"]["CurrentMap"]]["Map"]
+    Var.ObjectsLayer = Var.MapsData[Var.CharactersData["Player"]["CurrentMap"]]["Objects"]
+
+
 def ShowMap(
     Y = None, 
     X = None):
     """
-        Show map on view with all layers (map → objects → characters)
+        Show current map on view with all layers (map → objects → characters)
 
         Full map if no coordinates specified,
         or only refresh map on specified coordinates
@@ -460,14 +470,17 @@ def _PrintMapLayersAtPosition(
         Print map and object layer as specified position
     """
 
+    # get current map
+    CurrentMap = Var.CharactersData["Player"]["CurrentMap"]
+
     # map layer
     # get map element data for current element
     MapElement = Var.MapElementsData[Var.MapLayer[Y][X]]
     # draw
     RC.Print(
         f"{MapElement['Style']}{MapElement['Image']}[;]",
-        Var.GameData["Views"]["Main"]["MapViewPort"]["Y"] + Y,
-        Var.GameData["Views"]["Main"]["MapViewPort"]["X"] + X,
+        Var.GameData["Views"][CurrentMap]["MapViewPort"]["Y"] + Y,
+        Var.GameData["Views"][CurrentMap]["MapViewPort"]["X"] + X,
         JumpLineAfter = False)
 
     # object layer
@@ -477,8 +490,8 @@ def _PrintMapLayersAtPosition(
         # draw
         RC.Print(
             f"{MapObject['Style']}{MapObject['Image']}[;]",
-            Var.GameData["Views"]["Main"]["MapViewPort"]["Y"] + Y,
-            Var.GameData["Views"]["Main"]["MapViewPort"]["X"] + X,
+            Var.GameData["Views"][CurrentMap]["MapViewPort"]["Y"] + Y,
+            Var.GameData["Views"][CurrentMap]["MapViewPort"]["X"] + X,
             JumpLineAfter = False)
 
 

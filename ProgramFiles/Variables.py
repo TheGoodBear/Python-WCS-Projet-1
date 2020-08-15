@@ -13,13 +13,14 @@ LastPlayerCommand = None
 # Layers
 MapLayer = None
 ObjectsLayer = None
-CharactersLayer = None
+# CharactersLayer = None
 
 # Data
 GameData = None
+ViewsData = None
 CharactersData = None
+MapsData = None
 MapElementsData = None
 ObjectsData = None
 MessagesData = None
-ViewsData = None
 ActionsHistory = []

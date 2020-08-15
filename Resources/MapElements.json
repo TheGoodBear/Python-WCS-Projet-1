@@ -95,7 +95,7 @@
             "GivePoisonedWater" : 0
         }
     },
-    "m" : {
+    "I" : {
         "Image" : "~",
         "Style" : "[C;]",
         "Behaviors" : {
@@ -127,7 +127,7 @@
             "GivePoisonedWater" : 0
         }
     },
-    "x" : {
+    "H" : {
         "Image" : "~",
         "Style" : "[Y;]",
         "Behaviors" : {
@@ -233,6 +233,454 @@
                 "Clé en bronze", 
                 "Clé en argent", 
                 "Clé en or"],
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "4" : {
+        "Image" : "═",
+        "Style" : "[B;W]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Ask",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "a" : {
+        "Image" : "A",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "b" : {
+        "Image" : "B",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "c" : {
+        "Image" : "C",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "d" : {
+        "Image" : "D",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "e" : {
+        "Image" : "E",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "f" : {
+        "Image" : "F",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "g" : {
+        "Image" : "G",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "h" : {
+        "Image" : "H",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "i" : {
+        "Image" : "I",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "j" : {
+        "Image" : "J",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "k" : {
+        "Image" : "K",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "l" : {
+        "Image" : "L",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "m" : {
+        "Image" : "M",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "n" : {
+        "Image" : "N",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "o" : {
+        "Image" : "O",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "p" : {
+        "Image" : "P",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "q" : {
+        "Image" : "Q",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "r" : {
+        "Image" : "R",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "s" : {
+        "Image" : "S",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "t" : {
+        "Image" : "T",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "u" : {
+        "Image" : "U",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "v" : {
+        "Image" : "V",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "w" : {
+        "Image" : "W",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "x" : {
+        "Image" : "X",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "y" : {
+        "Image" : "Y",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "z" : {
+        "Image" : "Z",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Switch",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "5" : {
+        "Image" : "☻",
+        "Style" : "[R;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : "Ask",
+            "Prerequisites" : null,
             "Health" : 0,
             "Satiety" : 0,
             "Thirst" : 0,

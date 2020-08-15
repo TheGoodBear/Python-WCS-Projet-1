@@ -65,15 +65,32 @@
             "ActionHistoryViewPort" : {"Y" : 31, "X" : 103, "Width" : 40, "Height" : 9},
             "MessageViewPort" : {"Y" : 41, "X" : 103, "Width" : 40, "Height" : 10}
             },
-        "Challenge" : {
+        "Challenges" : {
             "WindowViewPort" : {"Y" : 1, "X" : 1, "Width" : 133, "Height" : 52},
             "DashboardViewPort" : {"Y" : 2, "X" : 101, "Width" : 40, "Height" : 50},
-            "ChallengeViewPort" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 40},
-            "ChallengeTitleViewPort" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
-            "ChallengeTextViewPort" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 34},
-            "ChallengeAskViewPort" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
+            "Challenge1" : {
+                "ViewPort" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 40},
+                "TitleViewPort" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
+                "MapViewPort" : null,
+                "TextViewPort" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 34},
+                "AskViewPort" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
+            },
+            "Challenge2" : {
+                "ViewPort" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 40},
+                "TitleViewPort" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
+                "MapViewPort" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 10},
+                "TextViewPort" : {"Y" : 20, "X" : 13, "Width" : 78, "Height" : 24},
+                "AskViewPort" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
+            },
+            "Challenge3" : {
+                "ViewPort" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 40},
+                "TitleViewPort" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
+                "MapViewPort" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 10},
+                "TextViewPort" : {"Y" : 20, "X" : 13, "Width" : 78, "Height" : 24},
+                "AskViewPort" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
             }
-        },
+        }
+    },
     "Challenge1" : {
         "MinimumNumber" : 0,
         "MaximumNumber" : 100,
