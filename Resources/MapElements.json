@@ -242,12 +242,28 @@
             "GivePoisonedWater" : 0
         }
     },
-    "4" : {
+    "5" : {
         "Image" : "═",
         "Style" : "[B;W]",
         "Behaviors" : {
             "CanWalk" : false,
             "Event" : "Ask",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "6" : {
+        "Image" : "♫",
+        "Style" : "[W;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
             "Satiety" : 0,
@@ -674,12 +690,28 @@
             "GivePoisonedWater" : 0
         }
     },
-    "5" : {
+    "7" : {
         "Image" : "☻",
         "Style" : "[R;]",
         "Behaviors" : {
             "CanWalk" : false,
             "Event" : "Ask",
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Thirst" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "8" : {
+        "Image" : "♫",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanWalk" : false,
+            "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
             "Satiety" : 0,

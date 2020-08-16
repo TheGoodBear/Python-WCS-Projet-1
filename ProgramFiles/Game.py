@@ -24,10 +24,8 @@ def Initialization():
     # load characters data
     Var.CharactersData = Util.LoadJSONFile(Var.ResourcesFolder, "Characters")
     # load map data and prepare layers
-    MapsData = Util.LoadMaps(Var.ResourcesFolder, "Maps")
+    Var.MapsData = Util.LoadMaps(Var.ResourcesFolder, "Maps")
     GetCurrentMapLayers()
-    Var.ObjectsLayer = list(BlankLayer)
-    Var.CharactersLayer = list(BlankLayer)
     # update Map viewport so it matches map size
     MapViewPort = Var.GameData["Views"]["Main"]["MapViewPort"]
     DeltaWidth = MapViewPort["Width"] - len(Var.MapLayer[0])
@@ -62,6 +60,11 @@ def Run():
         (ActionName, ActionArgument) = AskPlayerAction()
         ExecutePlayerAction(ActionName, ActionArgument)
         # ShowView(Var.GameData["Game"]["CurrentView"], ClearScreen = True)
+    
+    RC.ClearConsole()
+    print("AU REVOIR !")
+    input()
+    return
 
 
 
@@ -101,11 +104,13 @@ def ShowView(
         RC.ClearConsole()
 
     LineOffset = 0
-    for Index, Line in enumerate(Var.ViewsData[ViewName]):
-        RC.Print(Line, 
-            Var.GameData["Views"][ViewName]["WindowViewPort"]["Y"] + Index, 1, 
-            JustifyText = RC.Justify.Center, 
-            MaxColumns = Var.GameData["Game"]["WindowWidth"])
+    if ViewParts is None:
+        # draw view template
+        for Index, Line in enumerate(Var.ViewsData[ViewName]):
+            RC.Print(Line, 
+                Var.GameData["Views"][ViewName]["WindowViewPort"]["Y"] + Index, 1, 
+                JustifyText = RC.Justify.Center, 
+                MaxColumns = Var.GameData["Game"]["WindowWidth"])
 
     # show view content
     if ViewName == "Start":
@@ -351,24 +356,25 @@ def ShowView(
                     BackpackItemsVP["Y"] + LineOffset + Index, BackpackItemsVP["X"],
                     JustifyText = RC.Justify.Left, 
                     MaxColumns = BackpackItemsVP["Width"])
-        # environement view part
+        # environment view part
         if ViewParts is None or "Environment" in ViewParts:
             LineOffset = 0
             CurrentMap = Var.CharactersData['Player']['CurrentMap']
+            CurrentMapData = Var.CharactersData['Player']['Maps'][CurrentMap]
             Message = (Var.MessagesData["Dashboard"]["PlayerOrientation"]
                 .replace(
                     "{DirectionName}", 
-                    f"{Var.MessagesData['Dashboard']['Directions'][Var.CharactersData['Player']['Maps'][CurrentMap]['Direction']]}")
+                    f"{Var.MessagesData['Dashboard']['Directions'][CurrentMapData['Direction']]}")
                 .replace(
                     "{DirectionSymbol}", 
-                    f"{Var.GameData['Game']['Directions'][Var.CharactersData['Player']['Direction']]['Symbol']}"))
+                    f"{Var.GameData['Game']['Directions'][CurrentMapData['Direction']]['Symbol']}"))
             LineOffset += RC.Print(Message,          
                 EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = EnvironmentVP["Width"])[0]
-            OnElement = (Var.MapLayer[CurrentMap]
-                [Var.CharactersData['Player']['Maps'][CurrentMap]['Y']]
-                [Var.CharactersData['Player']['Maps'][CurrentMap]['X']])
+            OnElement = (Var.MapLayer
+                [CurrentMapData['Y']]
+                [CurrentMapData['X']])
             Message = (Var.MessagesData["Dashboard"]["PlayerWalksOn"]
                 .replace(
                     "{Element}", 
@@ -378,13 +384,13 @@ def ShowView(
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = EnvironmentVP["Width"])[0]
             SeenElement = (
-                Var.MapLayer[CurrentMap][
-                    Var.CharactersData['Player']['Maps'][CurrentMap]['Y'] 
+                Var.MapLayer[
+                    CurrentMapData['Y'] 
                     + Var.GameData['Game']['Directions']
-                        [Var.CharactersData['Player']['Maps'][CurrentMap]['Direction']]['DeltaY']]
-                    [Var.CharactersData['Player']['Maps'][CurrentMap]['X'] 
+                        [CurrentMapData['Direction']]['DeltaY']]
+                    [CurrentMapData['X'] 
                     + Var.GameData['Game']['Directions']
-                        [Var.CharactersData['Player']['Maps'][CurrentMap]['Direction']]['DeltaX']])
+                        [CurrentMapData['Direction']]['DeltaX']])
             Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
                 .replace(
                     "{Element}", 
@@ -440,6 +446,7 @@ def GetCurrentMapLayers():
 
     Var.MapLayer = Var.MapsData[Var.CharactersData["Player"]["CurrentMap"]]["Map"]
     Var.ObjectsLayer = Var.MapsData[Var.CharactersData["Player"]["CurrentMap"]]["Objects"]
+
 
 
 def ShowMap(
@@ -508,6 +515,7 @@ def AskPlayerAction():
     AskActionVP = Var.GameData["Views"]["Main"]["AskActionViewPort"]
     
     while True:
+        IsCommandOK = True
 
         RC.ShowCursor()
         NewCommand = Util.GetUserInput(
@@ -523,20 +531,25 @@ def AskPlayerAction():
         ActionArgument = Command[1:]
 
         if Action not in PossibleActions:
+
             # action is not valid, show error message and wait          
+            IsCommandOK = False
             RC.ShowCursor(False)
             RC.Print(Var.MessagesData["Dashboard"]["AskActionUnknown"],
                 AskActionVP["Y"], AskActionVP["X"], 
                 MaxColumns = AskActionVP["Width"],
                 JustifyText = RC.Justify.Left)
             time.sleep(Var.GameData["Game"]["WaitOnActionError"])
+
         else:
+
             # get action name
             ActionName = [ActionName for ActionName, ActionValues in Var.MessagesData["Dashboard"]["Actions"].items() if ActionValues["Command"] == Action][0]
             # check if action argument is valid
             if (Var.GameData["Game"]["Actions"][ActionName]["NumberParameter"] == "Mandatory"
                 and ActionArgument == ""):
                 # action parameter is not valid, show error message and wait          
+                IsCommandOK = False
                 RC.ShowCursor(False)
                 RC.Print(Var.MessagesData["Dashboard"]["AskActionNoItem"],
                     AskActionVP["Y"], AskActionVP["X"], 
@@ -547,17 +560,23 @@ def AskPlayerAction():
                 and ActionArgument == ""):
                 # optional argument missing, set 1 for default
                 ActionArgument = 1
-            elif not ActionArgument.isdigit():
+            elif (Var.GameData["Game"]["Actions"][ActionName]["NumberParameter"] is not None
+                and not ActionArgument.isdigit()):
                 # action argument is not valid, show error message and wait          
+                IsCommandOK = False
                 RC.ShowCursor(False)
                 RC.Print(Var.MessagesData["Dashboard"]["AskActionUnknown"],
                     AskActionVP["Y"], AskActionVP["X"], 
                     MaxColumns = AskActionVP["Width"],
                     JustifyText = RC.Justify.Left)
                 time.sleep(Var.GameData["Game"]["WaitOnActionError"])
-            else:
+            elif ActionArgument.isdigit():
                 # convert action argument to integer
                 ActionArgument = int(ActionArgument)
+
+            if IsCommandOK:
+                # save last action
+                Var.LastPlayerCommand = Command
                 # return action
                 return ActionName, ActionArgument
 
@@ -570,5 +589,16 @@ def ExecutePlayerAction(
         Execute player action with specified argument 
     """
     
-    print(f"Faire {ActionArgument} fois l'action {ActionName}")
-    
+    if ActionName == "Quit":
+        Var.GameRunning = False
+
+    else:
+        Message = f"Faire {ActionArgument} fois l'action {ActionName}"
+        Util.ManageMessageHistory(Message, Var.ActionsHistory)
+        ShowView(Var.GameData["Game"]["CurrentView"], "ActionHistory")
+
+
+
+# # Test code
+# if __name__ == "__main__":
+#     Initialization()

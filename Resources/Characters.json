@@ -10,7 +10,7 @@
         "Hydration" : 100,
         "MaxSatiety" : 100,
         "Satiety" : 100,
-        "CurrentMap" : "Main",
+        "CurrentMap" : "Challenge2",
         "Maps" : {
             "Main" : {
                 "X" : 9,

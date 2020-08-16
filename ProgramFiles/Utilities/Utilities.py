@@ -295,7 +295,7 @@ def ManageMessageHistory(
     """
 
     # print message
-    print(Message)
+    # print(Message)
     # add to history
     MessagePrefix = ""
     if CountMessage:
@@ -359,6 +359,8 @@ def LoadMaps(
                 elif Line.startswith("# "):
                     # new map
                     if MapName is not None:
+                        # initialize dictionary for map
+                        MapsData[MapName] = {}
                         # save current map in dictionary
                         MapsData[MapName]["Map"] = MapData
                         # initialize blank layer
@@ -386,6 +388,8 @@ def LoadMaps(
                     NumberOfColumns = max(NumberOfColumns, NumberOfColumnsInThisLine)
 
         if MapData is not None:
+            # initialize dictionary for map
+            MapsData[MapName] = {}
             # save current map in dictionary
             MapsData[MapName]["Map"] = MapData
             # initialize blank layer
