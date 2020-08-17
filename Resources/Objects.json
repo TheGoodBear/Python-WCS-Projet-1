@@ -2,6 +2,7 @@
     "Backpack" : {
         "Image" : " ",
         "Style" : "[;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : true,
             "Pickable" : false,
@@ -23,14 +24,19 @@
         }
     },
     "BronzeKey" : {
-        "Image" : "♪",
-        "Style" : "[;Y]",
+        "Image" : "♫",
+        "Style" : "[R;]",
+        "StartPosition" : {
+            "Map" : "Challenge1",
+            "Y" : 3,
+            "X" : 5
+        },
         "Behaviors" : {
             "ForVictory" : true,
             "Pickable" : true,
             "Dropable" : true,
             "Actions" : ["Use"],
-            "RequiredMapElements" : ["0"],
+            "RequiredMapElements" : null,
             "RequiredObjects" : null,
             "Capacity" : null,
             "Contains" : null,
@@ -40,8 +46,13 @@
         }
     },
     "SilverKey" : {
-        "Image" : "♪",
+        "Image" : "♫",
         "Style" : "[W;]",
+        "StartPosition" : {
+            "Map" : "Challenge2",
+            "Y" : 5,
+            "X" : 10
+        },
         "Behaviors" : {
             "ForVictory" : true,
             "Pickable" : true,
@@ -57,8 +68,13 @@
         }
     },
     "GoldKey" : {
-        "Image" : "♪",
+        "Image" : "♫",
         "Style" : "[Y;]",
+        "StartPosition" : {
+            "Map" : "Challenge3",
+            "Y" : 6,
+            "X" : 10
+        },
         "Behaviors" : {
             "ForVictory" : true,
             "Pickable" : true,
@@ -76,6 +92,7 @@
     "LaptopComputer" : {
         "Image" : "◘",
         "Style" : "[;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : true,
             "Pickable" : true,
@@ -93,6 +110,7 @@
     "SolarCharger" : {
         "Image" : "◘",
         "Style" : "[;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -112,6 +130,7 @@
     "Knife" : {
         "Image" : "◘",
         "Style" : "[;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -129,6 +148,7 @@
     "GlassBottle" : {
         "Image" : "◘",
         "Style" : "[C;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -152,6 +172,7 @@
     "Map" : {
         "Image" : "◘",
         "Style" : "[;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -169,6 +190,7 @@
     "BadFood1" : {
         "Image" : "¤",
         "Style" : "[G;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -186,6 +208,7 @@
     "GoodFood1" : {
         "Image" : "¤",
         "Style" : "[G;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -203,6 +226,7 @@
     "BadFood2" : {
         "Image" : "¤",
         "Style" : "[G;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -220,6 +244,7 @@
     "GoodFood2" : {
         "Image" : "¤",
         "Style" : "[G;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -237,6 +262,7 @@
     "BadFood3" : {
         "Image" : "¤",
         "Style" : "[G;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,
@@ -254,6 +280,7 @@
     "GoodFood3" : {
         "Image" : "¤",
         "Style" : "[G;]",
+        "StartPosition" : null,
         "Behaviors" : {
             "ForVictory" : false,
             "Pickable" : true,

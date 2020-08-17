@@ -8,18 +8,20 @@
 GameRunning = True
 ResourcesFolder = "Resources\\"
 CurrentMessage = "Pas de messages"
+Player = None
 LastPlayerCommand = None
 
-# Layers
+# Map
+MapViewPortName = None
 MapLayer = None
 ObjectsLayer = None
-CharactersLayer = None
 
 # Data
 GameData = None
+ViewsData = None
 CharactersData = None
+MapsData = None
 MapElementsData = None
 ObjectsData = None
 MessagesData = None
-ViewsData = None
 ActionsHistory = []

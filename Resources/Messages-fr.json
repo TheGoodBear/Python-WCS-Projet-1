@@ -14,8 +14,7 @@
         "Sex" : { "F" : "Female", "H" : "Male", "A" : "Other" },
         "Hello2" : "Parfait, si tu permets je t'apellerai donc {ColoredName} et tu seras représenté dans le jeu par {Symbol}.",
         "AskContinue" : "[B;W]Appuies sur Entrée pour poursuivre l'histoire...",
-        "AskReady" : "[B;W]Appuies sur Entrée quand tu es prêt...",
-        "AskAction" : "Que veut-tu faire maintenant {Name} ? "
+        "AskReady" : "[B;W]Appuies sur Entrée quand tu es prêt..."
     },
     "Dashboard" : {
         "Category" : "",
@@ -28,45 +27,47 @@
         "CounterActions" : "Actions : {TotalActions}",
         "BackpackTitle" : "[B;W]Sac à dos   ({ItemsInBackpack} / {BackpackCapacity})",
         "Directions" : {"N" : "le Nord", "E" : "l'Est", "S" : "le Sud", "W" : "l'Ouest"},
-        "PlayerOrientation" : "Tu es tourné vers {DirectionName} ({DirectionSymbol})",
-        "PlayerWalksOn" : "Tu te trouves sur {Element}",
-        "PlayerSees" : "Devant toi tu vois {Element}",
+        "PlayerOrientation" : "Je suis tourné vers {DirectionName} ({DirectionSymbol})",
+        "PlayerMovesOn" : "Sous mes pieds : {Element}",
+        "PlayerSees" : "Devant moi : {Element}",
         "Actions" : {
-            "Walk" : {
+            "Move" : {
                 "Command" : "A",
                 "Description" : "Avancer (de n pas)",
-                "Succes" : "Tu avances de {Steps} pas.", 
-                "Failure" : "Tu ne peux pas avancer."}, 
+                "Success" : "J'avance de {Steps} pas.", 
+                "Failure" : "Je ne peux pas avancer."}, 
             "TurnLeft" : {
                 "Command" : "G",
                 "Description" : "Tourner à gauche",
-                "Succes" : "Tu tournes sur ta gauche.", 
+                "Success" : "Je tourne sur ma gauche.", 
                 "Failure" : ""}, 
             "TurnRight" : {
                 "Command" : "D",
                 "Description" : "Tourner à droite",
-                "Succes" : "Tu tournes sur ta droite.", 
+                "Success" : "Je tourne sur ma droite.", 
                 "Failure" : ""}, 
             "UseObject" : {
                 "Command" : "U",
                 "Description" : "Utiliser un objet (numéroté dans le sac à dos)",
-                "Success" : "Tu utilises {Object}.", 
-                "Failure" : ""}, 
+                "Success" : "J'utilise {Object}.", 
+                "Failure" : "Il n'y a pas d'objet à cet emplacement du sac."}, 
             "DropObject" : {
                 "Command" : "P",
                 "Description" : "Poser un objet (numéroté dans le sac à dos)",
-                "Success" : "Tu déposes {Object}.", 
-                "Failure" : "Tu ne peux pas déposer d'objet ici."}, 
+                "Success" : "Je dépose {Object}.", 
+                "Failure" : "Il n'y a pas d'objet à cet emplacement du sac.", 
+                "Failure2" : "Je ne peux pas déposer d'objet ici."}, 
             "PickUp" : {
                 "Command" : "R",
-                "Description" : "Ramasser un objet devant toi",
-                "Success" : "Tu ramasses {Object}.", 
-                "Failure" : "Il n'y a rien à ramasser ici."}, 
+                "Description" : "Ramasser un objet devant moi",
+                "Success" : "je ramasse {Object}.", 
+                "Failure" : "Il n'y a rien à ramasser ici.", 
+                "Failure2" : "Mon sac est déjà plein."}, 
             "Rest" : {
                 "Command" : "X",
-                "Description" : "Te reposer",
-                "Success" : "Tu te reposes durant {Hours} heures.", 
-                "Failure" : "Tu ne peux pas te reposer ici."}, 
+                "Description" : "Me reposer",
+                "Success" : "Je me repose durant {Hours} heures.", 
+                "Failure" : "Je ne peux pas me reposer ici."}, 
             "GetHelp" : {
                 "Command" : "?",
                 "Description" : "Obtenir de l'aide",
@@ -75,13 +76,14 @@
             "Quit" : {
                 "Command" : "Q",
                 "Description" : "Quitter l'aventure",
-                "Success" : "Tu installes un camp de base, tu pourras choisir de redémarrer à partir de ton camp.", 
+                "Success" : "J'ai installé mon camp de base, je pourrai redémarrer l'aventure à partir de ce camp.\n\nIl est temps de revenir à la réalité...", 
                 "Failure" : ""}
             },
-            "AskAction" : "[Y;]Que veux-tu faire maintenant ? [;]",
-            "AskActionUnknown" : "[W;R]Je n'ai pas compris ta demande.[;]",
-            "AskActionNoItem" : "[W;R]Tu dois préciser le numéro de l'objet concerné.[;]",
-        "ActionHistoryTitle" : "[B;W]Tes dernières actions[;]"
+            "AskAction" : "[Y;]Que vais-je faire maintenant ? [;]",
+            "AskActionUnknown" : "[W;R]Cela ne semble pas faisable.[;]",
+            "AskActionNoItem" : "[W;R]Je dois préciser le numéro de l'objet concerné.[;]",
+        "ActionHistoryTitle" : "[B;W]Mes dernières actions[;]",
+        "ConfirmQuit" : "[B;Y]APPUYER sur ENTRÉE pour sortir[;]"
     },
     "Challenge1" : {
         "Category" : "Event",
@@ -151,7 +153,7 @@
         "MoveOn" : "Je m'engage prudemment dans le tunnel à la lumière vacillante de la torche.",
         "CantMoveOn" : "Ce tunnel est beaucoup trop sombre pour m'y aventurer sans lumière."
     },
-    "m" : {
+    "I" : {
         "Category" : "MapElement",
         "Name" : "Une cascade",
         "MoveOn" : "",
@@ -163,7 +165,7 @@
         "MoveOn" : "Brrr, elle est fraîche, ça fait du bien.",
         "CantMoveOn" : ""
     },
-    "x" : {
+    "H" : {
         "Category" : "MapElement",
         "Name" : "De l'eau saumâtre",
         "MoveOn" : "Bêêêrk ! Nager là-dedans va me rendre malade.",
@@ -172,8 +174,8 @@
     "|" : {
         "Category" : "MapElement",
         "Name" : "De l'eau profonde",
-        "MoveOn" : "",
-        "CantMoveOn" : "Cette eau est profonde et je ne sais pas quels prédateurs y habitent, mieux vaut ne pas m'y engager."
+        "MoveOn" : "Cette eau est profonde et il y a beaucoup de courant, je risque de vite fatiguer.",
+        "CantMoveOn" : ""
     },
     "~" : {
         "Category" : "MapElement",
@@ -181,30 +183,272 @@
         "MoveOn" : "",
         "CantMoveOn" : "De l'eau salée, aucun intérêt d'aller par là."
     },
+
     "1" : {
         "Category" : "MapElement",
-        "Name" : "Une statue de sphinx",
-        "MoveOn" : "Je m'approche de la statue du sphinx...",
+        "Name" : "Une petite enclave avec la statue d'un Sphinx",
+        "MoveOn" : "Je m'approche de la statue du Sphinx...",
         "CantMoveOn" : "La statue est désormais muette."
     },
+    "4" : {
+        "Category" : "MapElement",
+        "Name" : "Une statue de Sphinx",
+        "MoveOn" : "",
+        "CantMoveOn" : "Je vais éviter de fâcher le Sphinx en escaladant sa statue."
+    },
+    "5" : {
+        "Category" : "MapElement",
+        "Name" : "La sortie de l'enclave",
+        "MoveOn" : "Je sors de l'enclave du Sphinx.",
+        "CantMoveOn" : ""
+    },
+
     "2" : {
         "Category" : "MapElement",
         "Name" : "Un petit temple",
         "MoveOn" : "Je pénètre doucement dans le temple...",
-        "CantMoveOn" : "La porte du temple reste fermée."
+        "CantMoveOn" : "La porte du temple s'est refermée."
     },
+    "6" : {
+        "Category" : "MapElement",
+        "Name" : "Une grille solide",
+        "MoveOn" : "",
+        "CantMoveOn" : "Impossible de passer tant que la grille sera fermée..."
+    },
+    "7" : {
+        "Category" : "MapElement",
+        "Name" : "La sortie du temple",
+        "MoveOn" : "Je sors du temple.",
+        "CantMoveOn" : ""
+    },
+    "a" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "b" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "c" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "d" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "e" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "f" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "g" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "h" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "i" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "j" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "k" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "l" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "m" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "n" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "o" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "p" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "q" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "r" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "s" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "t" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "u" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "v" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "w" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "x" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "y" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+    "z" : {
+        "Category" : "MapElement",
+        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "MoveOn" : "",
+        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+    },
+
     "3" : {
         "Category" : "MapElement",
         "Name" : "Une clairière avec des singes",
         "MoveOn" : "Je m'approche du brouhaha émis par les singes...",
         "CantMoveOn" : "Les singes ne me prêtent plus aucune attention."
     },
+    "8" : {
+        "Category" : "MapElement",
+        "Name" : "La sortie de la clairière",
+        "MoveOn" : "Je sors de la clairière des singes.",
+        "CantMoveOn" : ""
+    },
+
     "0" : {
         "Category" : "MapElement",
         "Name" : "Une grosse porte en bois",
-        "MoveOn" : "Après avoir insérer les trois clés, la porte s'ouvre enfin !",
+        "MoveOn" : "Après avoir inséré les trois clés, la porte s'ouvre enfin !",
         "CantMoveOn" : "Je ne vois pas comment ouvrir cette porte sans les trois clé appropriées."
     },
+    
+    "El Maestro" : {
+        "Category" : "Character",
+        "Name" : "[R;;SB]El Maestro[;], le chef des singes",
+        "Talk" : "Il t'invite à jouer."
+    },
+    "Slow" : {
+        "Category" : "Character",
+        "Name" : "[C;;SB]Slow[;], un singe réservé",
+        "Talk" : "Il se retourne timidement quand tu t'approches de lui."
+    },
+    "Rock" : {
+        "Category" : "Character",
+        "Name" : "[C;;SB]Rock[;], un singe joueur",
+        "Talk" : "Il te serre la main avec enthousiame."
+    },
+    "Mambo" : {
+        "Category" : "Character",
+        "Name" : "[C;;SB]Mambo[;], un singe qui a le rythme dans la peau",
+        "Talk" : "Il te tape amicalement dans le dos."
+    },
+    "Tango" : {
+        "Category" : "Character",
+        "Name" : "[C;;SB]Tango[;], un singe visiblement amical",
+        "Talk" : "Il t'invite à danser."
+    },
+    "Salsa" : {
+        "Category" : "Character",
+        "Name" : "[M;;SB]Salsa[;], une mignone petite guenon",
+        "Talk" : "Elle te fait un joli sourire."
+    },
+    "Cha-cha-cha" : {
+        "Category" : "Character",
+        "Name" : "[M;;SB]Cha-cha-cha[;], une guenon enjouée",
+        "Talk" : "Elle fait une cabriole."
+    },
+    "Milonga" : {
+        "Category" : "Character",
+        "Name" : "[M;;SB]Milonga[;], une guenon entreprenante",
+        "Talk" : "Elle dandine nonchalament des hanches en te faisant un clin d'œil."
+    },
+    "Samba" : {
+        "Category" : "Character",
+        "Name" : "[M;;SB]Samba[;], une guenon très caline",
+        "Talk" : "Elle te saute joyeusement dans les bras."
+    },
+    "Rhumba" : {
+        "Category" : "Character",
+        "Name" : "[M;;SB]Rhumba[;], la favorite du chef",
+        "Talk" : "Elle te regarde d'un air autain."
+    },
+    
     "Backpack" : {
         "Category" : "Object",
         "Name" : "Sac à dos",

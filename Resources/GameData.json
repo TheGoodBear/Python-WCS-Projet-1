@@ -6,31 +6,51 @@
         "Language" : "fr",
         "ViewDataFile" : "Views",
         "MapFile" : "Map",
-        "WindowWidth" : 143,
+        "WindowWidth" : 153,
         "WindowHeight" : 53,
         "MapMaxWidth" : 100,
         "MapMaxHeight" : 50,
         "DashboardWidth" : 40,
-        "CurrentView" : "Start",
+        "CurrentView" : "Challenge",
         "Sex" : {
             "Female" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
             "Male" : {"Color" : "[C;;SB]", "Symbol" : "♂"},
             "Other" : {"Color" : "[Y;;SB]", "Symbol" : "¤"}
         },
         "VitalSigns" : {
-            "BarLength" : 25,
+            "BarLength" : 35,
             "Health" : {"Color" : "[R;]", "Symbol" : "◘"},
             "Hydration" : {"Color" : "[U;]", "Symbol" : "◘"},
             "Satiety" : {"Color" : "[G;]", "Symbol" : "◘"}
         },
         "Directions" : {
-            "N" : {"Symbol" : "▲", "DeltaX" : 0, "DeltaY" : -1},
-            "E" : {"Symbol" : "►", "DeltaX" : 1, "DeltaY" : 0},
-            "S" : {"Symbol" : "▼", "DeltaX" : 0, "DeltaY" : 1},
-            "W" : {"Symbol" : "◄", "DeltaX" : -1, "DeltaY" : 0}
+            "N" : {
+                "Symbol" : "▲", 
+                "DeltaX" : 0, 
+                "DeltaY" : -1, 
+                "NextRight" : "E", 
+                "NextLeft" : "W"},
+            "E" : {
+                "Symbol" : "►", 
+                "DeltaX" : 1, 
+                "DeltaY" : 0, 
+                "NextRight" : "S", 
+                "NextLeft" : "N"},
+            "S" : {
+                "Symbol" : "▼", 
+                "DeltaX" : 0, 
+                "DeltaY" : 1, 
+                "NextRight" : "W", 
+                "NextLeft" : "E"},
+            "W" : {
+                "Symbol" : "◄", 
+                "DeltaX" : -1, 
+                "DeltaY" : 0, 
+                "NextRight" : "N", 
+                "NextLeft" : "S"}
         },
         "Actions" : {
-            "Walk" : {"NumberParameter" : "Optional"},
+            "Move" : {"NumberParameter" : "Optional"},
             "TurnLeft" : {"NumberParameter" : null},
             "TurnRight" : {"NumberParameter" : null},
             "UseObject" : {"NumberParameter" : "Mandatory"},
@@ -42,118 +62,50 @@
         },
         "WaitOnActionError" : 2
     },
-    "Views" : {
+    "ViewPorts" : {
         "Start" : {
-            "WindowViewPort" : {"Y" : 7, "X" : 33, "Width" : 80, "Height" : 40},
-            "TitleViewPort" : {"Y" : 8, "X" : 34, "Width" : 78, "Height" : 1},
-            "TextViewPort" : {"Y" : 10, "X" : 35, "Width" : 76, "Height" : 34},
-            "AskViewPort" : {"Y" : 45, "X" : 35, "Width" : 76, "Height" : 1}
+            "Window" : {"Y" : 7, "X" : 33, "Width" : 80, "Height" : 40},
+            "Title" : {"Y" : 8, "X" : 34, "Width" : 78, "Height" : 1},
+            "Text" : {"Y" : 10, "X" : 35, "Width" : 76, "Height" : 34},
+            "Ask" : {"Y" : 45, "X" : 35, "Width" : 76, "Height" : 1}
             },
-        "Main" : {
-            "WindowViewPort" : {"Y" : 1, "X" : 1, "Width" : 133, "Height" : 52},
-            "MapViewPort" : {"Y" : 2, "X" : 2, "Width" : 100, "Height" : 50},
-            "DashboardViewPort" : {"Y" : 2, "X" : 103, "Width" : 40, "Height" : 50},
-            "TitleViewPort" : {"Y" : 2, "X" : 103, "Width" : 40, "Height" : 1},
-            "PlayerViewPort" : {"Y" : 5, "X" : 103, "Width" : 40, "Height" : 1},
-            "VitalSignsViewPort" : {"Y" : 6, "X" : 103, "Width" : 40, "Height" : 3},
-            "CountersViewPort" : {"Y" : 10, "X" : 103, "Width" : 40, "Height" : 1},
-            "BackpackTitleViewPort" : {"Y" : 12, "X" : 103, "Width" : 40, "Height" : 1},
-            "BackpackItemsViewPort" : {"Y" : 13, "X" : 103, "Width" : 40, "Height" : 10},
-            "EnvironmentViewPort" : {"Y" : 24, "X" : 103, "Width" : 40, "Height" : 3},
-            "AskActionViewPort" : {"Y" : 28, "X" : 103, "Width" : 40, "Height" : 1},
-            "ActionHistoryTitleViewPort" : {"Y" : 30, "X" : 103, "Width" : 40, "Height" : 1},
-            "ActionHistoryViewPort" : {"Y" : 31, "X" : 103, "Width" : 40, "Height" : 9},
-            "MessageViewPort" : {"Y" : 41, "X" : 103, "Width" : 40, "Height" : 10}
-            },
-        "Challenge" : {
-            "WindowViewPort" : {"Y" : 1, "X" : 1, "Width" : 133, "Height" : 52},
-            "DashboardViewPort" : {"Y" : 2, "X" : 101, "Width" : 40, "Height" : 50},
-            "ChallengeViewPort" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 40},
-            "ChallengeTitleViewPort" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
-            "ChallengeTextViewPort" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 34},
-            "ChallengeAskViewPort" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
-            }
+        "Dashboard" : {
+            "Window" : {"Y" : 2, "X" : 103, "Width" : 50, "Height" : 50},
+            "Title" : {"Y" : 2, "X" : 103, "Width" : 50, "Height" : 1},
+            "Player" : {"Y" : 5, "X" : 103, "Width" : 50, "Height" : 1},
+            "VitalSigns" : {"Y" : 6, "X" : 103, "Width" : 50, "Height" : 3},
+            "Counters" : {"Y" : 10, "X" : 103, "Width" : 50, "Height" : 1},
+            "BackpackTitle" : {"Y" : 12, "X" : 103, "Width" : 50, "Height" : 1},
+            "BackpackItems" : {"Y" : 13, "X" : 103, "Width" : 50, "Height" : 10},
+            "Environment" : {"Y" : 24, "X" : 103, "Width" : 50, "Height" : 4},
+            "AskAction" : {"Y" : 29, "X" : 103, "Width" : 50, "Height" : 1},
+            "ActionHistoryTitle" : {"Y" : 31, "X" : 103, "Width" : 50, "Height" : 1},
+            "ActionHistory" : {"Y" : 32, "X" : 103, "Width" : 50, "Height" : 9},
+            "Message" : {"Y" : 42, "X" : 103, "Width" : 50, "Height" : 9}
         },
+        "Main" : {
+            "Window" : {"Y" : 1, "X" : 1, "Width" : 143, "Height" : 52},
+            "Map" : {"Y" : 2, "X" : 2, "Width" : 100, "Height" : 50}
+        },
+        "Challenge" : {
+            "Window" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 50},
+            "Map" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 10},
+            "Title" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
+            "Text" : {"Y" : 20, "X" : 13, "Width" : 78, "Height" : 34},
+            "Ask" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
+        }
+    },
     "Challenge1" : {
         "MinimumNumber" : 0,
         "MaximumNumber" : 100,
         "Rounds" : 3,
         "MaxTries" : 20
     },
+    "Challenge2" : {
+        "CurrentLetter" : null
+    },
     "Challenge3" : {
         "DelayBetweenAnswers" : 1,
-        "PlayerChance" : 80,
-        "Monkeys" : [
-            {
-                "Name" : "El Maestro",
-                "Image" : null,
-                "Style" : "[R;;]",
-                "ChanceMin" : 50,
-                "ChanceMax" : 80
-            },
-            {
-                "Name" : "Slow",
-                "Image" : null,
-                "Style" : "[C;;]",
-                "ChanceMin" : 10,
-                "ChanceMax" : 60
-            },
-            {
-                "Name" : "Rock",
-                "Image" : null,
-                "Style" : "[C;;]",
-                "ChanceMin" : 10,
-                "ChanceMax" : 60
-            },
-            {
-                "Name" : "Mambo",
-                "Image" : null,
-                "Style" : "[C;;]",
-                "ChanceMin" : 10,
-                "ChanceMax" : 60
-            },
-            {
-                "Name" : "Tango",
-                "Image" : null,
-                "Style" : "[C;;]",
-                "ChanceMin" : 10,
-                "ChanceMax" : 60
-            },
-            {
-                "Name" : "Salsa",
-                "Image" : null,
-                "Style" : "[M;;]",
-                "ChanceMin" : 20,
-                "ChanceMax" : 70
-            },
-            {
-                "Name" : "Cha-cha-cha",
-                "Image" : null,
-                "Style" : "[M;;]",
-                "ChanceMin" : 20,
-                "ChanceMax" : 70
-            },
-            {
-                "Name" : "Milonga",
-                "Image" : null,
-                "Style" : "[M;;]",
-                "ChanceMin" : 20,
-                "ChanceMax" : 70
-            },
-            {
-                "Name" : "Samba",
-                "Image" : null,
-                "Style" : "[M;;]",
-                "ChanceMin" : 20,
-                "ChanceMax" : 70
-            },
-            {
-                "Name" : "Rhumba",
-                "Image" : null,
-                "Style" : "[M;;]",
-                "ChanceMin" : 20,
-                "ChanceMax" : 70
-            }
-        ]
+        "PlayerChance" : 80
     }
 }

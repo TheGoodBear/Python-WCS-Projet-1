@@ -295,11 +295,11 @@ def ManageMessageHistory(
     """
 
     # print message
-    print(Message)
+    # print(Message)
     # add to history
     MessagePrefix = ""
     if CountMessage:
-        MessagePrefix = "(" + str(len(MessageList) + 1) + ") "
+        MessagePrefix = str(len(MessageList) + 1).rjust(4) + ") "
     # return MessageList
     return MessageList.append(MessagePrefix + Message)
 
@@ -332,50 +332,75 @@ def LoadJSONFile(
 
 
 
-def LoadMap(
+def LoadMaps(
     Path,
     FileName):
     """
-        Load a map from a text file
-        and return 2D lists for map and blank layers
+        Load map from a text file
+        and return a dictionnary of 2D lists for map and blank layers
 
         Blank layer (for example for objects and characters) is initialized matching map dimensions
     """
 
+    MapsData = {}
     MapData = []
 
     try:
 
         with open(Path + FileName, "r", encoding="utf-8") as MyFile:
 
+            MapName = None
             NumberOfLines = 0
             NumberOfColumns = 0
             for Line in MyFile:
-                if Line.startswith("#"):
+                if Line.startswith("###"):
                     # comment
                     continue
-                
-                Columns = []
-                NumberOfColumnsInThisLine = 0
-                for Character in Line:
-                    # ignore line ends
-                    if Character == "\n":
-                        continue
-                    # add character to map
-                    Columns.append(Character)
-                    NumberOfColumnsInThisLine += 1
-                                    
-                # add line to map
-                MapData.append(Columns)
-                # update counters
-                NumberOfLines += 1
-                NumberOfColumns = max(NumberOfColumns, NumberOfColumnsInThisLine)
+                elif Line.startswith("# "):
+                    # new map
+                    if MapName is not None:
+                        # initialize dictionary for map
+                        MapsData[MapName] = {}
+                        # save current map in dictionary
+                        MapsData[MapName]["Map"] = MapData
+                        # initialize current map blank layer
+                        BlankLayer = [["" for X in range(NumberOfColumns)] for Y in range(NumberOfLines)]
+                        # add current map blank layer to dictionary
+                        MapsData[MapName]["Objects"] = BlankLayer
+                    # reset map data
+                    MapName = Line[2:].strip()
+                    MapData = []
+                    NumberOfLines = 0
+                    NumberOfColumns = 0
+                else:
+                    Columns = []
+                    NumberOfColumnsInThisLine = 0
+                    for Character in Line:
+                        # ignore line ends
+                        if Character == "\n":
+                            continue
+                        # add character to map
+                        Columns.append(Character)
+                        NumberOfColumnsInThisLine += 1
+                                        
+                    # add line to map
+                    MapData.append(Columns)
+                    # update counters
+                    NumberOfLines += 1
+                    NumberOfColumns = max(NumberOfColumns, NumberOfColumnsInThisLine)
 
-        # initialize blank layer
-        BlankLayer = [["" for X in range(NumberOfColumns)] for Y in range(NumberOfLines)]
+        if MapName is not None:
+            # initialize dictionary for map
+            MapsData[MapName] = {}
+            # save current map in dictionary
+            MapsData[MapName]["Map"] = MapData
+            # initialize blank layer
+            BlankLayer = [["" for X in range(NumberOfColumns)] for Y in range(NumberOfLines)]
+            # add blank layer to dictionary
+            MapsData[MapName]["Objects"] = BlankLayer
 
-        # print(MapData)
-        return MapData, BlankLayer
+        # print(MapsData)
+        return MapsData
             
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
@@ -407,8 +432,9 @@ def LoadViews(
                     continue
                 elif Line.startswith("# "):
                     # new view
-                    # save current view in dictionary
-                    Views[ViewName] = ViewLines
+                    if ViewName != "":
+                        # save current view in dictionary
+                        Views[ViewName] = ViewLines
                     # reset view data
                     ViewName = Line[2:].strip()
                     ViewLines = []
@@ -426,41 +452,6 @@ def LoadViews(
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
 
-
-# def ReplacePlaceholdersWithData(
-#     String,
-#     DataDict):
-#     """
-#         Replace data placeholders (delimited by {}) in string
-#         using data dictionary
-#     """
-
-#     for Key, Value in DataDict.items():
-#         String = String.replace(f"{{{Key}}}", f"{Value}")
-
-#     return String
-
-
-# def GetSymbolName(Symbol):
-#     """
-#         This function retrieve the name matching the symbol
-#     """
-#     ReturnValue = ""
-
-#     # check for each possible symbol
-#     # should be done in a better way (dictionary ?)
-#     if Symbol == Variables.RailroadSymbol[1]:
-#         ReturnValue = Variables.RailroadSymbol[0]
-#     elif Symbol == Variables.GarageSymbol[1]:
-#         ReturnValue = Variables.GarageSymbol[0]
-#     elif Symbol == Variables.WarehouseSymbol[1]:
-#         ReturnValue = Variables.WarehouseSymbol[0]
-#     elif Symbol.isdigit():
-#         ReturnValue = Variables.CrateSymbol[0].replace("{NbCrates}", Symbol)
-#     elif Symbol == Variables.EnergyPodSymbol[1]:
-#         ReturnValue = Variables.EnergyPodSymbol[0]
-
-#     return ReturnValue
 
 
 # program main entry (for example to check the functions)
