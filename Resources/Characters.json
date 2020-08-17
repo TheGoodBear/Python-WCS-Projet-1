@@ -1,7 +1,9 @@
-{
-    "Player" : {
+[
+    {
+        "Category" : "Player",
         "Name" : "Alain",
-        "Image" : "☺",
+        "Images" : {"N" : "▲", "E" : "►", "S" : "▼", "W" : "◄"},
+        "Style" : "[C;;SB]",
         "Sex" : "Male",
         "Behavior" : null,
         "MaxHealth" : 100,
@@ -10,15 +12,152 @@
         "Hydration" : 100,
         "MaxSatiety" : 100,
         "Satiety" : 100,
-        "CurrentMap" : "Challenge2",
-        "Maps" : {
-            "Main" : {
-                "X" : 9,
-                "Y" : 2,
-                "Direction" : "E"
-            }
-        },
+        "CurrentMap" : "Main",
+        "X" : 62,
+        "Y" : 38,
+        "Direction" : "E",
         "TotalMovements" : 0,
         "TotalActions" : 0
+    },
+    
+    {
+        "Category" : "Monkey",
+        "Name" : "El Maestro",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[R;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : "StartChallenge3",
+        "X" : 13,
+        "Y" : 6,
+        "Direction" : "N",
+        "ChanceToMove" : 0,
+        "ChanceMin" : 50,
+        "ChanceMax" : 80
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Slow",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[C;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 7,
+        "Y" : 2,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 10,
+        "ChanceMax" : 60
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Rock",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[C;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 9,
+        "Y" : 4,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 10,
+        "ChanceMax" : 60
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Mambo",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[C;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 6,
+        "Y" : 7,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 10,
+        "ChanceMax" : 60
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Tango",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[C;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 15,
+        "Y" : 8,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 10,
+        "ChanceMax" : 60
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Salsa",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[M;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 13,
+        "Y" : 3,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 20,
+        "ChanceMax" : 70
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Cha-cha-cha",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[M;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 10,
+        "Y" : 8,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 20,
+        "ChanceMax" : 70
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Milonga",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[M;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 6,
+        "Y" : 10,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 20,
+        "ChanceMax" : 70
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Samba",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[M;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 7,
+        "Y" : 10,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 20,
+        "ChanceMax" : 70
+    },
+    {
+        "Category" : "Monkey",
+        "Name" : "Rhumba",
+        "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
+        "Style" : "[M;]",
+        "CurrentMap" : "Challenge3",
+        "Event" : null,
+        "X" : 3,
+        "Y" : 4,
+        "Direction" : "N",
+        "ChanceToMove" : 10,
+        "ChanceMin" : 20,
+        "ChanceMax" : 70
     }
-}
+]

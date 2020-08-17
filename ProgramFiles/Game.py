@@ -23,21 +23,19 @@ def Initialization():
     Var.MessagesData = Util.LoadJSONFile(Var.ResourcesFolder, "Messages-" + Var.GameData["Game"]["Language"])
     # load characters data
     Var.CharactersData = Util.LoadJSONFile(Var.ResourcesFolder, "Characters")
+    # get player
+    Var.Player = [Character for Character in Var.CharactersData if Character["Category"] == "Player"][0]
     # load map data and prepare layers
     Var.MapsData = Util.LoadMaps(Var.ResourcesFolder, "Maps")
-    GetCurrentMapLayers()
-    # update Map viewport so it matches map size
-    MapViewPort = Var.GameData["Views"]["Main"]["MapViewPort"]
-    DeltaWidth = MapViewPort["Width"] - len(Var.MapLayer[0])
-    DeltaHeight = MapViewPort["Height"] - len(Var.MapLayer)
-    MapViewPort["X"] += DeltaWidth // 2 
-    MapViewPort["Y"] += DeltaHeight // 2 
-    MapViewPort["Width"] -= DeltaWidth
-    MapViewPort["Height"] -= DeltaHeight
+    GetMapLayersAndViewPort()
     # load map elements data
     Var.MapElementsData = Util.LoadJSONFile(Var.ResourcesFolder, "MapElements")
     # load objects data
     Var.ObjectsData = Util.LoadJSONFile(Var.ResourcesFolder, "Objects")
+    # place objects with a start position in the corresponding map layer
+    StartObjects = {ObjectKey : ObjectValue for (ObjectKey, ObjectValue) in Var.ObjectsData.items() if ObjectValue["StartPosition"] is not None}
+    for ObjectKey, ObjectValue in StartObjects.items():
+        Var.MapsData[ObjectValue["StartPosition"]["Map"]]["Objects"][ObjectValue["StartPosition"]["Y"]][ObjectValue["StartPosition"]["X"]] = ObjectKey
 
     # initialize window
     # InitializeWindow()
@@ -108,7 +106,7 @@ def ShowView(
         # draw view template
         for Index, Line in enumerate(Var.ViewsData[ViewName]):
             RC.Print(Line, 
-                Var.GameData["Views"][ViewName]["WindowViewPort"]["Y"] + Index, 1, 
+                Var.GameData["ViewPorts"][ViewName]["Window"]["Y"] + Index, 1, 
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = Var.GameData["Game"]["WindowWidth"])
 
@@ -118,9 +116,9 @@ def ShowView(
         RC.ShowCursor(False)
 
         # viewports data
-        TitleVP = Var.GameData["Views"][ViewName]["TitleViewPort"]
-        TextVP = Var.GameData["Views"][ViewName]["TextViewPort"]
-        AskVP = Var.GameData["Views"][ViewName]["AskViewPort"]
+        TitleVP = Var.GameData["ViewPorts"][ViewName]["Title"]
+        TextVP = Var.GameData["ViewPorts"][ViewName]["Text"]
+        AskVP = Var.GameData["ViewPorts"][ViewName]["Ask"]
 
         # title
         Message = (Var.MessagesData["Game"]["FullTitle"]
@@ -176,7 +174,7 @@ def ShowView(
             MaxColumns = TextVP["Width"])[0]
         
         RC.ShowCursor()
-        Var.CharactersData["Player"]["Name"] = Util.GetUserInput(
+        Var.Player["Name"] = Util.GetUserInput(
             Var.MessagesData["Game"]["AskName"],
             Minimum = 3,
             Maximum = 20,
@@ -188,7 +186,7 @@ def ShowView(
             TextVP["Width"], 2)
 
         Message = (Var.MessagesData["Game"]["Hello"]
-            .replace("{Name}", Var.CharactersData["Player"]["Name"]))
+            .replace("{Name}", Var.Player["Name"]))
         LineOffset += 1 + RC.Print(Message,
             TextVP["Y"] + LineOffset, TextVP["X"],
             JustifyText = RC.Justify.Left, 
@@ -204,17 +202,18 @@ def ShowView(
             PossibleValues = list(Var.MessagesData["Game"]["Sex"].keys()),
             SpecificErrorMessage = "Tu dois m'indiquer l'une des lettres entre parenthèses ci-dessus.",
             RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]]).upper()
-        Var.CharactersData["Player"]["Sex"] = Var.MessagesData["Game"]["Sex"][Sex]
+        Var.Player["Sex"] = Var.MessagesData["Game"]["Sex"][Sex]
+        Var.Player["Style"] = Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Color"]
         RC.ShowCursor(False)
         RC.ClearConsole(
             TextVP["Y"] + LineOffset, TextVP["X"], 
             TextVP["Width"], 2)
-
+        
         Message = (Var.MessagesData["Game"]["Hello2"]
             .replace("{ColoredName}", 
-                Var.GameData["Game"]["Sex"][Var.CharactersData["Player"]["Sex"]]["Color"] + Var.CharactersData["Player"]["Name"] + "[;]")
+                Var.Player["Style"] + Var.Player["Name"] + "[;]")
             .replace("{Symbol}", 
-                Var.GameData["Game"]["Sex"][Var.CharactersData["Player"]["Sex"]]["Color"] + Var.CharactersData["Player"]["Image"] + "[;]"))
+                Var.Player["Style"] + Var.Player["Image"] + "[;]"))
         LineOffset += RC.Print(Message,          
             TextVP["Y"] + LineOffset, TextVP["X"],
             JustifyText = RC.Justify.Left, 
@@ -230,26 +229,32 @@ def ShowView(
             AskVP["X"] + len(Var.MessagesData["Game"]["AskReady"]))
         input("")
    
-    elif ViewName == "Main":
+    elif ViewName == "Main" or ViewName == "Challenge":
+
+        # get viewport
+        ViewPort = (Var.Player["CurrentMap"] 
+            if not Var.Player["CurrentMap"][-1:].isdigit() 
+            else Var.Player["CurrentMap"][:-1])
 
         RC.ShowCursor(False)
 
+        # show map if specified
         if ViewParts is None or "Map" in ViewParts:
             ShowMap()
 
-        # viewports data
-        DashboardVP = Var.GameData["Views"][ViewName]["DashboardViewPort"]
-        TitleVP = Var.GameData["Views"][ViewName]["TitleViewPort"]
-        PlayerVP = Var.GameData["Views"][ViewName]["PlayerViewPort"]
-        VitalSignsVP = Var.GameData["Views"][ViewName]["VitalSignsViewPort"]
-        CountersVP = Var.GameData["Views"][ViewName]["CountersViewPort"]
-        BackpackTitleVP = Var.GameData["Views"][ViewName]["BackpackTitleViewPort"]
-        BackpackItemsVP = Var.GameData["Views"][ViewName]["BackpackItemsViewPort"]
-        EnvironmentVP = Var.GameData["Views"][ViewName]["EnvironmentViewPort"]
-        AskActionVP = Var.GameData["Views"][ViewName]["AskActionViewPort"]
-        ActionHistoryTitleVP = Var.GameData["Views"][ViewName]["ActionHistoryTitleViewPort"]
-        ActionHistoryVP = Var.GameData["Views"][ViewName]["ActionHistoryViewPort"]
-        MessageVP = Var.GameData["Views"][ViewName]["MessageViewPort"]
+        # dashboard viewports data
+        DashboardVP = Var.GameData["ViewPorts"]["Dashboard"]["Window"]
+        TitleVP = Var.GameData["ViewPorts"]["Dashboard"]["Title"]
+        PlayerVP = Var.GameData["ViewPorts"]["Dashboard"]["Player"]
+        VitalSignsVP = Var.GameData["ViewPorts"]["Dashboard"]["VitalSigns"]
+        CountersVP = Var.GameData["ViewPorts"]["Dashboard"]["Counters"]
+        BackpackTitleVP = Var.GameData["ViewPorts"]["Dashboard"]["BackpackTitle"]
+        BackpackItemsVP = Var.GameData["ViewPorts"]["Dashboard"]["BackpackItems"]
+        EnvironmentVP = Var.GameData["ViewPorts"]["Dashboard"]["Environment"]
+        AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
+        ActionHistoryTitleVP = Var.GameData["ViewPorts"]["Dashboard"]["ActionHistoryTitle"]
+        ActionHistoryVP = Var.GameData["ViewPorts"]["Dashboard"]["ActionHistory"]
+        MessageVP = Var.GameData["ViewPorts"]["Dashboard"]["Message"]
         
         # dashboard
         # title view part
@@ -267,10 +272,10 @@ def ShowView(
             MaxColumns = TitleVP["Width"])
         # player view part
         LineOffset = 0
-        Message = (Var.GameData["Game"]["Sex"][Var.CharactersData["Player"]["Sex"]]["Color"] + 
+        Message = (Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Color"] + 
             Var.MessagesData["Dashboard"]["PlayerFullName"]
-                .replace("{ColoredName}", Var.CharactersData["Player"]["Name"])
-                .replace("{SexSymbol}", Var.GameData["Game"]["Sex"][Var.CharactersData["Player"]["Sex"]]["Symbol"]))
+                .replace("{ColoredName}", Var.Player["Name"])
+                .replace("{SexSymbol}", Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Symbol"]))
         RC.Print(Message,          
             PlayerVP["Y"] + LineOffset, TitleVP["X"],
             JustifyText = RC.Justify.Center, 
@@ -279,7 +284,7 @@ def ShowView(
         if ViewParts is None or "VitalSigns" in ViewParts:
             LineOffset = 0
             HealthLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
-                (Var.CharactersData["Player"]["Health"] * 100 // Var.CharactersData["Player"]["MaxHealth"])
+                (Var.Player["Health"] * 100 // Var.Player["MaxHealth"])
                 // 100)
             Message = (Var.MessagesData["Dashboard"]["PlayerHealth"]
                 .replace(
@@ -290,7 +295,7 @@ def ShowView(
                 JustifyText = RC.Justify.Left, 
                 MaxColumns = VitalSignsVP["Width"])[0]
             HydrationLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
-                (Var.CharactersData["Player"]["Hydration"] * 100 // Var.CharactersData["Player"]["MaxHydration"])
+                (Var.Player["Hydration"] * 100 // Var.Player["MaxHydration"])
                 // 100)
             Message = (Var.MessagesData["Dashboard"]["PlayerHydration"]
                 .replace(
@@ -301,7 +306,7 @@ def ShowView(
                 JustifyText = RC.Justify.Left, 
                 MaxColumns = VitalSignsVP["Width"])[0]
             SatietyLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
-                (Var.CharactersData["Player"]["Satiety"] * 100 // Var.CharactersData["Player"]["MaxSatiety"])
+                (Var.Player["Satiety"] * 100 // Var.Player["MaxSatiety"])
                 // 100)
             Message = (Var.MessagesData["Dashboard"]["PlayerSatiety"]
                 .replace(
@@ -317,7 +322,7 @@ def ShowView(
             Message = (Var.MessagesData["Dashboard"]["CounterMovements"]
                 .replace(
                     "{TotalMovements}", 
-                    f"{Var.CharactersData['Player']['TotalMovements']}"))
+                    f"{Var.Player['TotalMovements']}"))
             RC.Print(Message,          
                 CountersVP["Y"], CountersVP["X"],
                 JustifyText = RC.Justify.Left, 
@@ -325,7 +330,7 @@ def ShowView(
             Message = (Var.MessagesData["Dashboard"]["CounterActions"]
                 .replace(
                     "{TotalActions}", 
-                    f"{Var.CharactersData['Player']['TotalActions']}"))
+                    f"{Var.Player['TotalActions']}"))
             RC.Print(Message,          
                 CountersVP["Y"], CountersVP["X"] + CountersVP["Width"] // 2,
                 JustifyText = RC.Justify.Left, 
@@ -359,42 +364,50 @@ def ShowView(
         # environment view part
         if ViewParts is None or "Environment" in ViewParts:
             LineOffset = 0
-            CurrentMap = Var.CharactersData['Player']['CurrentMap']
-            CurrentMapData = Var.CharactersData['Player']['Maps'][CurrentMap]
             Message = (Var.MessagesData["Dashboard"]["PlayerOrientation"]
                 .replace(
                     "{DirectionName}", 
-                    f"{Var.MessagesData['Dashboard']['Directions'][CurrentMapData['Direction']]}")
+                    f"{Var.MessagesData['Dashboard']['Directions'][Var.Player['Direction']]}")
                 .replace(
                     "{DirectionSymbol}", 
-                    f"{Var.GameData['Game']['Directions'][CurrentMapData['Direction']]['Symbol']}"))
+                    f"{Var.GameData['Game']['Directions'][Var.Player['Direction']]['Symbol']}"))
             LineOffset += RC.Print(Message,          
                 EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = EnvironmentVP["Width"])[0]
             OnElement = (Var.MapLayer
-                [CurrentMapData['Y']]
-                [CurrentMapData['X']])
-            Message = (Var.MessagesData["Dashboard"]["PlayerWalksOn"]
+                [Var.Player['Y']]
+                [Var.Player['X']])
+            SymbolString = ("" if Var.MapElementsData[OnElement]['Image'].strip() == ""
+                else f" ({Var.MapElementsData[OnElement]['Style']}{Var.MapElementsData[OnElement]['Image']}[;])")
+            Message = (Var.MessagesData["Dashboard"]["PlayerMovesOn"]
                 .replace(
                     "{Element}", 
-                    f"{Var.MapElementsData[OnElement]['Style']}{str(Var.MessagesData[OnElement]['Name']).lower()}[;] ({Var.MapElementsData[OnElement]['Style']}{Var.MapElementsData[OnElement]['Image']}[;])"))
+                    f"{Var.MapElementsData[OnElement]['Style']}{str(Var.MessagesData[OnElement]['Name']).lower()}[;]{SymbolString}"))
             LineOffset += RC.Print(Message,          
                 EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = EnvironmentVP["Width"])[0]
-            SeenElement = (
-                Var.MapLayer[
-                    CurrentMapData['Y'] 
-                    + Var.GameData['Game']['Directions']
-                        [CurrentMapData['Direction']]['DeltaY']]
-                    [CurrentMapData['X'] 
-                    + Var.GameData['Game']['Directions']
-                        [CurrentMapData['Direction']]['DeltaX']])
-            Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
-                .replace(
-                    "{Element}", 
-                    f"{Var.MapElementsData[SeenElement]['Style']}{str(Var.MessagesData[SeenElement]['Name']).lower()}[;] ({Var.MapElementsData[SeenElement]['Style']}{Var.MapElementsData[SeenElement]['Image']}[;])"))
+            try:
+                SeenElement = (
+                    Var.MapLayer[
+                        Var.Player['Y'] 
+                        + Var.GameData['Game']['Directions']
+                            [Var.Player['Direction']]['DeltaY']]
+                        [Var.Player['X'] 
+                        + Var.GameData['Game']['Directions']
+                            [Var.Player['Direction']]['DeltaX']])
+                SymbolString = ("" if Var.MapElementsData[SeenElement]['Image'].strip() == ""
+                    else f" ({Var.MapElementsData[SeenElement]['Style']}{Var.MapElementsData[SeenElement]['Image']}[;])")
+                Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
+                    .replace(
+                        "{Element}", 
+                        f"{Var.MapElementsData[SeenElement]['Style']}{str(Var.MessagesData[SeenElement]['Name']).lower()}[;]{SymbolString}"))
+            except IndexError:
+                Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
+                    .replace(
+                        "{Element}", 
+                        f"{Var.MapElementsData[OnElement]['Style']}{str(Var.MessagesData[OnElement]['Name']).lower()}[;]{SymbolString}"))
             LineOffset += RC.Print(Message,          
                 EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
                 JustifyText = RC.Justify.Center, 
@@ -411,9 +424,9 @@ def ShowView(
                 ActionHistoryVP["Y"], ActionHistoryVP["X"], 
                 ActionHistoryVP["Width"], ActionHistoryVP["Height"])
             LineOffset = 0
-            for Index, Action in enumerate(Var.ActionsHistory[-ActionHistoryVP["Height"]:]):
-                Message = f"{str(Index).rjust(4)}) {Action}"
-                RC.Print(Message,          
+            # get last ActionHistoryVP["Height"] (reversed)
+            for Index, Action in enumerate(Var.ActionsHistory[:-(ActionHistoryVP["Height"] + 1):-1]):
+                RC.Print(f"{Action}",          
                     ActionHistoryVP["Y"] + LineOffset + Index, ActionHistoryVP["X"],
                     JustifyText = RC.Justify.Left, 
                     MaxColumns = ActionHistoryVP["Width"])
@@ -428,24 +441,39 @@ def ShowView(
                 JustifyText = RC.Justify.Left, 
                 MaxColumns = MessageVP["Width"])
 
-    elif ViewName == "Challenge":
+    # elif ViewName == "Challenge":
 
-        # viewports data
-        DashboardVP = Var.GameData["Views"][ViewName]["DashboardViewPort"]
-        ChallengeVP = Var.GameData["Views"][ViewName]["ChallengeViewPort"]
-        TitleVP = Var.GameData["Views"][ViewName]["TitleViewPort"]
-        TextVP = Var.GameData["Views"][ViewName]["TextViewPort"]
-        AskVP = Var.GameData["Views"][ViewName]["AskViewPort"]
+        # # viewports data
+        # ChallengeVP = Var.GameData["ViewPorts"][ViewName]["Windows"]
+        # MapVP = Var.GameData["ViewPorts"][ViewName]["Map"]
+        # TitleVP = Var.GameData["ViewPorts"][ViewName]["Title"]
+        # TextVP = Var.GameData["ViewPorts"][ViewName]["Text"]
+        # AskVP = Var.GameData["ViewPorts"][ViewName]["Ask"]
 
 
 
-def GetCurrentMapLayers():
+def GetMapLayersAndViewPort():
     """
-        Get current map layers
+        Get current map layers and viewport
     """
 
-    Var.MapLayer = Var.MapsData[Var.CharactersData["Player"]["CurrentMap"]]["Map"]
-    Var.ObjectsLayer = Var.MapsData[Var.CharactersData["Player"]["CurrentMap"]]["Objects"]
+    # layers
+    Var.MapLayer = Var.MapsData[Var.Player["CurrentMap"]]["Map"]
+    Var.ObjectsLayer = Var.MapsData[Var.Player["CurrentMap"]]["Objects"]
+    
+    # viewport (from player current map, remove last character if a digit for viewport name)
+    CurrentMap = Var.Player["CurrentMap"]
+    Var.MapViewPortName = (CurrentMap 
+        if not CurrentMap[-1:].isdigit() 
+        else CurrentMap[:-1])
+    MapViewPort = Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]
+    # update map viewport so it matches map size
+    DeltaWidth = MapViewPort["Width"] - len(Var.MapLayer[0])
+    DeltaHeight = MapViewPort["Height"] - len(Var.MapLayer)
+    MapViewPort["X"] += DeltaWidth // 2 
+    MapViewPort["Y"] += DeltaHeight // 2 
+    MapViewPort["Width"] -= DeltaWidth
+    MapViewPort["Height"] -= DeltaHeight
 
 
 
@@ -459,7 +487,12 @@ def ShowMap(
         or only refresh map on specified coordinates
     """
 
-    if X == None or Y == None: 
+    if X == None or Y == None:
+        # clear main viewport
+        MainMapViewPort = Var.GameData["ViewPorts"]["Main"]["Map"] 
+        RC.ClearConsole(
+            MainMapViewPort["Y"], MainMapViewPort["X"], 
+            MainMapViewPort["Width"], MainMapViewPort["Height"])
         # draw full map
         for Line in range(len(Var.MapLayer)):
             for Column in range(len(Var.MapLayer[Line])):
@@ -477,17 +510,14 @@ def _PrintMapLayersAtPosition(
         Print map and object layer as specified position
     """
 
-    # get current map
-    CurrentMap = Var.CharactersData["Player"]["CurrentMap"]
-
     # map layer
     # get map element data for current element
     MapElement = Var.MapElementsData[Var.MapLayer[Y][X]]
     # draw
     RC.Print(
         f"{MapElement['Style']}{MapElement['Image']}[;]",
-        Var.GameData["Views"][CurrentMap]["MapViewPort"]["Y"] + Y,
-        Var.GameData["Views"][CurrentMap]["MapViewPort"]["X"] + X,
+        Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + Y,
+        Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + X,
         JumpLineAfter = False)
 
     # object layer
@@ -497,10 +527,24 @@ def _PrintMapLayersAtPosition(
         # draw
         RC.Print(
             f"{MapObject['Style']}{MapObject['Image']}[;]",
-            Var.GameData["Views"][CurrentMap]["MapViewPort"]["Y"] + Y,
-            Var.GameData["Views"][CurrentMap]["MapViewPort"]["X"] + X,
+            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + Y,
+            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + X,
             JumpLineAfter = False)
 
+    # character layer
+    # check if a character is at this position
+    CharacterHere = [
+        CharacterHere for CharacterHere in Var.CharactersData 
+            if CharacterHere['CurrentMap'] == Var.Player["CurrentMap"] 
+            and CharacterHere['X'] == X and CharacterHere['Y'] == Y]
+    if len(CharacterHere) == 1:
+        CharacterHere = CharacterHere[0]
+        # draw
+        RC.Print(
+            f"{CharacterHere['Style']}{CharacterHere['Images'][CharacterHere['Direction']]}[;]",
+            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + Y,
+            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + X,
+            JumpLineAfter = False)
 
 
 def AskPlayerAction():
@@ -512,7 +556,7 @@ def AskPlayerAction():
     PossibleActions = [Actions["Command"] for Actions in Var.MessagesData["Dashboard"]["Actions"].values()]
 
     # get player input
-    AskActionVP = Var.GameData["Views"]["Main"]["AskActionViewPort"]
+    AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
     
     while True:
         IsCommandOK = True
@@ -588,15 +632,174 @@ def ExecutePlayerAction(
     """
         Execute player action with specified argument 
     """
+
+    ActionMessage = ""
     
     if ActionName == "Quit":
+        # save game
+        Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["Quit"]["Success"]
+        # refresh view
+        ShowView(
+            Var.GameData["Game"]["CurrentView"], 
+            ViewParts = ["Message"])
+        SaveGame()
+        # wait for last Enter
+        AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
+        RC.Print(Var.MessagesData["Dashboard"]["ConfirmQuit"],
+            AskActionVP["Y"], AskActionVP["X"], 
+            MaxColumns = AskActionVP["Width"],
+            JustifyText = RC.Justify.Center)
+        input()
+        # stop main loop
         Var.GameRunning = False
+            
+    elif ActionName == "Move":
+        ActionMessage = (Var.MessagesData["Dashboard"]["Actions"]["Move"]["Success"]
+            .replace("{Steps}", str(ActionArgument)))
+        for Index in range(ActionArgument):
+            (IsSuccess, Var.CurrentMessage, Event) = Move(Var.Player)
+            MoveOtherCharacters()
+            # refresh view
+            ShowView(
+                Var.GameData["Game"]["CurrentView"], 
+                ViewParts = ["VitalSigns", "Counters", "Environment", "Message"])
+            # stop loop if movement is not possible
+            if not IsSuccess:
+                ActionMessage = Var.MessagesData["Dashboard"]["Actions"]["Move"]["Failure"]
+                break
+            # check event
+            CheckEvent(Event)
+
+    elif ActionName == "TurnLeft":
+        # update direction
+        Var.Player["Direction"] = Var.GameData["Game"]["Directions"][Var.Player["Direction"]]["NextLeft"]
+        ActionMessage = Var.MessagesData["Dashboard"]["Actions"][ActionName]["Success"]
+        # refresh view
+        ShowMap(Var.Player["Y"], Var.Player["X"])
+        ShowView(
+            Var.GameData["Game"]["CurrentView"], 
+            ViewParts = ["Environment"])
+
+    elif ActionName == "TurnRight":
+        # update direction
+        Var.Player["Direction"] = Var.GameData["Game"]["Directions"][Var.Player["Direction"]]["NextRight"]
+        ActionMessage = Var.MessagesData["Dashboard"]["Actions"][ActionName]["Success"]
+        # refresh view
+        ShowMap(Var.Player["Y"], Var.Player["X"])
+        ShowView(
+            Var.GameData["Game"]["CurrentView"], 
+            ViewParts = ["Environment"])
+
+    elif ActionName == "UseObject":
+        pass
 
     else:
-        Message = f"Faire {ActionArgument} fois l'action {ActionName}"
-        Util.ManageMessageHistory(Message, Var.ActionsHistory)
-        ShowView(Var.GameData["Game"]["CurrentView"], "ActionHistory")
+        ActionMessage = f"Faire {ActionArgument} fois l'action {ActionName}"
+    
+    # update messages
+    Util.ManageMessageHistory(ActionMessage, Var.ActionsHistory)
+    ShowView(Var.GameData["Game"]["CurrentView"], "ActionHistory")
 
+
+def Move(
+    Character):
+    """
+        Try to move character in current direction
+        If possible update its coordinates
+        Returns true/false matching mouvement success, appropriate message and event if any
+    """
+
+    Event = None
+
+    # define new position
+    NewX = Character["X"] + Var.GameData["Game"]["Directions"][Character["Direction"]]["DeltaX"]
+    NewY = Character["Y"] + Var.GameData["Game"]["Directions"][Character["Direction"]]["DeltaY"]
+
+    # check if no map element obstacle
+    try:
+        ElementAtNewPosition = Var.MapElementsData[Var.MapLayer[NewY][NewX]]
+    except IndexError:
+        # player is going out of map (exit to main)
+        # return message and current position event
+        return (True,
+            Var.MessagesData[Var.MapLayer[Character["Y"]][Character["X"]]]["MoveOn"], 
+            Var.MapElementsData[Var.MapLayer[Character["Y"]][Character["X"]]]["Behaviors"]["Event"])
+
+    if not ElementAtNewPosition["Behaviors"]["CanMoveOn"]:
+        # move is not possible
+        return (False, 
+            f"{Var.MessagesData['Dashboard']['Actions']['Move']['Failure']}\n{Var.MessagesData[Var.MapLayer[NewY][NewX]]['CantMoveOn']}", 
+            None)
+    else:
+        # get other character at new position
+        CharacterHere = [
+            CharacterHere for CharacterHere in Var.CharactersData 
+            if CharacterHere['Name'] != Character['Name']
+                and CharacterHere['CurrentMap'] == Var.Player["CurrentMap"] 
+                and CharacterHere['X'] == NewX and CharacterHere['Y'] == NewY]
+        if len(CharacterHere) == 1:
+            # other character is blocking movement
+            CharacterHere = CharacterHere[0]
+            return (False,
+                f"{Var.MessagesData[CharacterHere['Name']]['Name']}.\n\n{Var.MessagesData[CharacterHere['Name']]['Talk']}", 
+                CharacterHere["Event"])
+    
+    # movement possible
+    # update character position
+    OldX = Character["X"]
+    OldY = Character["Y"]
+    Character["X"] = NewX
+    Character["Y"] = NewY
+    # remove character from previous position
+    ShowMap(OldY, OldX)
+    # place character at new position
+    ShowMap(NewY, NewX)
+    # update character vital signs
+    Character["Health"] += ElementAtNewPosition["Behaviors"]["Health"]
+    Character["Hydration"] += ElementAtNewPosition["Behaviors"]["Hydration"]
+    Character["Satiety"] += ElementAtNewPosition["Behaviors"]["Satiety"]
+    # update counters
+    Character["TotalMovements"] += 1
+    # return message and event
+    return (True,
+        Var.MessagesData[Var.MapLayer[NewY][NewX]]["MoveOn"], 
+        ElementAtNewPosition["Behaviors"]["Event"])
+
+
+
+def MoveOtherCharacters():
+    """
+        Move other characters if any on the map
+    """
+    pass
+
+
+
+def CheckEvent(Event):
+    """
+        Check and execute event if appropriate
+    """
+    
+    if Event is not None:
+        
+        if type(Event) is dict:
+            # event is a dictionnary (map change)
+            Var.Player["CurrentMap"] = Event["Map"]
+            Var.Player["X"] = Event["X"]
+            Var.Player["Y"] = Event["Y"]
+            Var.Player["Direction"] = Event["Direction"]
+            GetMapLayersAndViewPort()
+            ShowView(
+                Var.GameData["Game"]["CurrentView"], 
+                ViewParts = ["Map", "VitalSigns", "Counters", "Environment", "ActionHistory", "Message"])
+
+
+
+def SaveGame():
+    """
+        Player quits, save game
+    """
+    pass
 
 
 # # Test code

@@ -299,7 +299,7 @@ def ManageMessageHistory(
     # add to history
     MessagePrefix = ""
     if CountMessage:
-        MessagePrefix = "(" + str(len(MessageList) + 1) + ") "
+        MessagePrefix = str(len(MessageList) + 1).rjust(4) + ") "
     # return MessageList
     return MessageList.append(MessagePrefix + Message)
 
@@ -363,13 +363,15 @@ def LoadMaps(
                         MapsData[MapName] = {}
                         # save current map in dictionary
                         MapsData[MapName]["Map"] = MapData
-                        # initialize blank layer
+                        # initialize current map blank layer
                         BlankLayer = [["" for X in range(NumberOfColumns)] for Y in range(NumberOfLines)]
-                        # add blank layer to dictionary
+                        # add current map blank layer to dictionary
                         MapsData[MapName]["Objects"] = BlankLayer
                     # reset map data
                     MapName = Line[2:].strip()
                     MapData = []
+                    NumberOfLines = 0
+                    NumberOfColumns = 0
                 else:
                     Columns = []
                     NumberOfColumnsInThisLine = 0
@@ -387,7 +389,7 @@ def LoadMaps(
                     NumberOfLines += 1
                     NumberOfColumns = max(NumberOfColumns, NumberOfColumnsInThisLine)
 
-        if MapData is not None:
+        if MapName is not None:
             # initialize dictionary for map
             MapsData[MapName] = {}
             # save current map in dictionary
@@ -450,41 +452,6 @@ def LoadViews(
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
 
-
-# def ReplacePlaceholdersWithData(
-#     String,
-#     DataDict):
-#     """
-#         Replace data placeholders (delimited by {}) in string
-#         using data dictionary
-#     """
-
-#     for Key, Value in DataDict.items():
-#         String = String.replace(f"{{{Key}}}", f"{Value}")
-
-#     return String
-
-
-# def GetSymbolName(Symbol):
-#     """
-#         This function retrieve the name matching the symbol
-#     """
-#     ReturnValue = ""
-
-#     # check for each possible symbol
-#     # should be done in a better way (dictionary ?)
-#     if Symbol == Variables.RailroadSymbol[1]:
-#         ReturnValue = Variables.RailroadSymbol[0]
-#     elif Symbol == Variables.GarageSymbol[1]:
-#         ReturnValue = Variables.GarageSymbol[0]
-#     elif Symbol == Variables.WarehouseSymbol[1]:
-#         ReturnValue = Variables.WarehouseSymbol[0]
-#     elif Symbol.isdigit():
-#         ReturnValue = Variables.CrateSymbol[0].replace("{NbCrates}", Symbol)
-#     elif Symbol == Variables.EnergyPodSymbol[1]:
-#         ReturnValue = Variables.EnergyPodSymbol[0]
-
-#     return ReturnValue
 
 
 # program main entry (for example to check the functions)
