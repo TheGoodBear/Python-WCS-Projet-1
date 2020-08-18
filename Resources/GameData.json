@@ -99,7 +99,12 @@
         "MinimumNumber" : 0,
         "MaximumNumber" : 100,
         "Rounds" : 3,
-        "MaxTries" : 20
+        "MaxTries" : 20,
+        "Stars" : {
+            "1" : {"Y" : 2, "X" : 7},
+            "2" : {"Y" : 3, "X" : 5},
+            "3" : {"Y" : 3, "X" : 9}
+        }
     },
     "Challenge2" : {
         "CurrentLetter" : null

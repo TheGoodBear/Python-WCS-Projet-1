@@ -691,14 +691,28 @@ def ExecutePlayerAction(
             ViewParts = ["Environment"])
 
     elif ActionName == "UseObject":
-        pass
+        if ActionArgument == 0 or ActionArgument > len(Var.ObjectsData['Backpack']['Behaviors']['Contains']):
+            # no object here
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure"]
+        else:
+            # get object data
+            CurrentObjectID = Var.ObjectsData['Backpack']['Behaviors']['Contains'][ActionArgument - 1]
+            CurrentObjectData = Var.ObjectsData[CurrentObjectID]
+            ActionMessage = (
+                Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]"))
+            Var.CurrentMessage = (
+                Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]"))
+
 
     else:
         ActionMessage = f"Faire {ActionArgument} fois l'action {ActionName}"
     
     # update messages
-    Util.ManageMessageHistory(ActionMessage, Var.ActionsHistory)
-    ShowView(Var.GameData["Game"]["CurrentView"], "ActionHistory")
+    if ActionMessage != "":
+        Util.ManageMessageHistory(ActionMessage, Var.ActionsHistory)
+    ShowView(Var.GameData["Game"]["CurrentView"], ["ActionHistory", "Message"])
 
 
 def Move(

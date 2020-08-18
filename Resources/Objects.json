@@ -28,8 +28,8 @@
         "Style" : "[R;]",
         "StartPosition" : {
             "Map" : "Challenge1",
-            "Y" : 3,
-            "X" : 5
+            "Y" : 5,
+            "X" : 7
         },
         "Behaviors" : {
             "ForVictory" : true,

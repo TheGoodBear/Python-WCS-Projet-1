@@ -213,6 +213,22 @@
             "GivePoisonedWater" : 0
         }
     },
+    "9" : {
+        "Image" : "☼",
+        "Style" : "[Y;]",
+        "Behaviors" : {
+            "CanMoveOn" : false,
+            "Event" : null,
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Hydration" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
     "5" : {
         "Image" : "░",
         "Style" : "[G;]",
@@ -282,6 +298,27 @@
                 "Y" : 10,
                 "X" : 86,
                 "Direction" : "W"
+            },
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Hydration" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : 0,
+            "GivePoisonedWater" : 0
+        }
+    },
+    "8" : {
+        "Image" : " ",
+        "Style" : "[;]",
+        "Behaviors" : {
+            "CanMoveOn" : true,
+            "Event" : {
+                "Map" : "Main",
+                "Y" : 33,
+                "X" : 26,
+                "Direction" : "E"
             },
             "Prerequisites" : null,
             "Health" : 0,
@@ -746,27 +783,6 @@
                 "Y" : 9,
                 "X" : 20,
                 "Direction" : "W"
-            },
-            "Prerequisites" : null,
-            "Health" : 0,
-            "Satiety" : 0,
-            "Hydration" : 0,
-            "GiveFood" : 0,
-            "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
-        }
-    },
-    "8" : {
-        "Image" : " ",
-        "Style" : "[;]",
-        "Behaviors" : {
-            "CanMoveOn" : true,
-            "Event" : {
-                "Map" : "Main",
-                "Y" : 33,
-                "X" : 26,
-                "Direction" : "E"
             },
             "Prerequisites" : null,
             "Health" : 0,
