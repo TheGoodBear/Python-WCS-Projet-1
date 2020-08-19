@@ -357,6 +357,12 @@ def ShowView(
             LineOffset = 0
             for Index, Item in enumerate(Var.ObjectsData['Backpack']['Behaviors']['Contains']):
                 Message = f"{Var.ObjectsData[Item]['Style']}{str(Index + 1).rjust(2)}) {Var.MessagesData[Item]['Name']}"
+                # add empty of contents remaining if appropriate
+                if Var.ObjectsData[Item]['Behaviors']["Contains"] is not None:
+                    Message += (
+                        f" ({Var.ObjectsData[Item]['Behaviors']['Contains']}/{Var.ObjectsData[Item]['Behaviors']['Capacity']})"
+                        if Var.ObjectsData[Item]['Behaviors']["Contains"] > 0
+                        else f" ({Var.MessagesData['Dashboard']['Empty']})")
                 RC.Print(Message,          
                     BackpackItemsVP["Y"] + LineOffset + Index, BackpackItemsVP["X"],
                     JustifyText = RC.Justify.Left, 
@@ -691,6 +697,7 @@ def ExecutePlayerAction(
             ViewParts = ["Environment"])
 
     elif ActionName == "UseObject":
+        ActionOK = False
         if ActionArgument == 0 or ActionArgument > len(Var.ObjectsData['Backpack']['Behaviors']['Contains']):
             # no object here
             Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure"]
@@ -698,12 +705,36 @@ def ExecutePlayerAction(
             # get object data
             CurrentObjectID = Var.ObjectsData['Backpack']['Behaviors']['Contains'][ActionArgument - 1]
             CurrentObjectData = Var.ObjectsData[CurrentObjectID]
-            ActionMessage = (
-                Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
-                .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]"))
             Var.CurrentMessage = (
                 Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
                 .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]"))
+            # check and update item capacity if any
+            if CurrentObjectData["Behaviors"]["Capacity"] is not None:
+                if CurrentObjectData["Behaviors"]["Contains"] > 0:
+                    ActionOK = True
+                    CurrentObjectData["Behaviors"]["Contains"] -= 1
+                    Var.CurrentMessage += (
+                            "\n\n" + Var.MessagesData[CurrentObjectID]["Use"].replace("{Contains}", str(CurrentObjectData["Behaviors"]["Contains"])) + "\n")
+                    ShowView(Var.GameData["Game"]["CurrentView"], ["BackpackItems"])
+                else:
+                    Var.CurrentMessage += (
+                            "\n\n" + Var.MessagesData[CurrentObjectID]["CantUse"])
+            else:
+                ActionOK = True
+                Var.CurrentMessage += (
+                     "\n\n" + Var.MessagesData[CurrentObjectID]["Use"] + "\n")
+
+            if ActionOK:
+                ActionMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                    .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]"))
+                # update vital signs
+                Var.CurrentMessage += UpdateVitalSign("Health", CurrentObjectData)
+                Var.CurrentMessage += UpdateVitalSign("Hydration", CurrentObjectData)
+                Var.CurrentMessage += UpdateVitalSign("Satiety", CurrentObjectData)
+            
+            # refresh view
+            ShowView(Var.GameData["Game"]["CurrentView"], ["VitalSigns", "Message"])
 
 
     else:
@@ -724,6 +755,7 @@ def Move(
     """
 
     Event = None
+    ElementAtCurrentPosition = Var.MapElementsData[Var.MapLayer[Character["Y"]][Character["X"]]]
 
     # define new position
     NewX = Character["X"] + Var.GameData["Game"]["Directions"][Character["Direction"]]["DeltaX"]
@@ -736,8 +768,9 @@ def Move(
         # player is going out of map (exit to main)
         # return message and current position event
         return (True,
-            Var.MessagesData[Var.MapLayer[Character["Y"]][Character["X"]]]["MoveOn"], 
-            Var.MapElementsData[Var.MapLayer[Character["Y"]][Character["X"]]]["Behaviors"]["Event"])
+            (Var.MessagesData[Var.MapLayer[Character["Y"]][Character["X"]]]["MoveOn"]
+                .replace("{Element}", ElementAtCurrentPosition["Style"] + Var.MessagesData[Var.MapLayer[Character["Y"]][Character["X"]]]["Name"].lower() + "[;]")), 
+            ElementAtCurrentPosition["Behaviors"]["Event"])
 
     if not ElementAtNewPosition["Behaviors"]["CanMoveOn"]:
         # move is not possible
@@ -768,15 +801,20 @@ def Move(
     ShowMap(OldY, OldX)
     # place character at new position
     ShowMap(NewY, NewX)
+    # get message
+    Message = (
+        Var.MessagesData[Var.MapLayer[NewY][NewX]]["MoveOn"]
+        .replace("{Element}", ElementAtNewPosition["Style"] + Var.MessagesData[Var.MapLayer[NewY][NewX]]["Name"].lower() + "[;]")
+        + "\n")
     # update character vital signs
-    Character["Health"] += ElementAtNewPosition["Behaviors"]["Health"]
-    Character["Hydration"] += ElementAtNewPosition["Behaviors"]["Hydration"]
-    Character["Satiety"] += ElementAtNewPosition["Behaviors"]["Satiety"]
+    Message += UpdateVitalSign("Health", ElementAtNewPosition)
+    Message += UpdateVitalSign("Hydration", ElementAtNewPosition)
+    Message += UpdateVitalSign("Satiety", ElementAtNewPosition)
     # update counters
     Character["TotalMovements"] += 1
     # return message and event
     return (True,
-        Var.MessagesData[Var.MapLayer[NewY][NewX]]["MoveOn"], 
+        Message,
         ElementAtNewPosition["Behaviors"]["Event"])
 
 
@@ -806,6 +844,29 @@ def CheckEvent(Event):
             ShowView(
                 Var.GameData["Game"]["CurrentView"], 
                 ViewParts = ["Map", "VitalSigns", "Counters", "Environment", "ActionHistory", "Message"])
+
+
+
+def UpdateVitalSign(
+    VitalSign,
+    ElementData):
+    """
+        Update vital sign with map element or object data
+        Return appropriate message
+    """
+    if ElementData["Behaviors"][VitalSign] != 0:
+        # update player data
+        Var.Player[VitalSign] = min(
+            Var.Player[VitalSign] + ElementData["Behaviors"][VitalSign],
+            Var.Player["Max" + VitalSign])
+        # show appropriate message
+        MessageName = "You" + ("Earn" if ElementData["Behaviors"][VitalSign] > 0 else "Loose")
+        return ("\n" +
+            Var.MessagesData["Dashboard"][MessageName]
+            .replace("{Number}", str(abs(ElementData["Behaviors"][VitalSign])))
+            .replace("{VitalSign}", Var.GameData["Game"]["VitalSigns"][VitalSign]["Color"] + Var.MessagesData["Dashboard"][VitalSign] + "[;]"))
+
+    return ""
 
 
 

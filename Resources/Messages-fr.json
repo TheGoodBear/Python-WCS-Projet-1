@@ -20,8 +20,11 @@
         "Category" : "",
         "FullVersion" : "(v{VersionNumber} du {VersionDate})",
         "PlayerFullName" : "{ColoredName}     {SexSymbol}",
+        "Health" : "Santé",
         "PlayerHealth" : "Santé........ {HealthCounter}",
+        "Hydration" : "Hydratation",
         "PlayerHydration" : "Hydratation.. {HydrationCounter}",
+        "Satiety" : "Satiété",
         "PlayerSatiety" : "Satiété...... {SatietyCounter}",
         "CounterMovements" : "Mouvements : {TotalMovements}",
         "CounterActions" : "Actions : {TotalActions}",
@@ -83,6 +86,9 @@
             "AskActionUnknown" : "[W;R]Cela ne semble pas faisable.[;]",
             "AskActionNoItem" : "[W;R]Je dois préciser le numéro de l'objet concerné.[;]",
         "ActionHistoryTitle" : "[B;W]Mes dernières actions[;]",
+        "YouEarn" : "Je gagne [W;G] {Number} [;] en {VitalSign}.",
+        "YouLoose" : "Je perd [W;R] {Number} [;] en {VitalSign}.",
+        "Empty" : "vide",
         "ConfirmQuit" : "[B;Y]APPUYER sur ENTRÉE pour sortir[;]"
     },
     "Challenge1" : {
@@ -120,19 +126,19 @@
     " " : {
         "Category" : "MapElement",
         "Name" : "De la lande",
-        "MoveOn" : "",
+        "MoveOn" : "Je me déplace sur {Element}.",
         "CantMoveOn" : ""
     },
     "S" : {
         "Category" : "MapElement",
         "Name" : "Du sable",
-        "MoveOn" : "",
+        "MoveOn" : "Je me déplace sur {Element}.",
         "CantMoveOn" : ""
     },
     "+" : {
         "Category" : "MapElement",
         "Name" : "De la végétation dense",
-        "MoveOn" : "",
+        "MoveOn" : "Je me déplace au milieu {Element}.",
         "CantMoveOn" : ""
     },
     "A" : {
@@ -162,22 +168,22 @@
     "-" : {
         "Category" : "MapElement",
         "Name" : "De l'eau peu profonde",
-        "MoveOn" : "Brrr, elle est fraîche, ça fait du bien.",
+        "MoveOn" : "Je me déplace dans {Element}.\n\nBrrr, elle est fraîche, ça fait du bien.",
         "CantMoveOn" : ""
     },
     "H" : {
         "Category" : "MapElement",
         "Name" : "De l'eau saumâtre",
-        "MoveOn" : "Bêêêrk ! Nager là-dedans va me rendre malade.",
+        "MoveOn" : "Je me déplace dans {Element}.\n\nBêêêrk ! Nager là-dedans va me rendre malade.",
         "CantMoveOn" : ""
     },
     "|" : {
         "Category" : "MapElement",
         "Name" : "De l'eau profonde",
-        "MoveOn" : "Cette eau est profonde et il y a beaucoup de courant, je risque de vite fatiguer.",
+        "MoveOn" : "Je me déplace dans {Element}.\n\nIl y a beaucoup de courant, je risque de vite fatiguer.",
         "CantMoveOn" : ""
     },
-    "~" : {
+    "=" : {
         "Category" : "MapElement",
         "Name" : "De l'eau salée",
         "MoveOn" : "",
@@ -394,7 +400,7 @@
     "0" : {
         "Category" : "MapElement",
         "Name" : "Une grosse porte en bois",
-        "MoveOn" : "Après avoir inséré les trois clés, la porte s'ouvre enfin !",
+        "MoveOn" : "Après avoir inséré les trois clés, la porte s'ouvre enfin !\n\n[B;W] Ça y est, j'ai réussi !!! [;]",
         "CantMoveOn" : "Je ne vois pas comment ouvrir cette porte sans les trois clé appropriées."
     },
     
@@ -453,9 +459,9 @@
         "Category" : "Object",
         "Name" : "Sac à dos",
         "Use" : "Je fouille dans mon sac...",
-        "CantUse" : "",
+        "CantUse" : "Je ne peux pas ramasser cet objet, mon sac est déjà plein.",
         "Pick" : "",
-        "Drop" : "J'en ai besoin pour porter mes affaires."
+        "Drop" : "Il vaut mieux que je le garde avec moi, j'en ai besoin pour porter mes affaires."
     },
     "BronzeKey" : {
         "Category" : "Object",
@@ -484,7 +490,7 @@
     "LaptopComputer" : {
         "Category" : "Object",
         "Name" : "Ordinateur portable",
-        "Use" : "Je me pose tranquillement pour discuter avec mes amis.",
+        "Use" : "Je me pose tranquillement pour discuter avec mes amis. (Il me reste assez d'énergie pour {Contains} utilisations)",
         "CantUse" : "Plus d'énergie, je dois le recharger.",
         "Pick" : "Allez hop, dans le sac.",
         "Drop" : "Et je fais comment pour communiquer maintenant ?"
@@ -508,7 +514,7 @@
     "GlassBottle" : {
         "Category" : "Object",
         "Name" : "Bouteille en verre",
-        "Use" : "Ha ça rafraîchit !",
+        "Use" : "Ha ça rafraîchit ! (Il me reste de quioi boire {Contains} fois)",
         "CantUse" : "Zut, elle est vide, je dois trouver un endroit où la remplir.",
         "Pick" : "Il vaut mieux que je puisse transporter de l'eau avec moi.",
         "Drop" : "J'espère que je trouverai suffisament de points d'eau."
