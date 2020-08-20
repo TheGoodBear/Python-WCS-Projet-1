@@ -13,8 +13,8 @@
         "MaxSatiety" : 100,
         "Satiety" : 100,
         "CurrentMap" : "Main",
-        "X" : 62,
-        "Y" : 38,
+        "X" : 48,
+        "Y" : 37,
         "Direction" : "E",
         "TotalMovements" : 0,
         "TotalActions" : 0

@@ -11,7 +11,7 @@
         "MapMaxWidth" : 100,
         "MapMaxHeight" : 50,
         "DashboardWidth" : 40,
-        "CurrentView" : "Challenge",
+        "CurrentView" : "Start",
         "Sex" : {
             "Female" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
             "Male" : {"Color" : "[C;;SB]", "Symbol" : "♂"},
@@ -57,7 +57,12 @@
             "FillObject" : {"NumberParameter" : "Mandatory"},
             "DropObject" : {"NumberParameter" : "Mandatory"},
             "PickUp" : {"NumberParameter" : null},
-            "Rest" : {"NumberParameter" : "Optional"},
+            "Rest" : {
+                "NumberParameter" : "Optional",
+                "Health" : 6,
+                "Hydration" : -2,
+                "Satiety" : -1
+            },
             "GetHelp" : {"NumberParameter" : null},
             "Quit" : {"NumberParameter" : null}
         },
@@ -65,10 +70,10 @@
     },
     "ViewPorts" : {
         "Start" : {
-            "Window" : {"Y" : 7, "X" : 33, "Width" : 80, "Height" : 40},
-            "Title" : {"Y" : 8, "X" : 34, "Width" : 78, "Height" : 1},
-            "Text" : {"Y" : 10, "X" : 35, "Width" : 76, "Height" : 34},
-            "Ask" : {"Y" : 45, "X" : 35, "Width" : 76, "Height" : 1}
+            "Window" : {"Y" : 7, "X" : 38, "Width" : 80, "Height" : 40},
+            "Title" : {"Y" : 8, "X" : 39, "Width" : 78, "Height" : 1},
+            "Text" : {"Y" : 10, "X" : 40, "Width" : 76, "Height" : 34},
+            "Ask" : {"Y" : 45, "X" : 39, "Width" : 78, "Height" : 1}
             },
         "Dashboard" : {
             "Window" : {"Y" : 2, "X" : 103, "Width" : 50, "Height" : 50},

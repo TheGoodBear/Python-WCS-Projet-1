@@ -4,6 +4,7 @@
         "Style" : "[;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : true,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : -1,
@@ -19,6 +20,7 @@
         "Style" : "[Y;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : true,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : -1,
@@ -34,6 +36,7 @@
         "Style" : "[G;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : true,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : -2,
@@ -49,6 +52,7 @@
         "Style" : "[G;]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
@@ -64,6 +68,7 @@
         "Style" : "[W;]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
@@ -79,6 +84,7 @@
         "Style" : "[;]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : true,
             "Event" : null,
             "Prerequisites" : ["Torche"],
             "Health" : -1,
@@ -94,6 +100,7 @@
         "Style" : "[C;]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
@@ -109,6 +116,7 @@
         "Style" : "[C;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : -2,
@@ -124,6 +132,7 @@
         "Style" : "[Y;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : -10,
@@ -139,6 +148,7 @@
         "Style" : "[U;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : -15,
@@ -154,6 +164,7 @@
         "Style" : "[U;]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
@@ -170,10 +181,11 @@
         "Style" : "[B;R]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : {
                 "Map" : "Challenge1",
-                "Y" : 6,
-                "X" : 5,
+                "Y" : 10,
+                "X" : 7,
                 "Direction" : "N"
             },
             "Prerequisites" : null,
@@ -190,6 +202,7 @@
         "Style" : "[B;W]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
@@ -205,6 +218,7 @@
         "Style" : "[Y;]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
@@ -220,6 +234,7 @@
         "Style" : "[G;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : {
                 "Map" : "Main",
                 "Y" : 36,
@@ -241,6 +256,7 @@
         "Style" : "[B;R]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : {
                 "Map" : "Challenge2",
                 "Y" : 14,
@@ -261,6 +277,7 @@
         "Style" : "[B;W]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : null,
             "Prerequisites" : null,
             "Health" : 0,
@@ -276,6 +293,7 @@
         "Style" : "[;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : {
                 "Map" : "Main",
                 "Y" : 10,
@@ -296,6 +314,7 @@
         "Style" : "[;]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : {
                 "Map" : "Main",
                 "Y" : 33,
@@ -316,6 +335,7 @@
         "Style" : "[B;C]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -332,6 +352,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -348,6 +369,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -364,6 +386,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -380,6 +403,7 @@
         "Style" : "[B;C]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -396,6 +420,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -412,6 +437,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -428,6 +454,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -444,6 +471,7 @@
         "Style" : "[B;C]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -461,6 +489,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "Event" : "Switch",
+            "CanRest" : false,
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -476,6 +505,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -492,6 +522,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -508,6 +539,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -524,6 +556,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -540,6 +573,7 @@
         "Style" : "[B;C]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -556,6 +590,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -572,6 +607,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -588,6 +624,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -604,6 +641,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -620,6 +658,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -636,6 +675,7 @@
         "Style" : "[B;C]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -652,6 +692,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -668,6 +709,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -684,6 +726,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -700,6 +743,7 @@
         "Style" : "[B;C]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -716,6 +760,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
+            "CanRest" : false,
             "Event" : "Switch",
             "State" : false,
             "Prerequisites" : null,
@@ -733,6 +778,7 @@
         "Style" : "[B;R]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : {
                 "Map" : "Challenge3",
                 "Y" : 9,
@@ -754,6 +800,7 @@
         "Style" : "[;R]",
         "Behaviors" : {
             "CanMoveOn" : true,
+            "CanRest" : false,
             "Event" : "Exit",
             "Prerequisites" : [
                 "BronzeKey", 
