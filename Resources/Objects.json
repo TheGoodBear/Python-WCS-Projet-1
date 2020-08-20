@@ -54,7 +54,7 @@
         "Style" : "[W;]",
         "StartPosition" : {
             "Map" : "Challenge2",
-            "Y" : 5,
+            "Y" : 6,
             "X" : 10
         },
         "Behaviors" : {
@@ -167,7 +167,7 @@
             "Dropable" : true,
             "Usable" : true,
             "RequiredMapElementsToUse" : null,
-            "RequiredMapElementsToFill" : ["m", "-", "x", "|", "="],
+            "RequiredMapElementsToFill" : ["I", "-", "H", "|", "="],
             "ChargeObjects" : null,
             "Capacity" : 5,
             "Contains" : 0,

@@ -10,6 +10,7 @@ ResourcesFolder = "Resources\\"
 CurrentMessage = "Pas de messages"
 Player = None
 LastPlayerCommand = None
+SeenElement = None
 
 # Map
 MapViewPortName = None

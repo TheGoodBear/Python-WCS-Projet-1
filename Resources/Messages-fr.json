@@ -53,7 +53,16 @@
                 "Command" : "U",
                 "Description" : "Utiliser un objet (numéroté dans le sac à dos)",
                 "Success" : "J'utilise {Object}.", 
-                "Failure" : "Il n'y a pas d'objet à cet emplacement du sac."}, 
+                "Charged" : "{Object} a été entièrement rechargé.", 
+                "Failure" : "Il n'y a pas d'objet à cet emplacement du sac.", 
+                "Failure2" : "{Object} n'est pas utilisable.", 
+                "Failure3" : "Je ne peux pas utiliser {Object} pour le moment."}, 
+            "FillObject" : {
+                "Command" : "C",
+                "Description" : "Charger ou remplir un objet (numéroté dans le sac à dos)",
+                "Success" : "Je rempli {Object} avec {Element}.", 
+                "Failure" : "Je dois être face à {Elements} pour remplir {Object}.", 
+                "Failure2" : "{Object} ne peut pas être rempli ou rechargé."}, 
             "DropObject" : {
                 "Command" : "P",
                 "Description" : "Poser un objet (numéroté dans le sac à dos)",
@@ -82,9 +91,9 @@
                 "Success" : "J'ai installé mon camp de base, je pourrai redémarrer l'aventure à partir de ce camp.\n\nIl est temps de revenir à la réalité...", 
                 "Failure" : ""}
             },
-            "AskAction" : "[Y;]Que vais-je faire maintenant ? [;]",
-            "AskActionUnknown" : "[W;R]Cela ne semble pas faisable.[;]",
-            "AskActionNoItem" : "[W;R]Je dois préciser le numéro de l'objet concerné.[;]",
+        "AskAction" : "[Y;]Que vais-je faire maintenant ? [;]",
+        "AskActionUnknown" : "[W;R]Cela ne semble pas faisable.[;]",
+        "AskActionNoItem" : "[W;R]Je dois préciser le numéro de l'objet concerné.[;]",
         "ActionHistoryTitle" : "[B;W]Mes dernières actions[;]",
         "YouEarn" : "Je gagne [W;G] {Number} [;] en {VitalSign}.",
         "YouLoose" : "Je perd [W;R] {Number} [;] en {VitalSign}.",
@@ -163,7 +172,7 @@
         "Category" : "MapElement",
         "Name" : "Une cascade",
         "MoveOn" : "",
-        "CantMoveOn" : "À part pour me casser le cou, je ne vois pas l'intérêt d'escalader ces rochers glissants."
+        "CantMoveOn" : "À part pour me casser le cou, je ne vois pas l'intérêt d'escalader ces rochers glissants.\n\nEn revanche cette eau limpide doit être particulièrement rafraichissante."
     },
     "-" : {
         "Category" : "MapElement",
@@ -229,159 +238,159 @@
     },
     "a" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "b" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "c" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "d" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "e" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "f" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "g" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "h" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "i" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "j" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "k" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "l" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "m" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "n" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "o" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "p" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "q" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "r" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "s" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "t" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "u" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "v" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "w" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "x" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "y" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
     "z" : {
         "Category" : "MapElement",
-        "Name" : "La lettre {Letter} gravée dans la pierre",
+        "Name" : "Une lettre gravée dans la pierre",
         "MoveOn" : "",
-        "CantMoveOn" : "La lettre s'illumine lorsque je la touche..."
+        "CantMoveOn" : "En revanche, la lettre [;;SI]s'illumine[;] lorsque je la touche..."
     },
 
     "3" : {
@@ -401,7 +410,7 @@
         "Category" : "MapElement",
         "Name" : "Une grosse porte en bois",
         "MoveOn" : "Après avoir inséré les trois clés, la porte s'ouvre enfin !\n\n[B;W] Ça y est, j'ai réussi !!! [;]",
-        "CantMoveOn" : "Je ne vois pas comment ouvrir cette porte sans les trois clé appropriées."
+        "CantMoveOn" : "Je ne vois pas comment ouvrir cette porte sans les trois clé appropriées.\n\nIl me manque encore {Prerequisites}."
     },
     
     "El Maestro" : {
@@ -490,7 +499,7 @@
     "LaptopComputer" : {
         "Category" : "Object",
         "Name" : "Ordinateur portable",
-        "Use" : "Je me pose tranquillement pour discuter avec mes amis. (Il me reste assez d'énergie pour {Contains} utilisations)",
+        "Use" : "Je me pose tranquillement pour discuter avec mes amis.\nIl me reste assez d'énergie pour {Contains} utilisations.",
         "CantUse" : "Plus d'énergie, je dois le recharger.",
         "Pick" : "Allez hop, dans le sac.",
         "Drop" : "Et je fais comment pour communiquer maintenant ?"
@@ -498,7 +507,7 @@
     "SolarCharger" : {
         "Category" : "Object",
         "Name" : "Chargeur solaire",
-        "Use" : "Voilà, mon ordinateur est bien rechargé.",
+        "Use" : "Je vais pouvoir recharger mon équipement électrique.",
         "CantUse" : "À part pour charger l'ordinateur que j'ai perdu, je ne vois pas quoi en faire...",
         "Pick" : "Je vais enfin pouvoir recharger mon ordinateur",
         "Drop" : "Sans lui l'ordinateur ne tiendra pas longtemps."
@@ -514,10 +523,12 @@
     "GlassBottle" : {
         "Category" : "Object",
         "Name" : "Bouteille en verre",
-        "Use" : "Ha ça rafraîchit ! (Il me reste de quioi boire {Contains} fois)",
+        "Use" : "Ha ça rafraîchit (enfin je suppose) !\nIl me reste de quoi boire {Contains} fois.",
         "CantUse" : "Zut, elle est vide, je dois trouver un endroit où la remplir.",
+        "Fill" : "Je vais enfin pouvoir me désaltérer.",
+        "CantFill" : "Je ne peux pas remplir ma bouteille ici.",
         "Pick" : "Il vaut mieux que je puisse transporter de l'eau avec moi.",
-        "Drop" : "J'espère que je trouverai suffisament de points d'eau."
+        "Drop" : "Si je trouve suffisament de points d'eau, ça ira peut-être."
     },
     "Map" : {
         "Category" : "Object",

@@ -54,6 +54,7 @@
             "TurnLeft" : {"NumberParameter" : null},
             "TurnRight" : {"NumberParameter" : null},
             "UseObject" : {"NumberParameter" : "Mandatory"},
+            "FillObject" : {"NumberParameter" : "Mandatory"},
             "DropObject" : {"NumberParameter" : "Mandatory"},
             "PickUp" : {"NumberParameter" : null},
             "Rest" : {"NumberParameter" : "Optional"},

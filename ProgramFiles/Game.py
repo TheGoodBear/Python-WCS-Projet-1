@@ -355,13 +355,13 @@ def ShowView(
                 BackpackItemsVP["Y"], BackpackItemsVP["X"], 
                 BackpackItemsVP["Width"], BackpackItemsVP["Height"])
             LineOffset = 0
-            for Index, Item in enumerate(Var.ObjectsData['Backpack']['Behaviors']['Contains']):
+            for Index, Item in enumerate(Var.ObjectsData["Backpack"]["Behaviors"]["Contains"]):
                 Message = f"{Var.ObjectsData[Item]['Style']}{str(Index + 1).rjust(2)}) {Var.MessagesData[Item]['Name']}"
                 # add empty of contents remaining if appropriate
-                if Var.ObjectsData[Item]['Behaviors']["Contains"] is not None:
+                if Var.ObjectsData[Item]["Behaviors"]["Contains"] is not None:
                     Message += (
                         f" ({Var.ObjectsData[Item]['Behaviors']['Contains']}/{Var.ObjectsData[Item]['Behaviors']['Capacity']})"
-                        if Var.ObjectsData[Item]['Behaviors']["Contains"] > 0
+                        if Var.ObjectsData[Item]["Behaviors"]["Contains"] > 0
                         else f" ({Var.MessagesData['Dashboard']['Empty']})")
                 RC.Print(Message,          
                     BackpackItemsVP["Y"] + LineOffset + Index, BackpackItemsVP["X"],
@@ -394,8 +394,9 @@ def ShowView(
                 EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = EnvironmentVP["Width"])[0]
+            Var.SeenElement = None
             try:
-                SeenElement = (
+                Var.SeenElement = (
                     Var.MapLayer[
                         Var.Player['Y'] 
                         + Var.GameData['Game']['Directions']
@@ -403,12 +404,12 @@ def ShowView(
                         [Var.Player['X'] 
                         + Var.GameData['Game']['Directions']
                             [Var.Player['Direction']]['DeltaX']])
-                SymbolString = ("" if Var.MapElementsData[SeenElement]['Image'].strip() == ""
-                    else f" ({Var.MapElementsData[SeenElement]['Style']}{Var.MapElementsData[SeenElement]['Image']}[;])")
+                SymbolString = ("" if Var.MapElementsData[Var.SeenElement]['Image'].strip() == ""
+                    else f" ({Var.MapElementsData[Var.SeenElement]['Style']}{Var.MapElementsData[Var.SeenElement]['Image']}[;])")
                 Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
                     .replace(
                         "{Element}", 
-                        f"{Var.MapElementsData[SeenElement]['Style']}{str(Var.MessagesData[SeenElement]['Name']).lower()}[;]{SymbolString}"))
+                        f"{Var.MapElementsData[Var.SeenElement]['Style']}{str(Var.MessagesData[Var.SeenElement]['Name']).lower()}[;]{SymbolString}"))
             except IndexError:
                 Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
                     .replace(
@@ -660,8 +661,9 @@ def ExecutePlayerAction(
         Var.GameRunning = False
             
     elif ActionName == "Move":
-        ActionMessage = (Var.MessagesData["Dashboard"]["Actions"]["Move"]["Success"]
-            .replace("{Steps}", str(ActionArgument)))
+        ActionMessage = (
+            Var.MessagesData["Dashboard"]["Actions"]["Move"]["Success"]
+                .replace("{Steps}", str(ActionArgument)))
         for Index in range(ActionArgument):
             (IsSuccess, Var.CurrentMessage, Event) = Move(Var.Player)
             MoveOtherCharacters()
@@ -703,41 +705,166 @@ def ExecutePlayerAction(
             Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure"]
         else:
             # get object data
-            CurrentObjectID = Var.ObjectsData['Backpack']['Behaviors']['Contains'][ActionArgument - 1]
+            CurrentObjectID = Var.ObjectsData["Backpack"]["Behaviors"]["Contains"][ActionArgument - 1]
             CurrentObjectData = Var.ObjectsData[CurrentObjectID]
-            Var.CurrentMessage = (
-                Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
-                .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]"))
-            # check and update item capacity if any
-            if CurrentObjectData["Behaviors"]["Capacity"] is not None:
-                if CurrentObjectData["Behaviors"]["Contains"] > 0:
-                    ActionOK = True
-                    CurrentObjectData["Behaviors"]["Contains"] -= 1
-                    Var.CurrentMessage += (
-                            "\n\n" + Var.MessagesData[CurrentObjectID]["Use"].replace("{Contains}", str(CurrentObjectData["Behaviors"]["Contains"])) + "\n")
-                    ShowView(Var.GameData["Game"]["CurrentView"], ["BackpackItems"])
-                else:
-                    Var.CurrentMessage += (
-                            "\n\n" + Var.MessagesData[CurrentObjectID]["CantUse"])
-            else:
-                ActionOK = True
-                Var.CurrentMessage += (
-                     "\n\n" + Var.MessagesData[CurrentObjectID]["Use"] + "\n")
+            
+            if CurrentObjectData["Behaviors"]["Usable"]:
+                # object is usable
+                if CurrentObjectData["Behaviors"]["RequiredMapElementsToUse"] is not None:
+                    # object needs a specific map element to be used
+                    if not Var.SeenElement in CurrentObjectData["Behaviors"]["RequiredMapElementsToUse"]:
+                        # the element is not here
+                        Var.CurrentMessage = (
+                            Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure3"]
+                                .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] 
+                            + "[;]\n\n"
+                            + Var.MessagesData[CurrentObjectID]["CantUse"]))
+                    else:
+                        # the element is here
+                        ActionOK = True
+                        Var.CurrentMessage = (
+                            Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                                .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] 
+                            + "[;]\n\n"
+                            + Var.MessagesData[CurrentObjectID]["Use"]))
+                        # remove prerequisite from map element
+                        Var.MapElementsData[Var.SeenElement]["Prerequisites"].remove(CurrentObjectID)
+                        # remove object from backpack
+                        Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
+                        # refresh view
+                        ShowView(Var.GameData["Game"]["CurrentView"], ["BackpackItems"])
 
+                else:
+                    Var.CurrentMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                            .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"]
+                            + "[;]"))
+                    
+                    # check and update item capacity if any
+                    if CurrentObjectData["Behaviors"]["Capacity"] is not None:
+                        # object has a capacity
+                        if CurrentObjectData["Behaviors"]["Contains"] > 0:
+                            # object still has charges
+                            ActionOK = True
+                            CurrentObjectData["Behaviors"]["Contains"] -= 1
+                            Var.CurrentMessage += (
+                                    "\n\n" + 
+                                    Var.MessagesData[CurrentObjectID]["Use"]
+                                        .replace("{Contains}", str(CurrentObjectData["Behaviors"]["Contains"])) 
+                                    + "\n")
+                            ShowView(Var.GameData["Game"]["CurrentView"], ["BackpackItems"])
+                        else:
+                            # object is empty
+                            Var.CurrentMessage += (
+                                    "\n\n" + Var.MessagesData[CurrentObjectID]["CantUse"])
+                    else:
+                        # object has no capacity
+                        ActionOK = True
+                        Var.CurrentMessage += (
+                            "\n\n" + Var.MessagesData[CurrentObjectID]["Use"] + "\n")
+
+                    # check if object is a charger
+                    if CurrentObjectData["Behaviors"]["ChargeObjects"] is not None:
+                        # object is a charger
+                        ActionOK = True
+                        Var.CurrentMessage += "\n"
+                        # get each object to charge
+                        for ObjectToCharge in CurrentObjectData["Behaviors"]["ChargeObjects"]:
+                            if ObjectToCharge in Var.ObjectsData["Backpack"]["Behaviors"]["Contains"]:
+                                # object is in backpack
+                                # charge it to maximum capacity
+                                Var.ObjectsData[ObjectToCharge]["Behaviors"]["Contains"] = Var.ObjectsData[ObjectToCharge]["Behaviors"]["Capacity"]
+                                Var.CurrentMessage += (
+                                    Var.MessagesData["Dashboard"]["Actions"][ActionName]["Charged"]
+                                        .replace("{Object}", Var.ObjectsData[ObjectToCharge]["Style"] + Var.MessagesData[ObjectToCharge]["Name"] + "[;]")
+                                    + "\n")
+                            ShowView(Var.GameData["Game"]["CurrentView"], ["BackpackItems"])
+
+                if ActionOK:
+                    # use action is possible, show message
+                    ActionMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                            .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"]
+                        + "[;]"))
+                    # update vital signs
+                    Var.CurrentMessage += UpdateVitalSign("Health", CurrentObjectData)
+                    Var.CurrentMessage += UpdateVitalSign("Hydration", CurrentObjectData)
+                    Var.CurrentMessage += UpdateVitalSign("Satiety", CurrentObjectData)
+            
+            else:
+                # object is not usable
+                Var.CurrentMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure2"]
+                        .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"]
+                    + "[;]"))
+
+            # refresh view
+            ShowView(Var.GameData["Game"]["CurrentView"], ["VitalSigns", "Message"])
+
+    elif ActionName == "FillObject":
+        ActionOK = False
+        if ActionArgument == 0 or ActionArgument > len(Var.ObjectsData['Backpack']['Behaviors']['Contains']):
+            # no object here
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure"]
+        else:
+            # get object data
+            CurrentObjectID = Var.ObjectsData["Backpack"]["Behaviors"]["Contains"][ActionArgument - 1]
+            CurrentObjectData = Var.ObjectsData[CurrentObjectID]
+            
+            if CurrentObjectData["Behaviors"]["RequiredMapElementsToFill"] is not None:
+                # object needs a specific map element to be filled
+                if not Var.SeenElement in CurrentObjectData["Behaviors"]["RequiredMapElementsToFill"]:
+                    # the element is not here
+                    ElementList = ""
+                    # get all possible elements
+                    for NeededElement in CurrentObjectData["Behaviors"]["RequiredMapElementsToFill"]:
+                        ElementList += ( 
+                            Var.MapElementsData[NeededElement]["Style"] 
+                            + Var.MessagesData[NeededElement]["Name"].lower() 
+                            + "[;], ")
+                    Var.CurrentMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["FillObject"]["Failure"]
+                            .replace("{Elements}", ElementList[:len(ElementList) - len(", ")]) 
+                            .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"]) 
+                        + "[;]\n\n"
+                        + Var.MessagesData[CurrentObjectID]["CantFill"])
+                else:
+                    # the element is here
+                    ActionOK = True
+                    Var.CurrentMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["FillObject"]["Success"]
+                            .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]") 
+                            .replace("{Element}", Var.MapElementsData[Var.SeenElement]["Style"] + Var.MessagesData[Var.SeenElement]["Name"]) 
+                        + "[;]\n\n"
+                        + Var.MessagesData[CurrentObjectID]["Fill"])
+                    # charge object to maximum capacity
+                    CurrentObjectData["Behaviors"]["Contains"] = CurrentObjectData["Behaviors"]["Capacity"]
+                    # update objects vital signs
+                    CurrentObjectData["Behaviors"]["Health"] = Var.MapElementsData[Var.SeenElement]["Behaviors"]["GiveWater"]["Health"]
+                    CurrentObjectData["Behaviors"]["Hydration"] = Var.MapElementsData[Var.SeenElement]["Behaviors"]["GiveWater"]["Hydration"]
+                    # refresh view
+                    ShowView(Var.GameData["Game"]["CurrentView"], ["BackpackItems"])
+
+            else:
+                # object is not fillable
+                Var.CurrentMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["FillObject"]["Failure2"]
+                        .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"]
+                    + "[;]"))
+                
             if ActionOK:
+                # use action is possible, show message
                 ActionMessage = (
-                    Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
-                    .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]"))
-                # update vital signs
-                Var.CurrentMessage += UpdateVitalSign("Health", CurrentObjectData)
-                Var.CurrentMessage += UpdateVitalSign("Hydration", CurrentObjectData)
-                Var.CurrentMessage += UpdateVitalSign("Satiety", CurrentObjectData)
+                    Var.MessagesData["Dashboard"]["Actions"]["FillObject"]["Success"]
+                        .replace("{Object}", CurrentObjectData["Style"] + Var.MessagesData[CurrentObjectID]["Name"] + "[;]") 
+                        .replace("{Element}", Var.MapElementsData[Var.SeenElement]["Style"] + Var.MessagesData[Var.SeenElement]["Name"].lower() + "[;]"))
             
             # refresh view
             ShowView(Var.GameData["Game"]["CurrentView"], ["VitalSigns", "Message"])
 
 
     else:
+        # other known action
         ActionMessage = f"Faire {ActionArgument} fois l'action {ActionName}"
     
     # update messages
@@ -775,7 +902,7 @@ def Move(
     if not ElementAtNewPosition["Behaviors"]["CanMoveOn"]:
         # move is not possible
         return (False, 
-            f"{Var.MessagesData['Dashboard']['Actions']['Move']['Failure']}\n{Var.MessagesData[Var.MapLayer[NewY][NewX]]['CantMoveOn']}", 
+            f"{Var.MessagesData['Dashboard']['Actions']['Move']['Failure']}\n\n{Var.MessagesData[Var.MapLayer[NewY][NewX]]['CantMoveOn']}", 
             None)
     else:
         # get other character at new position

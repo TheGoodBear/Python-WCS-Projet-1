@@ -11,8 +11,7 @@
             "Hydration" : -1,
             "GiveFood" : 5,
             "GivePoisonedFood" : 2,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "S" : {
@@ -27,8 +26,7 @@
             "Hydration" : -2,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "+" : {
@@ -43,8 +41,7 @@
             "Hydration" : -1,
             "GiveFood" : 2,
             "GivePoisonedFood" : 4,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "A" : {
@@ -59,8 +56,7 @@
             "Hydration" : 0,
             "GiveFood" : 10,
             "GivePoisonedFood" : 20,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "M" : {
@@ -75,8 +71,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "T" : {
@@ -91,8 +86,7 @@
             "Hydration" : -1,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "I" : {
@@ -107,8 +101,7 @@
             "Hydration" : 10,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 100,
-            "GivePoisonedWater" : 0
+            "GiveWater" : {"Health" : 0, "Hydration" : 50}
         }
     },
     "-" : {
@@ -123,8 +116,7 @@
             "Hydration" : -1,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 100,
-            "GivePoisonedWater" : 0
+            "GiveWater" : {"Health" : 0, "Hydration" : 30}
         }
     },
     "H" : {
@@ -139,8 +131,7 @@
             "Hydration" : -1,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 100
+            "GiveWater" : {"Health" : -20, "Hydration" : 10}
         }
     },
     "|" : {
@@ -155,8 +146,7 @@
             "Hydration" : -1,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 100,
-            "GivePoisonedWater" : 0
+            "GiveWater" : {"Health" : 0, "Hydration" : 30}
         }
     },
     "=" : {
@@ -171,8 +161,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 100
+            "GiveWater" : {"Health" : -10, "Hydration" : -10}
         }
     },
 
@@ -193,8 +182,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "4" : {
@@ -209,8 +197,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "9" : {
@@ -225,8 +212,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "5" : {
@@ -246,8 +232,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
 
@@ -268,8 +253,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "6" : {
@@ -284,8 +268,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "7" : {
@@ -305,8 +288,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "8" : {
@@ -326,8 +308,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "a" : {
@@ -343,8 +324,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "b" : {
@@ -360,8 +340,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "c" : {
@@ -377,8 +356,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "d" : {
@@ -394,8 +372,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "e" : {
@@ -411,8 +388,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "f" : {
@@ -428,8 +404,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "g" : {
@@ -445,8 +420,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "h" : {
@@ -462,8 +436,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "i" : {
@@ -479,8 +452,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "j" : {
@@ -496,8 +468,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "k" : {
@@ -513,8 +484,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "l" : {
@@ -530,8 +500,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "m" : {
@@ -547,8 +516,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "n" : {
@@ -564,8 +532,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "o" : {
@@ -581,8 +548,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "p" : {
@@ -598,8 +564,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "q" : {
@@ -615,8 +580,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "r" : {
@@ -632,8 +596,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "s" : {
@@ -649,8 +612,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "t" : {
@@ -666,8 +628,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "u" : {
@@ -683,8 +644,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "v" : {
@@ -700,8 +660,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "w" : {
@@ -717,8 +676,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "x" : {
@@ -734,8 +692,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "y" : {
@@ -751,8 +708,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
     "z" : {
@@ -768,8 +724,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
 
@@ -790,8 +745,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     },
 
@@ -810,8 +764,7 @@
             "Hydration" : 0,
             "GiveFood" : 0,
             "GivePoisonedFood" : 0,
-            "GiveWater" : 0,
-            "GivePoisonedWater" : 0
+            "GiveWater" : null
         }
     }
 }
