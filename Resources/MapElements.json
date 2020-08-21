@@ -203,7 +203,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : null,
+            "Event" : "StartChallenge1",
             "Prerequisites" : null,
             "Health" : 0,
             "Satiety" : 0,
@@ -230,7 +230,7 @@
         }
     },
     "*" : {
-        "Image" : "☼",
+        "Image" : "*",
         "Style" : "[B;B]",
         "Behaviors" : {
             "CanMoveOn" : false,
@@ -275,7 +275,7 @@
             "CanRest" : false,
             "Event" : {
                 "Map" : "Challenge2",
-                "Y" : 14,
+                "Y" : 15,
                 "X" : 10,
                 "Direction" : "N"
             },
@@ -294,7 +294,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : null,
+            "Event" : "StartChallenge2",
             "Prerequisites" : null,
             "Health" : 0,
             "Satiety" : 0,
@@ -325,6 +325,7 @@
             "GiveWater" : null
         }
     },
+
     "8" : {
         "Image" : " ",
         "Style" : "[;]",
@@ -346,6 +347,7 @@
             "GiveWater" : null
         }
     },
+
     "a" : {
         "Image" : "A",
         "Style" : "[B;C]",

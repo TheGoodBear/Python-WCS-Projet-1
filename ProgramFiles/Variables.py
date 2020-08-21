@@ -13,6 +13,7 @@ LastPlayerCommand = None
 SeenCoordinates = {}
 SeenElement = None
 SeenObject = None
+CurrentChallengeData = None
 
 # Map
 MapViewPortName = None

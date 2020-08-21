@@ -66,7 +66,8 @@
             "GetHelp" : {"NumberParameter" : null},
             "Quit" : {"NumberParameter" : null}
         },
-        "WaitOnActionError" : 2
+        "WaitOnActionError" : 2,
+        "WaitOnChallengeWon" : 2
     },
     "ViewPorts" : {
         "Start" : {
@@ -90,32 +91,38 @@
             "Message" : {"Y" : 42, "X" : 103, "Width" : 50, "Height" : 9}
         },
         "Main" : {
-            "Window" : {"Y" : 1, "X" : 1, "Width" : 143, "Height" : 52},
+            "Window" : {"Y" : 1, "X" : 1, "Width" : 153, "Height" : 53},
             "Map" : {"Y" : 2, "X" : 2, "Width" : 100, "Height" : 50}
         },
         "Challenge" : {
             "Window" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 50},
-            "Map" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 10},
             "Title" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
-            "Text" : {"Y" : 20, "X" : 13, "Width" : 78, "Height" : 34},
+            "Map" : {"Y" : 11, "X" : 13, "Width" : 76, "Height" : 16},
+            "Text" : {"Y" : 27, "X" : 14, "Width" : 76, "Height" : 16},
             "Ask" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
         }
     },
     "Challenge1" : {
-        "MinimumNumber" : 0,
+        "MinimumNumber" : 1,
         "MaximumNumber" : 100,
         "Rounds" : 3,
         "MaxTries" : 20,
         "Eyes" : {
+            "Image" : "☼",
             "Style" : "[C;B]",
-            "1" : {"Y" : 4, "X" : 6},
-            "2" : {"Y" : 4, "X" : 8}
+            "Elements" : [
+                {"Y" : 4, "X" : 6},
+                {"Y" : 4, "X" : 8}
+            ]
         },
         "Stars" : {
+            "Image" : "*",
             "Style" : "[Y;B]",
-            "1" : {"Y" : 2, "X" : 7},
-            "2" : {"Y" : 3, "X" : 5},
-            "3" : {"Y" : 3, "X" : 9}
+            "Elements" : [
+                {"Y" : 2, "X" : 7},
+                {"Y" : 3, "X" : 5},
+                {"Y" : 3, "X" : 9}
+            ]
         }
     },
     "Challenge2" : {

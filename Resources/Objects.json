@@ -35,7 +35,7 @@
         },
         "Behaviors" : {
             "ForVictory" : true,
-            "Pickable" : true,
+            "Pickable" : false,
             "Dropable" : true,
             "Usable" : true,
             "RequiredMapElementsToUse" : ["0"],
@@ -59,7 +59,7 @@
         },
         "Behaviors" : {
             "ForVictory" : true,
-            "Pickable" : true,
+            "Pickable" : false,
             "Dropable" : true,
             "Usable" : true,
             "RequiredMapElementsToUse" : ["0"],
@@ -83,7 +83,7 @@
         },
         "Behaviors" : {
             "ForVictory" : true,
-            "Pickable" : true,
+            "Pickable" : false,
             "Dropable" : true,
             "Usable" : true,
             "RequiredMapElementsToUse" : ["0"],
