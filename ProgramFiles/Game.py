@@ -50,15 +50,19 @@ def Run():
         Game main loop
     """
 
-
+    # show start view
     # ShowView(Var.GameData["Game"]["CurrentView"], ClearScreen = True)
+
+    # show main view
     Var.GameData["Game"]["CurrentView"] = "Main"
-    ShowView(Var.GameData["Game"]["CurrentView"], ClearScreen = True)
+    ShowView(ClearScreen = True)
+
+    # main loop
     while Var.GameRunning:
         (ActionName, ActionArgument) = AskPlayerAction()
         ExecutePlayerAction(ActionName, ActionArgument)
-        # ShowView(Var.GameData["Game"]["CurrentView"], ClearScreen = True)
     
+    # exit program
     RC.ClearConsole()
     print("AU REVOIR !")
     input()
@@ -88,7 +92,7 @@ def InitializeWindow():
 
 
 def ShowView(
-    ViewName,
+    ViewName = None,
     ViewParts = None,
     ClearScreen = False):
     """
@@ -100,6 +104,14 @@ def ShowView(
     # show view template
     if ClearScreen:
         RC.ClearConsole()
+
+    # get view name
+    if ViewName is None:
+        ViewName = (
+            Var.Player["CurrentMap"] 
+            if not Var.Player["CurrentMap"][-1:].isdigit() 
+            else Var.Player["CurrentMap"][:-1])
+        Var.GameData["Game"]["CurrentView"] = ViewName
 
     LineOffset = 0
     if ViewParts is None:
@@ -213,7 +225,7 @@ def ShowView(
             .replace("{ColoredName}", 
                 Var.Player["Style"] + Var.Player["Name"] + "[;]")
             .replace("{Symbol}", 
-                Var.Player["Style"] + Var.Player["Image"] + "[;]"))
+                Var.Player["Style"] + " ".join(set(Var.Player["Images"].values())) + "[;]"))
         LineOffset += RC.Print(Message,          
             TextVP["Y"] + LineOffset, TextVP["X"],
             JustifyText = RC.Justify.Left, 
@@ -229,12 +241,7 @@ def ShowView(
             AskVP["X"] + len(Var.MessagesData["Game"]["AskReady"]))
         input("")
    
-    elif ViewName == "Main" or ViewName == "Challenge":
-
-        # get viewport
-        ViewPort = (Var.Player["CurrentMap"] 
-            if not Var.Player["CurrentMap"][-1:].isdigit() 
-            else Var.Player["CurrentMap"][:-1])
+    elif ViewName == "Main":
 
         RC.ShowCursor(False)
 
@@ -242,213 +249,69 @@ def ShowView(
         if ViewParts is None or "Map" in ViewParts:
             ShowMap()
 
-        # dashboard viewports data
-        DashboardVP = Var.GameData["ViewPorts"]["Dashboard"]["Window"]
-        TitleVP = Var.GameData["ViewPorts"]["Dashboard"]["Title"]
-        PlayerVP = Var.GameData["ViewPorts"]["Dashboard"]["Player"]
-        VitalSignsVP = Var.GameData["ViewPorts"]["Dashboard"]["VitalSigns"]
-        CountersVP = Var.GameData["ViewPorts"]["Dashboard"]["Counters"]
-        BackpackTitleVP = Var.GameData["ViewPorts"]["Dashboard"]["BackpackTitle"]
-        BackpackItemsVP = Var.GameData["ViewPorts"]["Dashboard"]["BackpackItems"]
-        EnvironmentVP = Var.GameData["ViewPorts"]["Dashboard"]["Environment"]
-        AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
-        ActionHistoryTitleVP = Var.GameData["ViewPorts"]["Dashboard"]["ActionHistoryTitle"]
-        ActionHistoryVP = Var.GameData["ViewPorts"]["Dashboard"]["ActionHistory"]
-        MessageVP = Var.GameData["ViewPorts"]["Dashboard"]["Message"]
+        # show dashboard
+        ShowDashboard(ViewParts)
+
+    elif ViewName == "Challenge":
+
+        RC.ShowCursor(False)
+
+        # viewports data
+        ChallengeVP = Var.GameData["ViewPorts"][ViewName]["Window"]
+        MapVP = Var.GameData["ViewPorts"][ViewName]["Map"]
+        TitleVP = Var.GameData["ViewPorts"][ViewName]["Title"]
+        TextVP = Var.GameData["ViewPorts"][ViewName]["Text"]
+        AskVP = Var.GameData["ViewPorts"][ViewName]["Ask"]
+
+        # show map if specified
+        if ViewParts is None or "Map" in ViewParts:
+            ShowMap()
+
+        # show dashboard
+        ShowDashboard(ViewParts)
+
+        CurrentMap = Var.Player["CurrentMap"]
+
+        if "ChallengeTitle" in ViewParts:
+            # challenge title
+            RC.Print(f"{Var.MessagesData[CurrentMap]['Title']}",
+                TitleVP["Y"], TitleVP["X"],
+                JustifyText = RC.Justify.Center,
+                MaxColumns = TitleVP["Width"])
+
+        if "ChallengeText1" in Viewparts:
+            # challenge text
+            RC.ClearConsole(
+                TextVP["Y"], TextVP["X"], 
+                TextVP["Width"], TextVP["Height"])
+            LineOffset = 0
+
+            Message = (Var.MessagesData[CurrentMap]["History1"]
+                .replace("{Name}", 
+                    Var.Player["Style"] + Var.Player["Name"] + "[;]"))
+            LineOffset += RC.Print(Message,          
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])[0]
+
+        if "ChallengeText2" in Viewparts:
+            # challenge text
+            RC.ClearConsole(
+                TextVP["Y"], TextVP["X"], 
+                TextVP["Width"], TextVP["Height"])
+            LineOffset = 0
+
+            Message = (Var.MessagesData[CurrentMap]["History2"]
+                .replace("{Name}", 
+                    Var.Player["Style"] + Var.Player["Name"] + "[;]"))
+            LineOffset += RC.Print(Message,          
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])[0]
+
         
-        # dashboard
-        # title view part
-        LineOffset = 0
-        LineOffset += RC.Print(f"[B;W]{Var.MessagesData['Game']['Title']}",
-            TitleVP["Y"], TitleVP["X"],
-            JustifyText = RC.Justify.Center, 
-            MaxColumns = TitleVP["Width"])[0]
-        Message = (Var.MessagesData["Dashboard"]["FullVersion"]
-            .replace("{VersionNumber}", Var.GameData["Game"]["VersionNumber"])
-            .replace("{VersionDate}", Var.GameData["Game"]["VersionDate"]))
-        RC.Print(f"{Message}",
-            TitleVP["Y"] + LineOffset, TitleVP["X"],
-            JustifyText = RC.Justify.Center,
-            MaxColumns = TitleVP["Width"])
-        # player view part
-        LineOffset = 0
-        Message = (Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Color"] + 
-            Var.MessagesData["Dashboard"]["PlayerFullName"]
-                .replace("{ColoredName}", Var.Player["Name"])
-                .replace("{SexSymbol}", Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Symbol"]))
-        RC.Print(Message,          
-            PlayerVP["Y"] + LineOffset, TitleVP["X"],
-            JustifyText = RC.Justify.Center, 
-            MaxColumns = TitleVP["Width"])
-        # vital signs view part
-        if ViewParts is None or "VitalSigns" in ViewParts:
-            LineOffset = 0
-            HealthLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
-                (Var.Player["Health"] * 100 // Var.Player["MaxHealth"])
-                // 100)
-            Message = (Var.MessagesData["Dashboard"]["PlayerHealth"]
-                .replace(
-                    "{HealthCounter}", 
-                    f"{Var.GameData['Game']['VitalSigns']['Health']['Color']}{''.ljust(HealthLength, Var.GameData['Game']['VitalSigns']['Health']['Symbol'])}[;]"))
-            LineOffset += RC.Print(Message,          
-                VitalSignsVP["Y"] + LineOffset, VitalSignsVP["X"],
-                JustifyText = RC.Justify.Left, 
-                MaxColumns = VitalSignsVP["Width"])[0]
-            HydrationLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
-                (Var.Player["Hydration"] * 100 // Var.Player["MaxHydration"])
-                // 100)
-            Message = (Var.MessagesData["Dashboard"]["PlayerHydration"]
-                .replace(
-                    "{HydrationCounter}", 
-                    f"{Var.GameData['Game']['VitalSigns']['Hydration']['Color']}{''.ljust(HydrationLength, Var.GameData['Game']['VitalSigns']['Hydration']['Symbol'])}[;]"))
-            LineOffset += RC.Print(Message,          
-                VitalSignsVP["Y"] + LineOffset, VitalSignsVP["X"],
-                JustifyText = RC.Justify.Left, 
-                MaxColumns = VitalSignsVP["Width"])[0]
-            SatietyLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
-                (Var.Player["Satiety"] * 100 // Var.Player["MaxSatiety"])
-                // 100)
-            Message = (Var.MessagesData["Dashboard"]["PlayerSatiety"]
-                .replace(
-                    "{SatietyCounter}", 
-                    f"{Var.GameData['Game']['VitalSigns']['Satiety']['Color']}{''.ljust(SatietyLength, Var.GameData['Game']['VitalSigns']['Satiety']['Symbol'])}[;]"))
-            LineOffset += RC.Print(Message,          
-                VitalSignsVP["Y"] + LineOffset, VitalSignsVP["X"],
-                JustifyText = RC.Justify.Left, 
-                MaxColumns = VitalSignsVP["Width"])[0]
-        # counters view part
-        if ViewParts is None or "Counters" in ViewParts:
-            LineOffset = 0
-            Message = (Var.MessagesData["Dashboard"]["CounterMovements"]
-                .replace(
-                    "{TotalMovements}", 
-                    f"{Var.Player['TotalMovements']}"))
-            RC.Print(Message,          
-                CountersVP["Y"], CountersVP["X"],
-                JustifyText = RC.Justify.Left, 
-                MaxColumns = CountersVP["Width"] // 2)
-            Message = (Var.MessagesData["Dashboard"]["CounterActions"]
-                .replace(
-                    "{TotalActions}", 
-                    f"{Var.Player['TotalActions']}"))
-            RC.Print(Message,          
-                CountersVP["Y"], CountersVP["X"] + CountersVP["Width"] // 2,
-                JustifyText = RC.Justify.Left, 
-                MaxColumns = CountersVP["Width"] // 2)
-        # backpack title view part
-        if ViewParts is None or "BackpackTitle" in ViewParts:
-            LineOffset = 0
-            Message = (Var.MessagesData["Dashboard"]["BackpackTitle"]
-                .replace(
-                    "{ItemsInBackpack}", 
-                    f"{len(Var.ObjectsData['Backpack']['Behaviors']['Contains'])}")
-                .replace(
-                    "{BackpackCapacity}", 
-                    f"{Var.ObjectsData['Backpack']['Behaviors']['Capacity']}"))
-            RC.Print(Message,          
-                BackpackTitleVP["Y"] + LineOffset, BackpackTitleVP["X"],
-                JustifyText = RC.Justify.Center, 
-                MaxColumns = BackpackTitleVP["Width"])
-        # backpack items view part
-        if ViewParts is None or "BackpackItems" in ViewParts:
-            RC.ClearConsole(
-                BackpackItemsVP["Y"], BackpackItemsVP["X"], 
-                BackpackItemsVP["Width"], BackpackItemsVP["Height"])
-            LineOffset = 0
-            for Index, Item in enumerate(Var.ObjectsData['Backpack']['Behaviors']['Contains']):
-                Message = f"{Var.ObjectsData[Item]['Style']}{str(Index + 1).rjust(2)}) {Var.MessagesData[Item]['Name']}"
-                RC.Print(Message,          
-                    BackpackItemsVP["Y"] + LineOffset + Index, BackpackItemsVP["X"],
-                    JustifyText = RC.Justify.Left, 
-                    MaxColumns = BackpackItemsVP["Width"])
-        # environment view part
-        if ViewParts is None or "Environment" in ViewParts:
-            LineOffset = 0
-            Message = (Var.MessagesData["Dashboard"]["PlayerOrientation"]
-                .replace(
-                    "{DirectionName}", 
-                    f"{Var.MessagesData['Dashboard']['Directions'][Var.Player['Direction']]}")
-                .replace(
-                    "{DirectionSymbol}", 
-                    f"{Var.GameData['Game']['Directions'][Var.Player['Direction']]['Symbol']}"))
-            LineOffset += RC.Print(Message,          
-                EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
-                JustifyText = RC.Justify.Center, 
-                MaxColumns = EnvironmentVP["Width"])[0]
-            OnElement = (Var.MapLayer
-                [Var.Player['Y']]
-                [Var.Player['X']])
-            SymbolString = ("" if Var.MapElementsData[OnElement]['Image'].strip() == ""
-                else f" ({Var.MapElementsData[OnElement]['Style']}{Var.MapElementsData[OnElement]['Image']}[;])")
-            Message = (Var.MessagesData["Dashboard"]["PlayerMovesOn"]
-                .replace(
-                    "{Element}", 
-                    f"{Var.MapElementsData[OnElement]['Style']}{str(Var.MessagesData[OnElement]['Name']).lower()}[;]{SymbolString}"))
-            LineOffset += RC.Print(Message,          
-                EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
-                JustifyText = RC.Justify.Center, 
-                MaxColumns = EnvironmentVP["Width"])[0]
-            try:
-                SeenElement = (
-                    Var.MapLayer[
-                        Var.Player['Y'] 
-                        + Var.GameData['Game']['Directions']
-                            [Var.Player['Direction']]['DeltaY']]
-                        [Var.Player['X'] 
-                        + Var.GameData['Game']['Directions']
-                            [Var.Player['Direction']]['DeltaX']])
-                SymbolString = ("" if Var.MapElementsData[SeenElement]['Image'].strip() == ""
-                    else f" ({Var.MapElementsData[SeenElement]['Style']}{Var.MapElementsData[SeenElement]['Image']}[;])")
-                Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
-                    .replace(
-                        "{Element}", 
-                        f"{Var.MapElementsData[SeenElement]['Style']}{str(Var.MessagesData[SeenElement]['Name']).lower()}[;]{SymbolString}"))
-            except IndexError:
-                Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
-                    .replace(
-                        "{Element}", 
-                        f"{Var.MapElementsData[OnElement]['Style']}{str(Var.MessagesData[OnElement]['Name']).lower()}[;]{SymbolString}"))
-            LineOffset += RC.Print(Message,          
-                EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
-                JustifyText = RC.Justify.Center, 
-                MaxColumns = EnvironmentVP["Width"])[0]
-        # action history title view part
-        LineOffset = 0
-        RC.Print(Var.MessagesData["Dashboard"]["ActionHistoryTitle"],          
-            ActionHistoryTitleVP["Y"] + LineOffset, ActionHistoryTitleVP["X"],
-            JustifyText = RC.Justify.Center, 
-            MaxColumns = ActionHistoryTitleVP["Width"])
-        # action history view part
-        if ViewParts is None or "ActionHistory" in ViewParts:
-            RC.ClearConsole(
-                ActionHistoryVP["Y"], ActionHistoryVP["X"], 
-                ActionHistoryVP["Width"], ActionHistoryVP["Height"])
-            LineOffset = 0
-            # get last ActionHistoryVP["Height"] (reversed)
-            for Index, Action in enumerate(Var.ActionsHistory[:-(ActionHistoryVP["Height"] + 1):-1]):
-                RC.Print(f"{Action}",          
-                    ActionHistoryVP["Y"] + LineOffset + Index, ActionHistoryVP["X"],
-                    JustifyText = RC.Justify.Left, 
-                    MaxColumns = ActionHistoryVP["Width"])
-        # message view part
-        if ViewParts is None or "Message" in ViewParts:
-            RC.ClearConsole(
-                MessageVP["Y"], MessageVP["X"], 
-                MessageVP["Width"], MessageVP["Height"])
-            LineOffset = 0
-            RC.Print(Var.CurrentMessage,          
-                MessageVP["Y"] + LineOffset, MessageVP["X"],
-                JustifyText = RC.Justify.Left, 
-                MaxColumns = MessageVP["Width"])
 
-    # elif ViewName == "Challenge":
 
-        # # viewports data
-        # ChallengeVP = Var.GameData["ViewPorts"][ViewName]["Windows"]
-        # MapVP = Var.GameData["ViewPorts"][ViewName]["Map"]
-        # TitleVP = Var.GameData["ViewPorts"][ViewName]["Title"]
-        # TextVP = Var.GameData["ViewPorts"][ViewName]["Text"]
-        # AskVP = Var.GameData["ViewPorts"][ViewName]["Ask"]
 
 
 
@@ -547,6 +410,257 @@ def _PrintMapLayersAtPosition(
             JumpLineAfter = False)
 
 
+
+def ShowDashboard(ViewParts = None):
+    """
+        Show dashboard
+        Only update specific viewparts if specified
+    """
+
+    # dashboard viewports data
+    DashboardVP = Var.GameData["ViewPorts"]["Dashboard"]["Window"]
+    GameTitleVP = Var.GameData["ViewPorts"]["Dashboard"]["Title"]
+    PlayerVP = Var.GameData["ViewPorts"]["Dashboard"]["Player"]
+    VitalSignsVP = Var.GameData["ViewPorts"]["Dashboard"]["VitalSigns"]
+    CountersVP = Var.GameData["ViewPorts"]["Dashboard"]["Counters"]
+    BackpackTitleVP = Var.GameData["ViewPorts"]["Dashboard"]["BackpackTitle"]
+    BackpackItemsVP = Var.GameData["ViewPorts"]["Dashboard"]["BackpackItems"]
+    EnvironmentVP = Var.GameData["ViewPorts"]["Dashboard"]["Environment"]
+    AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
+    ActionHistoryTitleVP = Var.GameData["ViewPorts"]["Dashboard"]["ActionHistoryTitle"]
+    ActionHistoryVP = Var.GameData["ViewPorts"]["Dashboard"]["ActionHistory"]
+    MessageVP = Var.GameData["ViewPorts"]["Dashboard"]["Message"]
+    
+    # dashboard
+    # title view part
+    if ViewParts is None or "Title" in ViewParts:
+        LineOffset = 0
+        LineOffset += RC.Print(f"[B;W]{Var.MessagesData['Game']['Title']}",
+            GameTitleVP["Y"], GameTitleVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = GameTitleVP["Width"])[0]
+        Message = (Var.MessagesData["Dashboard"]["FullVersion"]
+            .replace("{VersionNumber}", Var.GameData["Game"]["VersionNumber"])
+            .replace("{VersionDate}", Var.GameData["Game"]["VersionDate"]))
+        RC.Print(f"{Message}",
+            GameTitleVP["Y"] + LineOffset, GameTitleVP["X"],
+            JustifyText = RC.Justify.Center,
+            MaxColumns = GameTitleVP["Width"])
+    
+    # player view part
+    if ViewParts is None or "Player" in ViewParts:
+        LineOffset = 0
+        Message = (Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Color"] + 
+            Var.MessagesData["Dashboard"]["PlayerFullName"]
+                .replace("{ColoredName}", Var.Player["Name"])
+                .replace("{SexSymbol}", Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Symbol"]))
+        RC.Print(Message,          
+            PlayerVP["Y"] + LineOffset, TitleVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = TitleVP["Width"])
+    
+    # vital signs view part
+    if ViewParts is None or "VitalSigns" in ViewParts:
+        LineOffset = 0
+        HealthLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
+            (Var.Player["Health"] * 100 // Var.Player["MaxHealth"])
+            // 100)
+        Message = (Var.MessagesData["Dashboard"]["PlayerHealth"]
+            .replace(
+                "{HealthCounter}", 
+                f"{Var.GameData['Game']['VitalSigns']['Health']['Color']}{''.ljust(HealthLength, Var.GameData['Game']['VitalSigns']['Health']['Symbol'])}[;]"))
+        LineOffset += RC.Print(Message,          
+            VitalSignsVP["Y"] + LineOffset, VitalSignsVP["X"],
+            JustifyText = RC.Justify.Left, 
+            MaxColumns = VitalSignsVP["Width"])[0]
+        HydrationLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
+            (Var.Player["Hydration"] * 100 // Var.Player["MaxHydration"])
+            // 100)
+        Message = (Var.MessagesData["Dashboard"]["PlayerHydration"]
+            .replace(
+                "{HydrationCounter}", 
+                f"{Var.GameData['Game']['VitalSigns']['Hydration']['Color']}{''.ljust(HydrationLength, Var.GameData['Game']['VitalSigns']['Hydration']['Symbol'])}[;]"))
+        LineOffset += RC.Print(Message,          
+            VitalSignsVP["Y"] + LineOffset, VitalSignsVP["X"],
+            JustifyText = RC.Justify.Left, 
+            MaxColumns = VitalSignsVP["Width"])[0]
+        SatietyLength = (Var.GameData["Game"]["VitalSigns"]["BarLength"] * 
+            (Var.Player["Satiety"] * 100 // Var.Player["MaxSatiety"])
+            // 100)
+        Message = (Var.MessagesData["Dashboard"]["PlayerSatiety"]
+            .replace(
+                "{SatietyCounter}", 
+                f"{Var.GameData['Game']['VitalSigns']['Satiety']['Color']}{''.ljust(SatietyLength, Var.GameData['Game']['VitalSigns']['Satiety']['Symbol'])}[;]"))
+        LineOffset += RC.Print(Message,          
+            VitalSignsVP["Y"] + LineOffset, VitalSignsVP["X"],
+            JustifyText = RC.Justify.Left, 
+            MaxColumns = VitalSignsVP["Width"])[0]
+    
+    # counters view part
+    if ViewParts is None or "Counters" in ViewParts:
+        LineOffset = 0
+        Message = (Var.MessagesData["Dashboard"]["CounterMovements"]
+            .replace(
+                "{TotalMovements}", 
+                f"{Var.Player['TotalMovements']}"))
+        RC.Print(Message,          
+            CountersVP["Y"], CountersVP["X"],
+            JustifyText = RC.Justify.Left, 
+            MaxColumns = CountersVP["Width"] // 2)
+        Message = (Var.MessagesData["Dashboard"]["CounterActions"]
+            .replace(
+                "{TotalActions}", 
+                f"{Var.Player['TotalActions']}"))
+        RC.Print(Message,          
+            CountersVP["Y"], CountersVP["X"] + CountersVP["Width"] // 2,
+            JustifyText = RC.Justify.Left, 
+            MaxColumns = CountersVP["Width"] // 2)
+    
+    # backpack title view part
+    if ViewParts is None or "BackpackTitle" in ViewParts:
+        LineOffset = 0
+        Message = (Var.MessagesData["Dashboard"]["BackpackTitle"]
+            .replace(
+                "{ItemsInBackpack}", 
+                f"{len(Var.ObjectsData['Backpack']['Behaviors']['Contains'])}")
+            .replace(
+                "{BackpackCapacity}", 
+                f"{Var.ObjectsData['Backpack']['Behaviors']['Capacity']}"))
+        RC.Print(Message,          
+            BackpackTitleVP["Y"] + LineOffset, BackpackTitleVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = BackpackTitleVP["Width"])
+    
+    # backpack items view part
+    if ViewParts is None or "BackpackItems" in ViewParts:
+        RC.ClearConsole(
+            BackpackItemsVP["Y"], BackpackItemsVP["X"], 
+            BackpackItemsVP["Width"], BackpackItemsVP["Height"])
+        LineOffset = 0
+        for Index, Item in enumerate(Var.ObjectsData["Backpack"]["Behaviors"]["Contains"]):
+            Message = f"{Var.ObjectsData[Item]['Style']}{str(Index + 1).rjust(2)}) {Var.MessagesData[Item]['Name']}"
+            # add empty of contents remaining if appropriate
+            if Var.ObjectsData[Item]["Behaviors"]["Contains"] is not None:
+                Message += (
+                    f" ({Var.ObjectsData[Item]['Behaviors']['Contains']}/{Var.ObjectsData[Item]['Behaviors']['Capacity']})"
+                    if Var.ObjectsData[Item]["Behaviors"]["Contains"] > 0
+                    else f" ({Var.MessagesData['Dashboard']['Empty']})")
+            RC.Print(Message,          
+                BackpackItemsVP["Y"] + LineOffset + Index, BackpackItemsVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = BackpackItemsVP["Width"])
+    
+    # environment view part
+    if ViewParts is None or "Environment" in ViewParts:
+        RC.ClearConsole(
+            EnvironmentVP["Y"], EnvironmentVP["X"], 
+            EnvironmentVP["Width"], EnvironmentVP["Height"])
+        LineOffset = 0
+        Message = (Var.MessagesData["Dashboard"]["PlayerOrientation"]
+            .replace(
+                "{DirectionName}", 
+                f"{Var.MessagesData['Dashboard']['Directions'][Var.Player['Direction']]}")
+            .replace(
+                "{DirectionSymbol}", 
+                f"{Var.GameData['Game']['Directions'][Var.Player['Direction']]['Symbol']}"))
+        LineOffset += RC.Print(Message,          
+            EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = EnvironmentVP["Width"])[0]
+        # on element
+        OnElement = (Var.MapLayer
+            [Var.Player["Y"]]
+            [Var.Player["X"]])
+        SymbolString = ("" if Var.MapElementsData[OnElement]["Image"].strip() == ""
+            else f" ({Var.MapElementsData[OnElement]['Style']}{Var.MapElementsData[OnElement]['Image']}[;])")
+        Message = (Var.MessagesData["Dashboard"]["PlayerMovesOn"]
+            .replace(
+                "{Element}", 
+                f"{Var.MapElementsData[OnElement]['Style']}{str(Var.MessagesData[OnElement]['Name']).lower()}[;]{SymbolString}"))
+        LineOffset += RC.Print(Message,          
+            EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = EnvironmentVP["Width"])[0]
+        # seen element
+        Var.SeenCoordinates["Y"] = (
+            Var.Player["Y"] 
+            + Var.GameData["Game"]["Directions"][Var.Player["Direction"]]["DeltaY"])
+        Var.SeenCoordinates["X"] = (
+            Var.Player["X"] 
+            + Var.GameData["Game"]["Directions"][Var.Player["Direction"]]["DeltaX"])
+        Var.SeenElement = None
+        try:
+            Var.SeenElement = (
+                Var.MapLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]])
+            SymbolString = ("" if Var.MapElementsData[Var.SeenElement]["Image"].strip() == ""
+                else f" ({Var.MapElementsData[Var.SeenElement]['Style']}{Var.MapElementsData[Var.SeenElement]['Image']}[;])")
+            Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
+                .replace(
+                    "{Element}", 
+                    f"{Var.MapElementsData[Var.SeenElement]['Style']}{str(Var.MessagesData[Var.SeenElement]['Name']).lower()}[;]{SymbolString}"))
+        except IndexError:
+            Message = (Var.MessagesData["Dashboard"]["PlayerSees"]
+                .replace(
+                    "{Element}", 
+                    f"{Var.MapElementsData[OnElement]['Style']}{str(Var.MessagesData[OnElement]['Name']).lower()}[;]{SymbolString}"))
+        LineOffset += RC.Print(Message,          
+            EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = EnvironmentVP["Width"])[0]
+        # seen object
+        Var.SeenObject = None
+        try:
+            Var.SeenObject = (
+                Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]])
+            if Var.SeenObject.strip() != "":
+                # there is an object in front of player
+                SymbolString = ("" if Var.ObjectsData[Var.SeenObject]["Image"].strip() == ""
+                    else f" ({Var.ObjectsData[Var.SeenObject]['Style']}{Var.ObjectsData[Var.SeenObject]['Image']}[;])")
+                Message = (Var.MessagesData["Dashboard"]["PlayerSeesObject"]
+                    .replace(
+                        "{Object}", 
+                        f"{Var.ObjectsData[Var.SeenObject]['Style']}{str(Var.MessagesData[Var.SeenObject]['Name']).lower()}[;]{SymbolString}"))
+                LineOffset += RC.Print(Message,          
+                    EnvironmentVP["Y"] + LineOffset, EnvironmentVP["X"],
+                    JustifyText = RC.Justify.Center, 
+                    MaxColumns = EnvironmentVP["Width"])[0]
+        except IndexError:
+            pass
+
+    # action history title view part
+    if ViewParts is None or "ActionHistoryTitle" in ViewParts:
+        LineOffset = 0
+        RC.Print(Var.MessagesData["Dashboard"]["ActionHistoryTitle"],          
+            ActionHistoryTitleVP["Y"] + LineOffset, ActionHistoryTitleVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = ActionHistoryTitleVP["Width"])
+
+    # action history view part
+    if ViewParts is None or "ActionHistory" in ViewParts:
+        RC.ClearConsole(
+            ActionHistoryVP["Y"], ActionHistoryVP["X"], 
+            ActionHistoryVP["Width"], ActionHistoryVP["Height"])
+        LineOffset = 0
+        # get last ActionHistoryVP["Height"] (reversed)
+        for Index, Action in enumerate(Var.ActionsHistory[:-(ActionHistoryVP["Height"] + 1):-1]):
+            RC.Print(f"{Action}",          
+                ActionHistoryVP["Y"] + LineOffset + Index, ActionHistoryVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = ActionHistoryVP["Width"])
+    
+    # message/story view part
+    if ViewParts is None or "Message" in ViewParts:
+        RC.ClearConsole(
+            MessageVP["Y"], MessageVP["X"], 
+            MessageVP["Width"], MessageVP["Height"])
+        LineOffset = 0
+        RC.Print(Var.CurrentMessage,          
+            MessageVP["Y"] + LineOffset, MessageVP["X"],
+            JustifyText = RC.Justify.Left, 
+            MaxColumns = MessageVP["Width"])
+
+
+
 def AskPlayerAction():
     """
         Ask player action
@@ -639,9 +753,7 @@ def ExecutePlayerAction(
         # save game
         Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["Quit"]["Success"]
         # refresh view
-        ShowView(
-            Var.GameData["Game"]["CurrentView"], 
-            ViewParts = ["Message"])
+        ShowView(ViewParts = ["Message"])
         SaveGame()
         # wait for last Enter
         AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
@@ -654,15 +766,14 @@ def ExecutePlayerAction(
         Var.GameRunning = False
             
     elif ActionName == "Move":
-        ActionMessage = (Var.MessagesData["Dashboard"]["Actions"]["Move"]["Success"]
-            .replace("{Steps}", str(ActionArgument)))
+        ActionMessage = (
+            Var.MessagesData["Dashboard"]["Actions"]["Move"]["Success"]
+                .replace("{Steps}", str(ActionArgument)))
         for Index in range(ActionArgument):
             (IsSuccess, Var.CurrentMessage, Event) = Move(Var.Player)
             MoveOtherCharacters()
             # refresh view
-            ShowView(
-                Var.GameData["Game"]["CurrentView"], 
-                ViewParts = ["VitalSigns", "Counters", "Environment", "Message"])
+            ShowView(ViewParts = ["VitalSigns", "Counters", "Environment", "Message"])
             # stop loop if movement is not possible
             if not IsSuccess:
                 ActionMessage = Var.MessagesData["Dashboard"]["Actions"]["Move"]["Failure"]
@@ -676,9 +787,7 @@ def ExecutePlayerAction(
         ActionMessage = Var.MessagesData["Dashboard"]["Actions"][ActionName]["Success"]
         # refresh view
         ShowMap(Var.Player["Y"], Var.Player["X"])
-        ShowView(
-            Var.GameData["Game"]["CurrentView"], 
-            ViewParts = ["Environment"])
+        ShowView(ViewParts = ["Environment"])
 
     elif ActionName == "TurnRight":
         # update direction
@@ -686,19 +795,354 @@ def ExecutePlayerAction(
         ActionMessage = Var.MessagesData["Dashboard"]["Actions"][ActionName]["Success"]
         # refresh view
         ShowMap(Var.Player["Y"], Var.Player["X"])
-        ShowView(
-            Var.GameData["Game"]["CurrentView"], 
-            ViewParts = ["Environment"])
+        ShowView(ViewParts = ["Environment"])
 
     elif ActionName == "UseObject":
+        ActionOK = False
+        if ActionArgument == 0 or ActionArgument > len(Var.ObjectsData["Backpack"]["Behaviors"]["Contains"]):
+            # no object here
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure"]
+        else:
+            # get object data
+            CurrentObjectID = Var.ObjectsData["Backpack"]["Behaviors"]["Contains"][ActionArgument - 1]
+            CurrentObjectData = Var.ObjectsData[CurrentObjectID]
+            
+            if CurrentObjectData["Behaviors"]["Usable"]:
+                # object is usable
+                if CurrentObjectData["Behaviors"]["RequiredMapElementsToUse"] is not None:
+                    # object needs a specific map element to be used
+                    if not Var.SeenElement in CurrentObjectData["Behaviors"]["RequiredMapElementsToUse"]:
+                        # the element is not here
+                        Var.CurrentMessage = (
+                            Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure3"]
+                                .replace("{Object}", 
+                                    CurrentObjectData["Style"] 
+                                    + Var.MessagesData[CurrentObjectID]["Name"] 
+                                    + "[;]")
+                            + "\n\n"
+                            + Var.MessagesData[CurrentObjectID]["CantUse"])
+                    else:
+                        # the element is here
+                        ActionOK = True
+                        Var.CurrentMessage = (
+                            Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                                .replace("{Object}", 
+                                    CurrentObjectData["Style"] 
+                                    + Var.MessagesData[CurrentObjectID]["Name"] 
+                                    + "[;]")
+                            + "\n\n"
+                            + Var.MessagesData[CurrentObjectID]["Use"])
+                        # remove prerequisite from map element
+                        Var.MapElementsData[Var.SeenElement]["Prerequisites"].remove(CurrentObjectID)
+                        # remove object from backpack
+                        Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
+                        # refresh view
+                        ShowView(ViewParts = ["BackpackItems"])
+
+                else:
+                    Var.CurrentMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                            .replace("{Object}", 
+                                CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"]
+                                + "[;]"))
+                    
+                    # check and update item capacity if any
+                    if CurrentObjectData["Behaviors"]["Capacity"] is not None:
+                        # object has a capacity
+                        if CurrentObjectData["Behaviors"]["Contains"] > 0:
+                            # object still has charges
+                            ActionOK = True
+                            CurrentObjectData["Behaviors"]["Contains"] -= 1
+                            Var.CurrentMessage += (
+                                    "\n\n" + 
+                                    Var.MessagesData[CurrentObjectID]["Use"]
+                                        .replace("{Contains}", 
+                                            str(CurrentObjectData["Behaviors"]["Contains"])) 
+                                    + "\n")
+                            ShowView(ViewParts = ["BackpackItems"])
+                        else:
+                            # object is empty
+                            Var.CurrentMessage += (
+                                    "\n\n" + Var.MessagesData[CurrentObjectID]["CantUse"])
+                    else:
+                        # object has no capacity
+                        ActionOK = True
+                        Var.CurrentMessage += (
+                            "\n\n" + Var.MessagesData[CurrentObjectID]["Use"] + "\n")
+
+                    # check if object is a charger
+                    if CurrentObjectData["Behaviors"]["ChargeObjects"] is not None:
+                        # object is a charger
+                        ActionOK = True
+                        Var.CurrentMessage += "\n"
+                        # get each object to charge
+                        for ObjectToCharge in CurrentObjectData["Behaviors"]["ChargeObjects"]:
+                            if ObjectToCharge in Var.ObjectsData["Backpack"]["Behaviors"]["Contains"]:
+                                # object is in backpack
+                                # charge it to maximum capacity
+                                Var.ObjectsData[ObjectToCharge]["Behaviors"]["Contains"] = Var.ObjectsData[ObjectToCharge]["Behaviors"]["Capacity"]
+                                Var.CurrentMessage += (
+                                    Var.MessagesData["Dashboard"]["Actions"][ActionName]["Charged"]
+                                        .replace("{Object}", 
+                                            Var.ObjectsData[ObjectToCharge]["Style"] 
+                                            + Var.MessagesData[ObjectToCharge]["Name"] 
+                                            + "[;]")
+                                    + "\n")
+                            ShowView(ViewParts = ["BackpackItems"])
+
+                if ActionOK:
+                    # use action is possible, show message
+                    ActionMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Success"]
+                            .replace("{Object}", 
+                                CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"]
+                                + "[;]"))
+                    # update vital signs
+                    Var.CurrentMessage += UpdateVitalSign("Health", CurrentObjectData)
+                    Var.CurrentMessage += UpdateVitalSign("Hydration", CurrentObjectData)
+                    Var.CurrentMessage += UpdateVitalSign("Satiety", CurrentObjectData)
+            
+            else:
+                # object is not usable
+                Var.CurrentMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure2"]
+                        .replace("{Object}", 
+                            CurrentObjectData["Style"] 
+                            + Var.MessagesData[CurrentObjectID]["Name"]
+                            + "[;]"))
+
+        # refresh view
+        ShowView(ViewParts = ["VitalSigns", "Message"])
+
+    elif ActionName == "FillObject":
+        ActionOK = False
+        if ActionArgument == 0 or ActionArgument > len(Var.ObjectsData["Backpack"]["Behaviors"]["Contains"]):
+            # no object here
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["UseObject"]["Failure"]
+        else:
+            # get object data
+            CurrentObjectID = Var.ObjectsData["Backpack"]["Behaviors"]["Contains"][ActionArgument - 1]
+            CurrentObjectData = Var.ObjectsData[CurrentObjectID]
+            
+            if CurrentObjectData["Behaviors"]["RequiredMapElementsToFill"] is not None:
+                # object needs a specific map element to be filled
+                if not Var.SeenElement in CurrentObjectData["Behaviors"]["RequiredMapElementsToFill"]:
+                    # the element is not here
+                    ElementList = ""
+                    # get all possible elements
+                    for NeededElement in CurrentObjectData["Behaviors"]["RequiredMapElementsToFill"]:
+                        ElementList += ( 
+                            Var.MapElementsData[NeededElement]["Style"] 
+                            + Var.MessagesData[NeededElement]["Name"].lower() 
+                            + "[;], ")
+                    Var.CurrentMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["FillObject"]["Failure"]
+                            .replace("{Elements}", 
+                                ElementList[:len(ElementList) - len(", ")]) 
+                            .replace("{Object}", 
+                                CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"]
+                                + "[;]") 
+                        + "\n\n"
+                        + Var.MessagesData[CurrentObjectID]["CantFill"])
+                else:
+                    # the element is here
+                    ActionOK = True
+                    Var.CurrentMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["FillObject"]["Success"]
+                            .replace("{Object}", 
+                                CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"] 
+                                + "[;]") 
+                            .replace("{Element}", 
+                                Var.MapElementsData[Var.SeenElement]["Style"] 
+                                + Var.MessagesData[Var.SeenElement]["Name"]
+                                + "[;]") 
+                        + "\n\n"
+                        + Var.MessagesData[CurrentObjectID]["Fill"])
+                    # charge object to maximum capacity
+                    CurrentObjectData["Behaviors"]["Contains"] = CurrentObjectData["Behaviors"]["Capacity"]
+                    # update objects vital signs
+                    CurrentObjectData["Behaviors"]["Health"] = Var.MapElementsData[Var.SeenElement]["Behaviors"]["GiveWater"]["Health"]
+                    CurrentObjectData["Behaviors"]["Hydration"] = Var.MapElementsData[Var.SeenElement]["Behaviors"]["GiveWater"]["Hydration"]
+                    # refresh view
+                    ShowView(ViewParts = ["BackpackItems"])
+
+            else:
+                # object is not fillable
+                Var.CurrentMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["FillObject"]["Failure2"]
+                        .replace("{Object}", 
+                            CurrentObjectData["Style"] 
+                            + Var.MessagesData[CurrentObjectID]["Name"]
+                            + "[;]"))
+                
+            if ActionOK:
+                # use action is possible, show message
+                ActionMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["FillObject"]["Success"]
+                        .replace("{Object}", 
+                            CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"] 
+                                + "[;]") 
+                        .replace("{Element}", 
+                            Var.MapElementsData[Var.SeenElement]["Style"] 
+                                + Var.MessagesData[Var.SeenElement]["Name"].lower() 
+                                + "[;]"))
+            
+        # refresh view
+        ShowView(ViewParts = ["VitalSigns", "Message"])
+
+    elif ActionName == "DropObject":
+        ActionOK = False
+        if ActionArgument == 0 or ActionArgument > len(Var.ObjectsData["Backpack"]["Behaviors"]["Contains"]):
+            # no object here
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["DropObject"]["Failure"]
+        elif Var.SeenObject.strip() != "" or not Var.MapElementsData[Var.SeenElement]["Behaviors"]["CanMoveOn"]:
+            # there is already an object here or map element is not appropriate
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["DropObject"]["Failure2"]
+        else:
+            # get object data
+            CurrentObjectID = Var.ObjectsData["Backpack"]["Behaviors"]["Contains"][ActionArgument - 1]
+            CurrentObjectData = Var.ObjectsData[CurrentObjectID]
+            if not CurrentObjectData["Behaviors"]["Dropable"]:
+                # object cannot be dropped
+                Var.CurrentMessage = Var.MessagesData[CurrentObjectID]["Drop"]
+            else:
+                # drop object
+                ActionOK = True
+                # remove object from backpack
+                Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
+                # add object to objects layer
+                Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]] = CurrentObjectID
+                # refresh map and view
+                ShowMap(Var.SeenCoordinates["Y"], Var.SeenCoordinates["X"])
+                ShowView(ViewParts = ["BackpackItems", "Environment"])
+                # get message
+                Var.CurrentMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["DropObject"]["Success"]
+                        .replace("{Object}", 
+                            CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"] 
+                                + "[;]") 
+                    + "\n\n"
+                    + Var.MessagesData[CurrentObjectID]["Drop"])           
+                
+            if ActionOK:
+                # drop action is possible, show message
+                ActionMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["DropObject"]["Success"]
+                        .replace("{Object}", CurrentObjectData["Style"] 
+                            + Var.MessagesData[CurrentObjectID]["Name"] 
+                            + "[;]")) 
+            
+        # refresh view
+        ShowView(ViewParts = ["Message"])
+
+    elif ActionName == "PickUp":
+        ActionOK = False
+        if Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]].strip() == "":
+            # no object here
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["PickUp"]["Failure"]
+        else:
+            # get object data
+            CurrentObjectID = Var.SeenObject
+            CurrentObjectData = Var.ObjectsData[CurrentObjectID]
+            if not CurrentObjectData["Behaviors"]["Pickable"]: 
+                # object is not pickable
+                Var.CurrentMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["PickUp"]["Failure2"]
+                        .replace("{Object}", 
+                            CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"] 
+                                + "[;]")) 
+            elif len(Var.ObjectsData["Backpack"]["Behaviors"]["Contains"]) == Var.ObjectsData["Backpack"]["Behaviors"]["Capacity"]:
+                # backpack is already full
+                Var.CurrentMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["PickUp"]["Failure2"]
+                        .replace("{Object}", 
+                            CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"] 
+                                + "[;]"))
+            else:
+                # pick up object
+                ActionOK = True
+                # add object to backpack
+                Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].append(CurrentObjectID)
+                # remove object from objects layer
+                Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]] = ""
+                # refresh map and view
+                ShowMap(Var.SeenCoordinates["Y"], Var.SeenCoordinates["X"])
+                ShowView(ViewParts = ["BackpackItems", "Environment"])
+                # get message
+                Var.CurrentMessage = (
+                    Var.MessagesData["Dashboard"]["Actions"]["PickUp"]["Success"]
+                        .replace("{Object}", 
+                            CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"] 
+                                + "[;]") 
+                    + "\n\n"
+                    + Var.MessagesData[CurrentObjectID]["PickUp"])           
+                
+                if ActionOK:
+                    # pick up action is possible, show message
+                    ActionMessage = (
+                        Var.MessagesData["Dashboard"]["Actions"]["PickUp"]["Success"]
+                            .replace("{Object}", CurrentObjectData["Style"] 
+                                + Var.MessagesData[CurrentObjectID]["Name"] 
+                                + "[;]")) 
+            
+        # refresh view
+        ShowView(ViewParts = ["Message"])
+
+    elif ActionName == "Rest":
+        ActionOK = False
+        OnElement = Var.MapLayer[Var.Player["Y"]][Var.Player["X"]]
+        OnElementData = Var.MapElementsData[OnElement]
+        if not OnElementData["Behaviors"]["CanRest"]:
+            # cannot rest here
+            Var.CurrentMessage = (
+                Var.MessagesData["Dashboard"]["Actions"]["Rest"]["Failure"]
+                    .replace("{Element}", 
+                        OnElementData["Style"] 
+                        + Var.MessagesData[OnElement]["Name"].lower()
+                        + "[;]"))
+        else:
+            # rest for appropriate time
+            ActionOK = True
+            # get messages
+            ActionMessage = (
+                Var.MessagesData["Dashboard"]["Actions"]["Rest"]["Success"]
+                    .replace("{Hours}", str(ActionArgument)))
+            Var.CurrentMessage = ActionMessage + "\n"
+
+            RestData = Var.GameData["Game"]["Actions"]["Rest"]
+            # update vital signs
+            Var.CurrentMessage += UpdateVitalSign("Health", Value = RestData["Health"] * ActionArgument)
+            Var.CurrentMessage += UpdateVitalSign("Hydration", Value = RestData["Hydration"] * ActionArgument)
+            Var.CurrentMessage += UpdateVitalSign("Satiety", Value = RestData["Satiety"] * ActionArgument)
+
+        # refresh view
+        ShowView(ViewParts = ["VitalSigns", "Message"])
+
+    elif ActionName == "GetHelp":
+        # show help screen
         pass
 
-    else:
-        ActionMessage = f"Faire {ActionArgument} fois l'action {ActionName}"
+    # else:
+    #     # other known action
+    #     ActionMessage = f"Faire {ActionArgument} fois l'action {ActionName}"
     
-    # update messages
-    Util.ManageMessageHistory(ActionMessage, Var.ActionsHistory)
-    ShowView(Var.GameData["Game"]["CurrentView"], "ActionHistory")
+    # update messages and action counter
+    if ActionMessage != "":
+        Var.Player["TotalActions"] += 1
+        Util.ManageMessageHistory(ActionMessage, Var.ActionsHistory)
+    
+    # refresh view
+    ShowView(ViewParts = ["Counters", "ActionHistory", "Message"])
+
 
 
 def Move(
@@ -710,6 +1154,7 @@ def Move(
     """
 
     Event = None
+    ElementAtCurrentPosition = Var.MapElementsData[Var.MapLayer[Character["Y"]][Character["X"]]]
 
     # define new position
     NewX = Character["X"] + Var.GameData["Game"]["Directions"][Character["Direction"]]["DeltaX"]
@@ -722,13 +1167,14 @@ def Move(
         # player is going out of map (exit to main)
         # return message and current position event
         return (True,
-            Var.MessagesData[Var.MapLayer[Character["Y"]][Character["X"]]]["MoveOn"], 
-            Var.MapElementsData[Var.MapLayer[Character["Y"]][Character["X"]]]["Behaviors"]["Event"])
+            (Var.MessagesData[Var.MapLayer[Character["Y"]][Character["X"]]]["MoveOn"]
+                .replace("{Element}", ElementAtCurrentPosition["Style"] + Var.MessagesData[Var.MapLayer[Character["Y"]][Character["X"]]]["Name"].lower() + "[;]")), 
+            ElementAtCurrentPosition["Behaviors"]["Event"])
 
     if not ElementAtNewPosition["Behaviors"]["CanMoveOn"]:
         # move is not possible
         return (False, 
-            f"{Var.MessagesData['Dashboard']['Actions']['Move']['Failure']}\n{Var.MessagesData[Var.MapLayer[NewY][NewX]]['CantMoveOn']}", 
+            f"{Var.MessagesData['Dashboard']['Actions']['Move']['Failure']}\n\n{Var.MessagesData[Var.MapLayer[NewY][NewX]]['CantMoveOn']}", 
             None)
     else:
         # get other character at new position
@@ -754,15 +1200,20 @@ def Move(
     ShowMap(OldY, OldX)
     # place character at new position
     ShowMap(NewY, NewX)
+    # get message
+    Message = (
+        Var.MessagesData[Var.MapLayer[NewY][NewX]]["MoveOn"]
+        .replace("{Element}", ElementAtNewPosition["Style"] + Var.MessagesData[Var.MapLayer[NewY][NewX]]["Name"].lower() + "[;]")
+        + "\n")
     # update character vital signs
-    Character["Health"] += ElementAtNewPosition["Behaviors"]["Health"]
-    Character["Hydration"] += ElementAtNewPosition["Behaviors"]["Hydration"]
-    Character["Satiety"] += ElementAtNewPosition["Behaviors"]["Satiety"]
+    Message += UpdateVitalSign("Health", ElementAtNewPosition)
+    Message += UpdateVitalSign("Hydration", ElementAtNewPosition)
+    Message += UpdateVitalSign("Satiety", ElementAtNewPosition)
     # update counters
     Character["TotalMovements"] += 1
     # return message and event
     return (True,
-        Var.MessagesData[Var.MapLayer[NewY][NewX]]["MoveOn"], 
+        Message,
         ElementAtNewPosition["Behaviors"]["Event"])
 
 
@@ -789,9 +1240,37 @@ def CheckEvent(Event):
             Var.Player["Y"] = Event["Y"]
             Var.Player["Direction"] = Event["Direction"]
             GetMapLayersAndViewPort()
-            ShowView(
-                Var.GameData["Game"]["CurrentView"], 
-                ViewParts = ["Map", "VitalSigns", "Counters", "Environment", "ActionHistory", "Message"])
+            ShowView(ViewParts = ["Map", "VitalSigns", "Counters", "Environment", "ActionHistory", "Message", 
+                "ChallengeTitle", "ChallengeHistory1"])
+
+
+
+def UpdateVitalSign(
+    VitalSign,
+    ElementData = None,
+    Value = None):
+    """
+        Update vital sign with map element, object data or absolute values
+        Return appropriate message
+    """
+
+    # get value
+    if Value is None and ElementData is not None and ElementData["Behaviors"][VitalSign] != 0:
+        Value = ElementData["Behaviors"][VitalSign]
+
+    if Value is not None:
+        # update player data
+        Var.Player[VitalSign] = min(
+            Var.Player[VitalSign] + Value,
+            Var.Player["Max" + VitalSign])
+        # show appropriate message
+        MessageName = "You" + ("Earn" if Value > 0 else "Loose")
+        return ("\n" +
+            Var.MessagesData["Dashboard"][MessageName]
+            .replace("{Number}", str(abs(Value)))
+            .replace("{VitalSign}", Var.GameData["Game"]["VitalSigns"][VitalSign]["Color"] + Var.MessagesData["Dashboard"][VitalSign] + "[;]"))
+
+    return ""
 
 
 

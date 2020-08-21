@@ -7,9 +7,10 @@
             "ForVictory" : true,
             "Pickable" : false,
             "Dropable" : false,
-            "Actions" : ["Open"],
-            "RequiredMapElements" : null,
-            "RequiredObjects" : null,
+            "Usable" : false,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : 10,
             "Contains" : [
                 "LaptopComputer",
@@ -18,9 +19,10 @@
                 "GlassBottle",
                 "Map"
             ],
+            "Spawn" : false,
             "Health" : 0,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "BronzeKey" : {
@@ -28,21 +30,23 @@
         "Style" : "[R;]",
         "StartPosition" : {
             "Map" : "Challenge1",
-            "Y" : 3,
-            "X" : 5
+            "Y" : 5,
+            "X" : 7
         },
         "Behaviors" : {
             "ForVictory" : true,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use"],
-            "RequiredMapElements" : null,
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : ["0"],
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : false,
             "Health" : 0,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "SilverKey" : {
@@ -50,21 +54,23 @@
         "Style" : "[W;]",
         "StartPosition" : {
             "Map" : "Challenge2",
-            "Y" : 5,
+            "Y" : 6,
             "X" : 10
         },
         "Behaviors" : {
             "ForVictory" : true,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use"],
-            "RequiredMapElements" : ["0"],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : ["0"],
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : false,
             "Health" : 0,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "GoldKey" : {
@@ -79,14 +85,16 @@
             "ForVictory" : true,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use"],
-            "RequiredMapElements" : ["0"],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : ["0"],
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : false,
             "Health" : 0,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "LaptopComputer" : {
@@ -97,14 +105,16 @@
             "ForVictory" : true,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use"],
-            "RequiredMapElements" : null,
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : 5,
             "Contains" : 5,
+            "Spawn" : false,
             "Health" : 10,
             "Satiety" : -2,
-            "Thirst" : -2
+            "Hydration" : -2
         }
     },
     "SolarCharger" : {
@@ -115,16 +125,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use"],
-            "RequiredMapElements" : null,
-            "RequiredObjects" : [{
-                "Name" : "LaptopComputer",
-                "Capacity" : 5}],
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : ["LaptopComputer"],
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : false,
             "Health" : 0,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "Knife" : {
@@ -135,14 +145,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use"],
-            "RequiredMapElements" : null,
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : false,
             "Health" : 0,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "GlassBottle" : {
@@ -153,20 +165,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use"],
-            "RequiredMapElements" : [
-                "m",
-                "-",
-                "x",
-                "|",
-                "="
-            ],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : ["I", "-", "H", "|", "="],
+            "ChargeObjects" : null,
             "Capacity" : 5,
-            "Contains" : null,
+            "Contains" : 0,
+            "Spawn" : false,
             "Health" : 0,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "Map" : {
@@ -177,14 +185,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use"],
-            "RequiredMapElements" : null,
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : false,
             "Health" : 0,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "BadFood1" : {
@@ -195,14 +205,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use", "Spawn"],
-            "RequiredMapElements" : ["A"],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : ["A"],
             "Health" : -20,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "GoodFood1" : {
@@ -213,14 +225,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use", "Spawn"],
-            "RequiredMapElements" : ["A"],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : ["A"],
             "Health" : 0,
             "Satiety" : 20,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "BadFood2" : {
@@ -231,14 +245,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use", "Spawn"],
-            "RequiredMapElements" : ["+"],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : ["+"],
             "Health" : -10,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "GoodFood2" : {
@@ -249,14 +265,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use", "Spawn"],
-            "RequiredMapElements" : ["+"],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : ["+"],
             "Health" : 0,
             "Satiety" : 10,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "BadFood3" : {
@@ -267,14 +285,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use", "Spawn"],
-            "RequiredMapElements" : [" "],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : [" "],
             "Health" : -10,
             "Satiety" : 0,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     },
     "GoodFood3" : {
@@ -285,14 +305,16 @@
             "ForVictory" : false,
             "Pickable" : true,
             "Dropable" : true,
-            "Actions" : ["Use", "Spawn"],
-            "RequiredMapElements" : ["+"],
-            "RequiredObjects" : null,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
             "Capacity" : null,
             "Contains" : null,
+            "Spawn" : [" "],
             "Health" : 5,
             "Satiety" : 5,
-            "Thirst" : 0
+            "Hydration" : 0
         }
     }
 }
