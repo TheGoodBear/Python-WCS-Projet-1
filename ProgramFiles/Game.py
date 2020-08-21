@@ -253,13 +253,65 @@ def ShowView(
         ShowDashboard(ViewParts)
 
     elif ViewName == "Challenge":
-        print("***************")
+
+        RC.ShowCursor(False)
+
         # viewports data
         ChallengeVP = Var.GameData["ViewPorts"][ViewName]["Window"]
         MapVP = Var.GameData["ViewPorts"][ViewName]["Map"]
         TitleVP = Var.GameData["ViewPorts"][ViewName]["Title"]
         TextVP = Var.GameData["ViewPorts"][ViewName]["Text"]
         AskVP = Var.GameData["ViewPorts"][ViewName]["Ask"]
+
+        # show map if specified
+        if ViewParts is None or "Map" in ViewParts:
+            ShowMap()
+
+        # show dashboard
+        ShowDashboard(ViewParts)
+
+        CurrentMap = Var.Player["CurrentMap"]
+
+        if "ChallengeTitle" in ViewParts:
+            # challenge title
+            RC.Print(f"{Var.MessagesData[CurrentMap]['Title']}",
+                TitleVP["Y"], TitleVP["X"],
+                JustifyText = RC.Justify.Center,
+                MaxColumns = TitleVP["Width"])
+
+        if "ChallengeText1" in Viewparts:
+            # challenge text
+            RC.ClearConsole(
+                TextVP["Y"], TextVP["X"], 
+                TextVP["Width"], TextVP["Height"])
+            LineOffset = 0
+
+            Message = (Var.MessagesData[CurrentMap]["History1"]
+                .replace("{Name}", 
+                    Var.Player["Style"] + Var.Player["Name"] + "[;]"))
+            LineOffset += RC.Print(Message,          
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])[0]
+
+        if "ChallengeText2" in Viewparts:
+            # challenge text
+            RC.ClearConsole(
+                TextVP["Y"], TextVP["X"], 
+                TextVP["Width"], TextVP["Height"])
+            LineOffset = 0
+
+            Message = (Var.MessagesData[CurrentMap]["History2"]
+                .replace("{Name}", 
+                    Var.Player["Style"] + Var.Player["Name"] + "[;]"))
+            LineOffset += RC.Print(Message,          
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])[0]
+
+        
+
+
 
 
 
@@ -367,7 +419,7 @@ def ShowDashboard(ViewParts = None):
 
     # dashboard viewports data
     DashboardVP = Var.GameData["ViewPorts"]["Dashboard"]["Window"]
-    TitleVP = Var.GameData["ViewPorts"]["Dashboard"]["Title"]
+    GameTitleVP = Var.GameData["ViewPorts"]["Dashboard"]["Title"]
     PlayerVP = Var.GameData["ViewPorts"]["Dashboard"]["Player"]
     VitalSignsVP = Var.GameData["ViewPorts"]["Dashboard"]["VitalSigns"]
     CountersVP = Var.GameData["ViewPorts"]["Dashboard"]["Counters"]
@@ -384,16 +436,16 @@ def ShowDashboard(ViewParts = None):
     if ViewParts is None or "Title" in ViewParts:
         LineOffset = 0
         LineOffset += RC.Print(f"[B;W]{Var.MessagesData['Game']['Title']}",
-            TitleVP["Y"], TitleVP["X"],
+            GameTitleVP["Y"], GameTitleVP["X"],
             JustifyText = RC.Justify.Center, 
-            MaxColumns = TitleVP["Width"])[0]
+            MaxColumns = GameTitleVP["Width"])[0]
         Message = (Var.MessagesData["Dashboard"]["FullVersion"]
             .replace("{VersionNumber}", Var.GameData["Game"]["VersionNumber"])
             .replace("{VersionDate}", Var.GameData["Game"]["VersionDate"]))
         RC.Print(f"{Message}",
-            TitleVP["Y"] + LineOffset, TitleVP["X"],
+            GameTitleVP["Y"] + LineOffset, GameTitleVP["X"],
             JustifyText = RC.Justify.Center,
-            MaxColumns = TitleVP["Width"])
+            MaxColumns = GameTitleVP["Width"])
     
     # player view part
     if ViewParts is None or "Player" in ViewParts:
@@ -1188,7 +1240,8 @@ def CheckEvent(Event):
             Var.Player["Y"] = Event["Y"]
             Var.Player["Direction"] = Event["Direction"]
             GetMapLayersAndViewPort()
-            ShowView(ViewParts = ["Map", "VitalSigns", "Counters", "Environment", "ActionHistory", "Message"])
+            ShowView(ViewParts = ["Map", "VitalSigns", "Counters", "Environment", "ActionHistory", "Message", 
+                "ChallengeTitle", "ChallengeHistory1"])
 
 
 

@@ -104,14 +104,15 @@
     },
     "Challenge1" : {
         "Category" : "Event",
-        "Title" : "Le Sphinx",
+        "Title" : "Le défi du Sphinx",
         "Image" : null,
-        "History" : "En haut de la falaise, en bordure de forêt et en surplomb de la plage, tu découvres la statue d’un Sphinx avec une grosse clé en bronze posée sur les pattes.\n\nLorsque tu t’en approches, les yeux de la statue s’illuminent et une voix se fait entendre :\n« Bonjour explorateur ! Pour ouvrir la porte de la montagne, atteindre le cœur de l’île et rejoindre tes compagnons, tu devras tout d’abord prouver ta valeur individuelle en gagnant les 3 clés que tu obtiendras en relevant les défis appropriés. Ceci est le premier d’entre eux. »\n\nIl est bien entendu impossible de prendre la clé (qui semble collée aux pattes du Sphinx) tant que le défi n’est pas gagné.\n\nLa voix poursuit : « {Rounds} fois de suite, tu devras deviner le nombre que j’ai en tête (entre {MinimumNumber} et {MaximumNumber}, tu as {MaxTries} essais maximum pour tous les trouver, es-tu prêt ? »",
+        "History1" : "En haut de la falaise, en bordure de forêt et en surplomb de la plage, je découvre la statue d’un Sphinx avec une grosse clé en bronze posée sur les pattes.",
+        "History2" : "Lorsque je m'en approche, les yeux de la statue s’illuminent et une voix se fait entendre :\n« Bonjour {Name} ! Pour ouvrir la porte de la montagne, atteindre le cœur de l’île et rejoindre tes compagnons, tu devras tout d’abord prouver ta valeur individuelle en gagnant les 3 clés que tu obtiendras en relevant les défis appropriés. Ceci est le premier d’entre eux. »\n\nLa voix poursuit : « {Rounds} fois de suite, tu devras deviner le nombre que j’ai en tête (entre {MinimumNumber} et {MaximumNumber}, tu as {MaxTries} essais maximum pour tous les trouver.\n\nÀ chaque réussite, une étoile me couronnera lorsque les 3 étoiles orneront mon front, la clé tu obtiendras.\n\nEs-tu prêt ? »",
         "AskUser" : "Quel nombre ai-je en tête ? ",
         "Higher" : "Non, le nombre auquel je pense est supérieur à celui-là.",
         "Lower" : "Non, le nombre auquel je pense est inférieur à celui-ci.",
-        "Success" : "« Bravo aventurier, tu es perspicace, mais d'autres défis t'attendent.\n\nEn attendant, tu as gagné cette clé. »\n\nLa clé de bronze a été ajoutée à ton sac à dos.",
-        "Failure" : "« Malheureusement tu as échoué, mais ce n'est que partie remise.\nReviens me voir plus tard, quand tu auras l'esprit clair. »",
+        "Success" : "« Bravo {Name}, tu es perspicace, mais d'autres défis t'attendent.\n\nEn attendant, tu as gagné cette clé.. »",
+        "Failure" : "« Malheureusement tu as échoué, mais ce n'est que partie remise.\n\nReviens me voir plus tard, quand tu auras l'esprit clair. »",
         "AskReady" : "Es-tu prêt à continuer l'aventure ? "
     },
     "Challenge2" : {
@@ -126,7 +127,7 @@
     },
     "Challenge3" : {
         "Category" : "Event",
-        "Title" : "L'arbre des singes",
+        "Title" : "La clairière aux singes",
         "Image" : null,
         "History" : "En explorant la jungle, tu remarques une bande de singes braillards assis en rond au milieu d'une clairière près d'unique arbre magnifique. En écoutant avec un peu plus d’attention, tu te rends comptes que les singes semblent articuler des nombres et que deux sons reviennent régulièrement : Fizz et Buzz...\n\nTu réfléchis à cela, lorsque soudainement, les cris s’arrêtent et tu te retrouves entouré par les singes.\n\nL’un d’eux, probablement le chef vu sa démarche assurée, s’approche de toi. Il te toise un instant puis, du doigt, te désigne le haut de l'arbre. En levant la tête, tu aperçois une grosse clé en or, pendue à une solide liane, tu commences à chercher un moyen de grimper dans les arbres, mais cela déclenche une vive réaction de la part des singes. Il semble qu’ils ne soient pas disposés à te donner la clé comme ça !\n\nTu te ravises alors, et le chef se rapproche de toi et commence à te parler...\n« Toi jouer ! Si gagner alors clé à toi ! »\nJouer ? Mais à quoi ?\n\nSemblant lire dans tes pensées, le chef dit alors « Nous montrer. »\n Puis il dit « 1 ». Un autre singe dit alors « 2 », puis un troisième « Fizz » et ainsi de suite : « 4 », « Buzz », « Fizz », « 7 », « 8 », « Fizz », « Buzz », « 11 », « 12 »...\nÀ ce moment, tous les autres singes se mettent à rire et celui qui vient d’annoncer 12 pousse un cri de déception et se retourne en boudant. Le jeu recommence alors avec les singes restants : « 1 », « 2 », « Fizz ».../n/nAu bout de quelques tours tu comprends le principe du jeu (dire Fizz si le nombre est un multiple de 3, Buzz si c'est un multiple de 5, FizzBuzz si c'est un multiple de 3 et 5, ou simplement le nombre lui même dans les autres cas) et tu tentes ta chance pour obtenir la clé.\n\nLe jeu est automatique, tu as {PlayerChance}% de chances de donner une bonne réponse lorsque vient ton tour",
         "AskStart" : "Appuies pour démarrer un tour de jeu ou (quit)te la clairière : ",
@@ -210,6 +211,18 @@
     "4" : {
         "Category" : "MapElement",
         "Name" : "Une statue de Sphinx",
+        "MoveOn" : "",
+        "CantMoveOn" : "Je vais éviter de fâcher le Sphinx en escaladant sa statue."
+    },
+    "9" : {
+        "Category" : "MapElement",
+        "Name" : "L'oeil du Sphinx",
+        "MoveOn" : "",
+        "CantMoveOn" : "Je vais éviter de fâcher le Sphinx en escaladant sa statue."
+    },
+    "*" : {
+        "Category" : "MapElement",
+        "Name" : "Une étoile couronnant le Sphinx",
         "MoveOn" : "",
         "CantMoveOn" : "Je vais éviter de fâcher le Sphinx en escaladant sa statue."
     },

@@ -215,7 +215,23 @@
     },
     "9" : {
         "Image" : "☼",
-        "Style" : "[Y;]",
+        "Style" : "[W;]",
+        "Behaviors" : {
+            "CanMoveOn" : false,
+            "CanRest" : false,
+            "Event" : null,
+            "Prerequisites" : null,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Hydration" : 0,
+            "GiveFood" : 0,
+            "GivePoisonedFood" : 0,
+            "GiveWater" : null
+        }
+    },
+    "*" : {
+        "Image" : "☼",
+        "Style" : "[B;B]",
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
