@@ -29,24 +29,28 @@ def Challenge1():
         Var.CurrentChallengeData["MaximumNumber"])
     FoundNumber = " ??? "
 
+    # clean text area
+    RC.ClearConsole(
+        TextVP["Y"], TextVP["X"], 
+        TextVP["Width"], TextVP["Height"])
+    LineOffset = 0
+
+    # print start message
+    LineOffset += RC.Print(Var.MessagesData["Challenge1"]["Start"] + "\n\n",          
+        TextVP["Y"] + LineOffset, TextVP["X"],
+        JustifyText = RC.Justify.Center, 
+        MaxColumns = TextVP["Width"])[0]
+
+    Message = ""
     while (RemainingTries > 0 
         and NumbersFound < Var.CurrentChallengeData["Rounds"]):
 
-        # challenge dashboard
-        RC.ClearConsole(
-            TextVP["Y"], TextVP["X"], 
-            TextVP["Width"], TextVP["Height"])
-        LineOffset = 0
-
-        # Message = (Var.MessagesData[CurrentMap]["Story1"]
-        #     .replace("{Name}", 
-        #         Var.Player["Style"] + Var.Player["Name"] + "[;]"))
-        Message = f"Il te reste encore {RemainingTries} essais.\n\n"
-        LineOffset += RC.Print(Message,          
-            TextVP["Y"] + LineOffset, TextVP["X"],
-            JustifyText = RC.Justify.Center, 
-            MaxColumns = TextVP["Width"])[0]
-        Message = f"{MinProposedNumber}  <<<  [;;SI]{FoundNumber}[;]  <<<  {MaxProposedNumber}\n\n"
+        Message += f"Il te reste encore {RemainingTries} essais.\n\n"
+        # LineOffset += RC.Print(Message,          
+        #     TextVP["Y"] + LineOffset, TextVP["X"],
+        #     JustifyText = RC.Justify.Center, 
+        #     MaxColumns = TextVP["Width"])[0]
+        Message += f"{MinProposedNumber}  <<<  [;;SI]{FoundNumber}[;]  <<<  {MaxProposedNumber}\n\n"
         LineOffset += RC.Print(Message,          
             TextVP["Y"] + LineOffset, TextVP["X"],
             JustifyText = RC.Justify.Center, 
@@ -65,9 +69,13 @@ def Challenge1():
                 .replace("{MaximumNumber}", str(Var.CurrentChallengeData["MaximumNumber"]))),
             RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]])
         RC.ShowCursor(False)
+
+        # clear challenge text
         RC.ClearConsole(
-            TextVP["Y"] + LineOffset, TextVP["X"], 
-            TextVP["Width"], 2)
+            TextVP["Y"], TextVP["X"], 
+            TextVP["Width"], TextVP["Height"])
+        LineOffset = 0
+        Message = ""
 
         RemainingTries -= 1
 
@@ -77,13 +85,13 @@ def Challenge1():
             NumbersFound += 1
             CurrentStar = Var.CurrentChallengeData["Stars"]["Elements"][NumbersFound - 1]
 
-            Message = (Var.MessagesData["Challenge1"]["Equal"]
+            Message += (Var.MessagesData["Challenge1"]["Equal"]
                 .replace("{Number}", str(MysteriousNumber))
-                .replace("{Star}", CurrentStar["Style"] + CurrentStar["Image"] + "[;]"))
-            LineOffset += RC.Print(Message,          
-                TextVP["Y"] + LineOffset, TextVP["X"],
-                JustifyText = RC.Justify.Left, 
-                MaxColumns = TextVP["Width"])[0]
+                .replace("{Star}", Var.CurrentChallengeData["Stars"]["Style"] + Var.CurrentChallengeData["Stars"]["Image"] + "[;]"))
+            # LineOffset += RC.Print(Message,          
+            #     TextVP["Y"] + LineOffset, TextVP["X"],
+            #     JustifyText = RC.Justify.Left, 
+            #     MaxColumns = TextVP["Width"])[0]
 
             # light star
             RC.Print(
@@ -99,13 +107,13 @@ def Challenge1():
                     TextVP["Width"], TextVP["Height"])
                 LineOffset = 0
                 # show message
-                Message = (Var.MessagesData["Challenge1"]["Success"]
+                Message += (Var.MessagesData["Challenge1"]["Success"]
                     .replace("{Name}", 
                         Var.Player["Style"] + Var.Player["Name"] + "[;]"))
-                LineOffset += RC.Print(Message,          
-                    TextVP["Y"] + LineOffset, TextVP["X"],
-                    JustifyText = RC.Justify.Left, 
-                    MaxColumns = TextVP["Width"])[0]
+                # LineOffset += RC.Print(Message,          
+                #     TextVP["Y"] + LineOffset, TextVP["X"],
+                #     JustifyText = RC.Justify.Left, 
+                #     MaxColumns = TextVP["Width"])[0]
                 # unlight eyes
                 for Element in Var.CurrentChallengeData["Eyes"]["Elements"]:
                     RC.Print(
@@ -127,34 +135,33 @@ def Challenge1():
         else:
             # bad answer
 
-            MinProposedNumber = min(MinProposedNumber, int(ProposedNumber))
-            MaxProposedNumber = max(MaxProposedNumber, int(ProposedNumber))
-
             if ProposedNumber < MysteriousNumber:
                 # too low
-                Message = Var.MessagesData["Challenge1"]["Higher"]
-                LineOffset += RC.Print(Message,          
-                    TextVP["Y"] + LineOffset, TextVP["X"],
-                    JustifyText = RC.Justify.Left, 
-                    MaxColumns = TextVP["Width"])[0]
+                MinProposedNumber = max(MinProposedNumber, int(ProposedNumber))
+                Message += Var.MessagesData["Challenge1"]["Higher"] + "\n\n"
+                # LineOffset += RC.Print(Message,          
+                #     TextVP["Y"] + LineOffset, TextVP["X"],
+                #     JustifyText = RC.Justify.Left, 
+                #     MaxColumns = TextVP["Width"])[0]
             else:
                 # too high
-                Message = Var.MessagesData["Challenge1"]["Lower"]
-                LineOffset += RC.Print(Message,          
-                    TextVP["Y"] + LineOffset, TextVP["X"],
-                    JustifyText = RC.Justify.Left, 
-                    MaxColumns = TextVP["Width"])[0]
+                MaxProposedNumber = min(MaxProposedNumber, int(ProposedNumber))
+                Message += Var.MessagesData["Challenge1"]["Lower"] + "\n\n"
+                # LineOffset += RC.Print(Message,          
+                #     TextVP["Y"] + LineOffset, TextVP["X"],
+                #     JustifyText = RC.Justify.Left, 
+                #     MaxColumns = TextVP["Width"])[0]
 
             if RemainingTries == 0:
                 # challenge lost
                 # show message
-                Message = (Var.MessagesData["Challenge1"]["Failure"]
+                Message += (Var.MessagesData["Challenge1"]["Failure"]
                     .replace("{Name}", 
                         Var.Player["Style"] + Var.Player["Name"] + "[;]"))
-                LineOffset += RC.Print(Message,          
-                    TextVP["Y"] + LineOffset, TextVP["X"],
-                    JustifyText = RC.Justify.Left, 
-                    MaxColumns = TextVP["Width"])[0]
+                # LineOffset += RC.Print(Message,          
+                #     TextVP["Y"] + LineOffset, TextVP["X"],
+                #     JustifyText = RC.Justify.Left, 
+                #     MaxColumns = TextVP["Width"])[0]
                 # unlight eyes
                 for Element in Var.CurrentChallengeData["Eyes"]["Elements"]:
                     RC.Print(

@@ -108,6 +108,7 @@
         "Image" : null,
         "Story1" : "En haut de la falaise, en bordure de forêt et en surplomb de la plage, je découvre la statue d’un Sphinx avec une grosse clé en bronze posée sur les pattes.",
         "Story2" : "Lorsque je m'en approche, les yeux de la statue s’illuminent et une voix se fait entendre :\n\n« Bonjour {Name} ! Pour ouvrir la porte de la montagne, atteindre le cœur de l’île et rejoindre tes compagnons, tu devras tout d’abord prouver ta valeur individuelle en gagnant les 3 clés que tu obtiendras en relevant les défis appropriés. Ceci est le premier d’entre eux. »\n\nLa voix poursuit : « {Rounds} fois de suite, tu devras deviner le nombre que j’ai en tête (entre {MinimumNumber} et {MaximumNumber}), tu as {MaxTries} essais maximum pour tous les trouver. »\n\n« À chaque réussite, une étoile me couronnera. Lorsque les 3 étoiles orneront mon front, la clé tu obtiendras. »\n\n« Viens me toucher lorsque tu es prêt. »",
+        "Start" : "Je m'approche du Sphinx et touche sa statue.\n\nLe défi commence...",
         "AskUser" : "Quel nombre ai-je en tête ? ",
         "Wrong" : "« Tu t'égares aventurier, il s'agit d'un nombre compris entre {MinimumNumber} et {MaximumNumber}. »",
         "Equal" : "« Très bien, tu as trouvé qu'il s'agissait de {Number}. »\nUne étoile ({Star}) s'allume au-dessus de la tête du Sphinx.",
