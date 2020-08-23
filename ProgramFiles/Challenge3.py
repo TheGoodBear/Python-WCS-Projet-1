@@ -11,9 +11,9 @@ import ProgramFiles.Utilities.RichConsole as RC
 
 
 # Functions
-def Challenge1():
+def StartChallenge():
     """
-        Manage challenge 1 (Mysterious number)
+        Manage challenge 3 (Multi FizzBuzz)
     """
 
     TextVP = Var.GameData["ViewPorts"]["Challenge"]["Text"]
@@ -46,10 +46,6 @@ def Challenge1():
         and NumbersFound < Var.CurrentChallengeData["Rounds"]):
 
         Message += f"Il te reste encore {RemainingTries} essais.\n\n"
-        # LineOffset += RC.Print(Message,          
-        #     TextVP["Y"] + LineOffset, TextVP["X"],
-        #     JustifyText = RC.Justify.Center, 
-        #     MaxColumns = TextVP["Width"])[0]
         Message += f"{MinProposedNumber}  <<<  [;;SI]{FoundNumber}[;]  <<<  {MaxProposedNumber}\n\n"
         LineOffset += RC.Print(Message,          
             TextVP["Y"] + LineOffset, TextVP["X"],
@@ -83,22 +79,16 @@ def Challenge1():
         if ProposedNumber == MysteriousNumber:
             # good answer
             NumbersFound += 1
-            CurrentStar = Var.CurrentChallengeData["Stars"]["Elements"][NumbersFound - 1]
 
-            Message += (Var.MessagesData["Challenge1"]["Equal"]
-                .replace("{Number}", str(MysteriousNumber))
-                .replace("{Star}", Var.CurrentChallengeData["Stars"]["Style"] + Var.CurrentChallengeData["Stars"]["Image"] + "[;]"))
-            # LineOffset += RC.Print(Message,          
-            #     TextVP["Y"] + LineOffset, TextVP["X"],
-            #     JustifyText = RC.Justify.Left, 
-            #     MaxColumns = TextVP["Width"])[0]
+            # switch on star
+            SphinxStars(NumbersFound - 1)
 
-            # light star
-            RC.Print(
-                f"{Var.CurrentChallengeData['Stars']['Style']}{Var.CurrentChallengeData['Stars']['Image']}[;]",
-                Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + CurrentStar["Y"],
-                Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + CurrentStar["X"],
-                JumpLineAfter = False)
+            Message += (
+                Var.MessagesData["Challenge1"]["Equal"]
+                    .replace("{Number}", str(MysteriousNumber))
+                    .replace("{Star}", Var.CurrentChallengeData["Stars"]["Style"] + Var.CurrentChallengeData["Stars"]["Image"] 
+                + "[;]")
+                + "\n\n")
 
             if NumbersFound == Var.CurrentChallengeData["Rounds"]:
                 # challenge won
@@ -110,27 +100,28 @@ def Challenge1():
                 Message += (Var.MessagesData["Challenge1"]["Success"]
                     .replace("{Name}", 
                         Var.Player["Style"] + Var.Player["Name"] + "[;]"))
-                # LineOffset += RC.Print(Message,          
-                #     TextVP["Y"] + LineOffset, TextVP["X"],
-                #     JustifyText = RC.Justify.Left, 
-                #     MaxColumns = TextVP["Width"])[0]
-                # unlight eyes
-                for Element in Var.CurrentChallengeData["Eyes"]["Elements"]:
-                    RC.Print(
-                        f"[B;B]{Var.CurrentChallengeData['Eyes']['Image']}[;]",
-                        Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + Element["Y"],
-                        Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + Element["X"],
-                        JumpLineAfter = False)
+                LineOffset += RC.Print(Message,          
+                    TextVP["Y"] + LineOffset, TextVP["X"],
+                    JustifyText = RC.Justify.Center, 
+                    MaxColumns = TextVP["Width"])[0]
+
+                # switch off eyes
+                SphinxEyes(False)
                 # free key
                 Var.ObjectsData["BronzeKey"]["Behaviors"]["Pickable"] = True
                 # close challenge
-                Var.MapElementsData["1"]["Behaviors"]["Event"] = None
+                Var.MapElementsData["4"]["Behaviors"]["Event"] = None
+                Var.MessagesData["4"]["CantMoveOn"] = Var.MessagesData["1"]["CantMoveOn"]
 
             else:
-                # draw next number
+                # start new round
+                ProposedNumber = None
+                MinProposedNumber = 0
+                MaxProposedNumber = 101
                 MysteriousNumber = random.randint(
                     Var.CurrentChallengeData["MinimumNumber"],
                     Var.CurrentChallengeData["MaximumNumber"])
+                FoundNumber = " ??? "
 
         else:
             # bad answer
@@ -139,18 +130,10 @@ def Challenge1():
                 # too low
                 MinProposedNumber = max(MinProposedNumber, int(ProposedNumber))
                 Message += Var.MessagesData["Challenge1"]["Higher"] + "\n\n"
-                # LineOffset += RC.Print(Message,          
-                #     TextVP["Y"] + LineOffset, TextVP["X"],
-                #     JustifyText = RC.Justify.Left, 
-                #     MaxColumns = TextVP["Width"])[0]
             else:
                 # too high
                 MaxProposedNumber = min(MaxProposedNumber, int(ProposedNumber))
                 Message += Var.MessagesData["Challenge1"]["Lower"] + "\n\n"
-                # LineOffset += RC.Print(Message,          
-                #     TextVP["Y"] + LineOffset, TextVP["X"],
-                #     JustifyText = RC.Justify.Left, 
-                #     MaxColumns = TextVP["Width"])[0]
 
             if RemainingTries == 0:
                 # challenge lost
@@ -158,20 +141,53 @@ def Challenge1():
                 Message += (Var.MessagesData["Challenge1"]["Failure"]
                     .replace("{Name}", 
                         Var.Player["Style"] + Var.Player["Name"] + "[;]"))
-                # LineOffset += RC.Print(Message,          
-                #     TextVP["Y"] + LineOffset, TextVP["X"],
-                #     JustifyText = RC.Justify.Left, 
-                #     MaxColumns = TextVP["Width"])[0]
-                # unlight eyes
-                for Element in Var.CurrentChallengeData["Eyes"]["Elements"]:
-                    RC.Print(
-                        f"[B;B]{Var.CurrentChallengeData['Eyes']['Image']}[;]",
-                        Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + Element["Y"],
-                        Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + Element["X"],
-                        JumpLineAfter = False)
+                LineOffset += RC.Print(Message,          
+                    TextVP["Y"] + LineOffset, TextVP["X"],
+                    JustifyText = RC.Justify.Left, 
+                    MaxColumns = TextVP["Width"])[0]
+                
+                # switch off eyes
+                SphinxEyes(False)
+                # switch off stars
+                SphinxStars(NumbersFound - 1)
+
 
             
-                
+
+def SphinxEyes(
+    SwitchOn = True):
+    """
+        Switch on/off sphinx eyes
+    """
+    
+    Style = Var.CurrentChallengeData["Eyes"]["StyleOn"] if SwitchOn else Var.CurrentChallengeData["Eyes"]["StyleOff"]
+
+    for Element in Var.CurrentChallengeData["Eyes"]["Elements"]:
+        RC.Print(
+            f"{Style}{Var.CurrentChallengeData['Eyes']['Image']}[;]",
+            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + Element["Y"],
+            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + Element["X"],
+            JumpLineAfter = False)
+
+
+def SphinxStars(
+    StarNumber = None):
+    """
+        Switch on specified star or switch off all stars
+    """
+
+    MinStar = StarNumber if StarNumber is not None else 0
+    MaxStar = StarNumber if StarNumber is not None else len(Var.CurrentChallengeData["Stars"]["Elements"]) - 1
+    Style = Var.CurrentChallengeData["Stars"]["StyleOn"] if StarNumber is not None else Var.CurrentChallengeData["Stars"]["StyleOff"]
+
+    for ElementNumber in range(MinStar, MaxStar + 1):
+        CurrentStar = Var.CurrentChallengeData["Stars"]["Elements"][ElementNumber]
+
+        RC.Print(
+            f"{Style}{Var.CurrentChallengeData['Stars']['Image']}[;]",
+            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + CurrentStar["Y"],
+            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + CurrentStar["X"],
+            JumpLineAfter = False)
 
 
 

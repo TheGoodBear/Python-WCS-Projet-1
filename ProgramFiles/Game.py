@@ -7,7 +7,9 @@ import time
 import ProgramFiles.Variables as Var
 import ProgramFiles.Utilities.Utilities as Util
 import ProgramFiles.Utilities.RichConsole as RC
-import ProgramFiles.Challenges as Chal
+import ProgramFiles.Challenge1 as Chal1
+import ProgramFiles.Challenge2 as Chal2
+import ProgramFiles.Challenge3 as Chal3
 
 
 # Functions
@@ -106,7 +108,11 @@ def ShowView(
     if ClearScreen:
         RC.ClearConsole()
 
-    # get view name
+    # get challenge number and view name
+    ChallengeNumber = (
+        int(Var.Player["CurrentMap"][-1:]) 
+        if Var.Player["CurrentMap"][-1:].isdigit() 
+        else 0)
     if ViewName is None:
         ViewName = (
             Var.Player["CurrentMap"] 
@@ -278,7 +284,8 @@ def ShowView(
                 MaxColumns = TitleVP["Width"],
                 Speed = RC.PrintSpeed.Instant)
 
-        if ViewParts is None or "ChallengeText1" in ViewParts:
+        if ((ViewParts is None or "ChallengeText1" in ViewParts)
+            and not Var.CurrentChallengeData["Won"]):
             # challenge text
             RC.ClearConsole(
                 TextVP["Y"], TextVP["X"], 
@@ -296,14 +303,12 @@ def ShowView(
             # ask continue
             AskContinue(AskVP)
 
-        if ViewParts is None or "ChallengeText2" in ViewParts:
-            # light eyes
-            for Element in Var.CurrentChallengeData["Eyes"]["Elements"]:
-                RC.Print(
-                    f"{Var.CurrentChallengeData['Eyes']['Style']}{Var.CurrentChallengeData['Eyes']['Image']}[;]",
-                    Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + Element["Y"],
-                    Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + Element["X"],
-                    JumpLineAfter = False)
+        if ((ViewParts is None or "ChallengeText2" in ViewParts)
+            and not Var.CurrentChallengeData["Won"]):
+
+            if ChallengeNumber == 1:
+                # light eyes
+                Chal1.SphinxEyes()
 
             # challenge text
             RC.ClearConsole(
@@ -1302,15 +1307,15 @@ def CheckEvent(Event):
 
         elif Event == "StartChallenge1":
             # start Challenge 1
-            Chal.Challenge1()
+            Chal1.StartChallenge()
 
         elif Event == "StartChallenge2":
             # start Challenge 2
-            Chal.Challenge2()
+            Chal2.StartChallenge()
 
         elif Event == "StartChallenge3":
             # start Challenge 3
-            Chal.Challenge3()
+            Chal3.StartChallenge()
 
 
 def UpdateVitalSign(

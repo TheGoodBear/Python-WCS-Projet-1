@@ -111,12 +111,11 @@
         "Start" : "Je m'approche du Sphinx et touche sa statue.\n\nLe défi commence...",
         "AskUser" : "Quel nombre ai-je en tête ? ",
         "Wrong" : "« Tu t'égares aventurier, il s'agit d'un nombre compris entre {MinimumNumber} et {MaximumNumber}. »",
-        "Equal" : "« Très bien, tu as trouvé qu'il s'agissait de {Number}. »\nUne étoile ({Star}) s'allume au-dessus de la tête du Sphinx.",
+        "Equal" : "« Très bien, tu as trouvé qu'il s'agissait de {Number}. »\n\nUne étoile ({Star}) s'allume au-dessus de la tête du Sphinx.",
         "Higher" : "« Non, le nombre auquel je pense est supérieur à celui-là. »",
         "Lower" : "« Non, le nombre auquel je pense est inférieur à celui-ci. »",
-        "Success" : "« Bravo {Name}, tu es perspicace, mais d'autres défis t'attendent. »\n\n« En attendant, tu peux prendre cette clé. »\n\nLes yeux de la statue s'éteignent à nouveau.",
-        "Failure" : "« Malheureusement tu as échoué {Name}. Mais ce n'est que partie remise. »\n\n« Reviens me voir plus tard, quand tu auras l'esprit clair. »\n\nLes yeux de la statue s'éteignent...",
-        "AskReady" : "Es-tu prêt à continuer l'aventure ? "
+        "Success" : "La dernière étoile étant allumée, la voix du Sphinx retentit à nouveau.\n\n« Bravo {Name}, tu es perspicace, mais d'autres défis t'attendent. »\n\n« En attendant, tu peux prendre cette clé. »\n\nLes yeux de la statue s'éteignent...",
+        "Failure" : "« Malheureusement tu as échoué {Name}. Mais ce n'est que partie remise. »\n\n« Reviens me voir plus tard, quand tu auras l'esprit clair. »\n\nLes yeux de la statue et les étoiles s'éteignent..."
     },
     "Challenge2" : {
         "Category" : "Event",
@@ -211,7 +210,7 @@
         "Category" : "MapElement",
         "Name" : "Une enclave avec un Sphinx",
         "MoveOn" : "Je m'approche de la statue du Sphinx...",
-        "CantMoveOn" : "La statue est désormais muette."
+        "CantMoveOn" : "J'ai déjà gagné le défi du Sphinx, la statue est désormais muette."
     },
     "4" : {
         "Category" : "MapElement",

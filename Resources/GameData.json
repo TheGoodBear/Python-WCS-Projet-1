@@ -103,13 +103,15 @@
         }
     },
     "Challenge1" : {
+        "Won" : false,
         "MinimumNumber" : 1,
         "MaximumNumber" : 100,
         "Rounds" : 3,
         "MaxTries" : 20,
         "Eyes" : {
             "Image" : "☼",
-            "Style" : "[C;B]",
+            "StyleOn" : "[C;B]",
+            "StyleOff" : "[W;]",
             "Elements" : [
                 {"Y" : 4, "X" : 6},
                 {"Y" : 4, "X" : 8}
@@ -117,7 +119,8 @@
         },
         "Stars" : {
             "Image" : "*",
-            "Style" : "[Y;B]",
+            "StyleOn" : "[Y;B]",
+            "StyleOff" : "[B;B]",
             "Elements" : [
                 {"Y" : 2, "X" : 7},
                 {"Y" : 3, "X" : 5},
@@ -126,9 +129,11 @@
         }
     },
     "Challenge2" : {
+        "Won" : false,
         "CurrentLetter" : null
     },
     "Challenge3" : {
+        "Won" : false,
         "DelayBetweenAnswers" : 1,
         "PlayerChance" : 80
     }
