@@ -19,15 +19,8 @@ def StartChallenge():
     TextVP = Var.GameData["ViewPorts"]["Challenge"]["Text"]
     AskVP = Var.GameData["ViewPorts"]["Challenge"]["Ask"]
 
-    RemainingTries = Var.CurrentChallengeData["MaxTries"]
-    NumbersFound = 0
-    ProposedNumber = None
-    MinProposedNumber = 0
-    MaxProposedNumber = 101
-    MysteriousNumber = random.randint(
-        Var.CurrentChallengeData["MinimumNumber"],
-        Var.CurrentChallengeData["MaximumNumber"])
-    FoundNumber = " ??? "
+    # # activate random letter
+    # SwitchLetter(chr(97 + random.randint(0, 25)))
 
     # clean text area
     RC.ClearConsole(
@@ -36,160 +29,150 @@ def StartChallenge():
     LineOffset = 0
 
     # print start message
-    LineOffset += RC.Print(Var.MessagesData["Challenge1"]["Start"] + "\n\n",          
+    Message = (
+        "\n\n[;;SI]" 
+        + Var.CurrentChallengeData["EncryptedCredo"]
+        + "[;]\n\n" 
+        + Var.MessagesData["Challenge2"]["Start"] 
+        + "\n\n")
+    LineOffset += RC.Print(Message,          
         TextVP["Y"] + LineOffset, TextVP["X"],
         JustifyText = RC.Justify.Center, 
         MaxColumns = TextVP["Width"])[0]
+        
+    # ask crypted name
+    RC.ShowCursor()
+    ProposedName = Util.GetUserInput(
+        Var.MessagesData["Challenge2"]["AskUser"],
+        RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]])
+    RC.ShowCursor(False)
 
     Message = ""
-    while (RemainingTries > 0 
-        and NumbersFound < Var.CurrentChallengeData["Rounds"]):
 
-        Message += f"Il te reste encore {RemainingTries} essais.\n\n"
-        Message += f"{MinProposedNumber}  <<<  [;;SI]{FoundNumber}[;]  <<<  {MaxProposedNumber}\n\n"
-        LineOffset += RC.Print(Message,          
-            TextVP["Y"] + LineOffset, TextVP["X"],
-            JustifyText = RC.Justify.Center, 
-            MaxColumns = TextVP["Width"])[0]
-        
-        # ask number
-        RC.ShowCursor()
-        ProposedNumber = Util.GetUserInput(
-            Var.MessagesData["Challenge1"]["AskUser"],
-            ValueType = "int",
-            Minimum = Var.CurrentChallengeData["MinimumNumber"],
-            Maximum = Var.CurrentChallengeData["MaximumNumber"],
-            SpecificErrorMessage = (
-                Var.MessagesData["Challenge1"]["Wrong"]
-                .replace("{MinimumNumber}", str(Var.CurrentChallengeData["MinimumNumber"]))
-                .replace("{MaximumNumber}", str(Var.CurrentChallengeData["MaximumNumber"]))),
-            RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]])
-        RC.ShowCursor(False)
+    # check answer
+    if ProposedName.lower() == Var.CurrentChallengeData["EncryptedPlayerName"]:
+        # good answer
+        # challenge won
 
-        # clear challenge text
         RC.ClearConsole(
             TextVP["Y"], TextVP["X"], 
             TextVP["Width"], TextVP["Height"])
         LineOffset = 0
-        Message = ""
+        # show message
+        Message += "\n\n" + Var.MessagesData["Challenge2"]["Success"]
+        LineOffset += RC.Print(Message,          
+            TextVP["Y"] + LineOffset, TextVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = TextVP["Width"])[0]
 
-        RemainingTries -= 1
+        # change grid data
+        Grid = Var.MapElementsData["6"]
+        Grid["Style"] = Var.CurrentChallengeData["GridStyleOpen"]
+        Grid["Behaviors"]["Event"] = None
+        # change letters message
+        for AsciiCode in range(97, 123):
+            Var.MapElementsData[chr(AsciiCode)]["CantMoveOn"] = Var.MessagesData["Challenge2"]["DeactivatedLetter"]
+        # free key
+        Var.ObjectsData["SilverKey"]["Behaviors"]["Pickable"] = True
+        # close challenge
+        Var.CurrentChallengeData["Won"] = True
 
-        # check answer
-        if ProposedNumber == MysteriousNumber:
-            # good answer
-            NumbersFound += 1
-
-            # switch on star
-            SphinxStars(NumbersFound - 1)
-
-            Message += (
-                Var.MessagesData["Challenge1"]["Equal"]
-                    .replace("{Number}", str(MysteriousNumber))
-                    .replace("{Star}", Var.CurrentChallengeData["Stars"]["Style"] + Var.CurrentChallengeData["Stars"]["Image"] 
-                + "[;]")
-                + "\n\n")
-
-            if NumbersFound == Var.CurrentChallengeData["Rounds"]:
-                # challenge won
-                RC.ClearConsole(
-                    TextVP["Y"], TextVP["X"], 
-                    TextVP["Width"], TextVP["Height"])
-                LineOffset = 0
-                # show message
-                Message += (Var.MessagesData["Challenge1"]["Success"]
-                    .replace("{Name}", 
-                        Var.Player["Style"] + Var.Player["Name"] + "[;]"))
-                LineOffset += RC.Print(Message,          
-                    TextVP["Y"] + LineOffset, TextVP["X"],
-                    JustifyText = RC.Justify.Center, 
-                    MaxColumns = TextVP["Width"])[0]
-
-                # switch off eyes
-                SphinxEyes(False)
-                # free key
-                Var.ObjectsData["BronzeKey"]["Behaviors"]["Pickable"] = True
-                # close challenge
-                Var.MapElementsData["4"]["Behaviors"]["Event"] = None
-                Var.MessagesData["4"]["CantMoveOn"] = Var.MessagesData["1"]["CantMoveOn"]
-
-            else:
-                # start new round
-                ProposedNumber = None
-                MinProposedNumber = 0
-                MaxProposedNumber = 101
-                MysteriousNumber = random.randint(
-                    Var.CurrentChallengeData["MinimumNumber"],
-                    Var.CurrentChallengeData["MaximumNumber"])
-                FoundNumber = " ??? "
-
-        else:
-            # bad answer
-
-            if ProposedNumber < MysteriousNumber:
-                # too low
-                MinProposedNumber = max(MinProposedNumber, int(ProposedNumber))
-                Message += Var.MessagesData["Challenge1"]["Higher"] + "\n\n"
-            else:
-                # too high
-                MaxProposedNumber = min(MaxProposedNumber, int(ProposedNumber))
-                Message += Var.MessagesData["Challenge1"]["Lower"] + "\n\n"
-
-            if RemainingTries == 0:
-                # challenge lost
-                # show message
-                Message += (Var.MessagesData["Challenge1"]["Failure"]
-                    .replace("{Name}", 
-                        Var.Player["Style"] + Var.Player["Name"] + "[;]"))
-                LineOffset += RC.Print(Message,          
-                    TextVP["Y"] + LineOffset, TextVP["X"],
-                    JustifyText = RC.Justify.Left, 
-                    MaxColumns = TextVP["Width"])[0]
-                
-                # switch off eyes
-                SphinxEyes(False)
-                # switch off stars
-                SphinxStars(NumbersFound - 1)
-
+    else:
+        # wrong answer
+        RC.ClearConsole(
+            TextVP["Y"], TextVP["X"], 
+            TextVP["Width"], TextVP["Height"])
+        LineOffset = 0
+        # show message
+        Message += (
+            "\n\n[;;SI]" 
+            + Var.CurrentChallengeData["EncryptedCredo"]
+            + "[;]\n\n" 
+            + Var.MessagesData["Challenge2"]["Failure"])
+        LineOffset += RC.Print(Message,          
+            TextVP["Y"] + LineOffset, TextVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = TextVP["Width"])[0]
 
             
 
-def SphinxEyes(
+def SwitchLetter(
+    Letter = None,
     SwitchOn = True):
     """
-        Switch on/off sphinx eyes
-    """
-    
-    Style = Var.CurrentChallengeData["Eyes"]["StyleOn"] if SwitchOn else Var.CurrentChallengeData["Eyes"]["StyleOff"]
-
-    for Element in Var.CurrentChallengeData["Eyes"]["Elements"]:
-        RC.Print(
-            f"{Style}{Var.CurrentChallengeData['Eyes']['Image']}[;]",
-            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + Element["Y"],
-            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + Element["X"],
-            JumpLineAfter = False)
-
-
-def SphinxStars(
-    StarNumber = None):
-    """
-        Switch on specified star or switch off all stars
+        Switch on/off specified letter
+        Define it as current if on
     """
 
-    MinStar = StarNumber if StarNumber is not None else 0
-    MaxStar = StarNumber if StarNumber is not None else len(Var.CurrentChallengeData["Stars"]["Elements"]) - 1
-    Style = Var.CurrentChallengeData["Stars"]["StyleOn"] if StarNumber is not None else Var.CurrentChallengeData["Stars"]["StyleOff"]
+    # find letter position in map
+    CurrentLetterPosition = None
+    for LineIndex, Line in enumerate(Var.MapLayer):
+        if Letter in Line:
+            CurrentLetterPosition = (LineIndex, Line.index(Letter))
+            break
+        
+    # get map element data for current letter
+    # MapElement = Var.MapElementsData[CurrentLetterPosition[0]][CurrentLetterPosition[1]]
+    MapElement = Var.MapElementsData[Letter]
+    Style = MapElement["Style"]
 
-    for ElementNumber in range(MinStar, MaxStar + 1):
-        CurrentStar = Var.CurrentChallengeData["Stars"]["Elements"][ElementNumber]
+    if not SwitchOn:
+        # invert element color
+        Style = Style.replace(";]", ";SI]")
 
-        RC.Print(
-            f"{Style}{Var.CurrentChallengeData['Stars']['Image']}[;]",
-            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + CurrentStar["Y"],
-            Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + CurrentStar["X"],
-            JumpLineAfter = False)
+    # draw
+    RC.Print(
+        f"{MapElement['Style']}{MapElement['Image']}[;]",
+        Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + CurrentLetterPosition[0],
+        Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + CurrentLetterPosition[1],
+        JumpLineAfter = False)
+
+    if SwitchOn:
+        # save new letter
+        Var.GameData["Challenge2"]["CurrentLetter"] = Letter
+
+        # encrypt credo and player name
+        Var.CurrentChallengeData["EncryptedCredo"] = Encrypt(
+            Var.MessagesData["Challenge2"]["OriginalCredo"],
+            ord(Letter) - 96).replace(",", "\n")
+        Var.CurrentChallengeData["EncryptedPlayerName"] = Encrypt(
+            Var.Player["Name"],
+            ord(Letter) - 96).lower()
 
 
 
+def Encrypt(
+    Message,
+    Offset):
+    """
+        Encrypt specified message with specified offset on ASCII code
+        and return result
+    """
 
+    EncryptedMessage = ""
 
+    # for each character in message
+    for Char in Message:
+        EncryptedChar = ""
+        
+        if ord(Char) >= 65 and ord(Char) <= 90:
+            # upper case letter
+            EncryptedChar = (
+                chr(ord(Char) + Offset) 
+                if ord(Char) + Offset <= 90 
+                else chr(ord(Char) + Offset - 26))
+        elif ord(Char) >= 97 and ord(Char) <= 122:
+            # upper case letter
+            EncryptedChar = (
+                chr(ord(Char) + Offset) 
+                if ord(Char) + Offset <= 122 
+                else chr(ord(Char) + Offset - 26))
+        else:
+            # other character, keep it
+            EncryptedChar = Char
+
+        # updated encrypted message
+        EncryptedMessage += EncryptedChar
+
+    # return encrypted message
+    return EncryptedMessage

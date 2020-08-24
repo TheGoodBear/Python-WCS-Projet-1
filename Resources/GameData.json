@@ -97,8 +97,8 @@
         "Challenge" : {
             "Window" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 50},
             "Title" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
-            "Map" : {"Y" : 11, "X" : 13, "Width" : 76, "Height" : 16},
-            "Text" : {"Y" : 27, "X" : 14, "Width" : 76, "Height" : 16},
+            "Map" : {"Y" : 10, "X" : 13, "Width" : 76, "Height" : 16},
+            "Text" : {"Y" : 26, "X" : 14, "Width" : 76, "Height" : 17},
             "Ask" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
         }
     },
@@ -130,7 +130,10 @@
     },
     "Challenge2" : {
         "Won" : false,
-        "CurrentLetter" : null
+        "CurrentLetter" : null,
+        "EncryptedCredo" : null,
+        "EncryptedPlayerName" : null,
+        "GridStyleOpen" : "[B;B]"
     },
     "Challenge3" : {
         "Won" : false,

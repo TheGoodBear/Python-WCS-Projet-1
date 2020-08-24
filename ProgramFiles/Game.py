@@ -2,6 +2,7 @@
 
 # Imports modules
 import time
+import random
 
 # Import application code
 import ProgramFiles.Variables as Var
@@ -300,10 +301,21 @@ def ShowView(
                 JustifyText = RC.Justify.Left, 
                 MaxColumns = TextVP["Width"])[0]
 
-            # ask continue
-            AskContinue(AskVP)
+            if ChallengeNumber == 2:
+                # activate random letter
+                Chal2.SwitchLetter(chr(97 + random.randint(0, 25)))
+                # update stoty with encrypted credo
+                Var.MessagesData[CurrentMap]["Story2"] = (
+                    "\n\n[;;SI]"
+                    + Var.CurrentChallengeData["EncryptedCredo"]
+                    + "[;]")
+
+            if Var.MessagesData[CurrentMap]["Story2"] is not None:
+                # ask continue (if story continues)
+                AskContinue(AskVP)
 
         if ((ViewParts is None or "ChallengeText2" in ViewParts)
+            and Var.MessagesData[CurrentMap]["Story2"] is not None
             and not Var.CurrentChallengeData["Won"]):
 
             if ChallengeNumber == 1:
@@ -318,17 +330,37 @@ def ShowView(
 
             Message = (Var.MessagesData[CurrentMap]["Story2"]
                 .replace("{Name}", 
-                    Var.Player["Style"] + Var.Player["Name"] + "[;]")
-                .replace("{Rounds}", str(Var.CurrentChallengeData["Rounds"]))
-                .replace("{MinimumNumber}", str(Var.CurrentChallengeData["MinimumNumber"]))
-                .replace("{MaximumNumber}", str(Var.CurrentChallengeData["MaximumNumber"]))
-                .replace("{MaxTries}", str(Var.CurrentChallengeData["MaxTries"])))
+                    Var.Player["Style"] + Var.Player["Name"] + "[;]"))
+            
+            TextJustify = RC.Justify.Left
+            if ChallengeNumber == 1:
+                Message = (Message
+                    .replace("{Rounds}", str(Var.CurrentChallengeData["Rounds"]))
+                    .replace("{MinimumNumber}", str(Var.CurrentChallengeData["MinimumNumber"]))
+                    .replace("{MaximumNumber}", str(Var.CurrentChallengeData["MaximumNumber"]))
+                    .replace("{MaxTries}", str(Var.CurrentChallengeData["MaxTries"])))
+            elif ChallengeNumber == 2:
+                TextJustify = RC.Justify.Center
+
             LineOffset += RC.Print(Message,          
                 TextVP["Y"] + LineOffset, TextVP["X"],
-                JustifyText = RC.Justify.Left, 
+                JustifyText = TextJustify, 
                 MaxColumns = TextVP["Width"])[0]
 
-        
+        if ViewParts is not None and "EncryptedCredo" in ViewParts:
+            # challenge 2 encrypted credo
+
+            Message = (
+                "\n\n[;;SI]"
+                + Var.CurrentChallengeData["EncryptedCredo"]
+                + "[;]\n\n"
+                + Var.MessagesData["Challenge2"]["Switch"])
+
+            LineOffset += RC.Print(Message,          
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Center, 
+                MaxColumns = TextVP["Width"])[0]
+
 
 def AskContinue(
     ViewPortData,
@@ -1312,6 +1344,12 @@ def CheckEvent(Event):
         elif Event == "StartChallenge2":
             # start Challenge 2
             Chal2.StartChallenge()
+
+        elif Event == "SwitchLetter":
+            # switch letter in temple
+            Chal2.SwitchLetter(Var.CurrentChallengeData["CurrentLetter"], False)
+            Chal2.SwitchLetter(Var.SeenElement)
+            ShowView(ViewParts = ["EncryptedCredo"])
 
         elif Event == "StartChallenge3":
             # start Challenge 3
