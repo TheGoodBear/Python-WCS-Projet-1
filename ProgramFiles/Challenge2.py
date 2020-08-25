@@ -118,11 +118,11 @@ def SwitchLetter(
 
     if not SwitchOn:
         # invert element color
-        Style = Style.replace(";]", ";SI]")
+        Style = Style.replace("]", ";SI]")
 
     # draw
     RC.Print(
-        f"{MapElement['Style']}{MapElement['Image']}[;]",
+        f"{Style}{MapElement['Image']}[;]",
         Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + CurrentLetterPosition[0],
         Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + CurrentLetterPosition[1],
         JumpLineAfter = False)
