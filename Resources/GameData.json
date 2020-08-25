@@ -11,6 +11,7 @@
         "MapMaxWidth" : 100,
         "MapMaxHeight" : 50,
         "DashboardWidth" : 40,
+        "LoadGamePossibleValues" : {"Yes" : "O", "No" : "N", "Delete" : "S"},
         "CurrentView" : "Start",
         "Sex" : {
             "Female" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
@@ -133,11 +134,12 @@
         "CurrentLetter" : null,
         "EncryptedCredo" : null,
         "EncryptedPlayerName" : null,
-        "GridStyleOpen" : "[B;B]"
+        "SelectedLetterStyle" : "[B;Y]"
     },
     "Challenge3" : {
         "Won" : false,
         "DelayBetweenAnswers" : 1,
-        "PlayerChance" : 80
+        "PlayerChance" : 80,
+        "CurrentPlayer" : null
     }
 }

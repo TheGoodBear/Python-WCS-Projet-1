@@ -8,6 +8,7 @@ import random
 import ProgramFiles.Variables as Var
 import ProgramFiles.Utilities.Utilities as Util
 import ProgramFiles.Utilities.RichConsole as RC
+import ProgramFiles.Game as Game
 
 
 # Functions
@@ -44,6 +45,7 @@ def StartChallenge():
     RC.ShowCursor()
     ProposedName = Util.GetUserInput(
         Var.MessagesData["Challenge2"]["AskUser"],
+        SpecificErrorMessage = Var.MessagesData["Challenge2"]["UserAnswerEmpty"],
         RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]])
     RC.ShowCursor(False)
 
@@ -59,23 +61,39 @@ def StartChallenge():
             TextVP["Width"], TextVP["Height"])
         LineOffset = 0
         # show message
-        Message += "\n\n" + Var.MessagesData["Challenge2"]["Success"]
+        Message += "\n\n" + Var.MessagesData["Challenge2"]["Success"] + "\n\n"
         LineOffset += RC.Print(Message,          
             TextVP["Y"] + LineOffset, TextVP["X"],
             JustifyText = RC.Justify.Center, 
             MaxColumns = TextVP["Width"])[0]
 
+        # switch off letter
+        SwitchLetter(Var.CurrentChallengeData["CurrentLetter"], False)
         # change grid data
-        Grid = Var.MapElementsData["6"]
-        Grid["Style"] = Var.CurrentChallengeData["GridStyleOpen"]
-        Grid["Behaviors"]["Event"] = None
-        # change letters message
+        for LineNumber, Line in enumerate(Var.MapLayer):
+            for ColumnNumber in range(len(Line)):
+                if Var.MapLayer[LineNumber][ColumnNumber] == "6":
+                    # replace grid by land
+                    Var.MapLayer[LineNumber][ColumnNumber] = " "
+                    # refresh map
+                    Game.ShowMap(LineNumber, ColumnNumber)
+        # change letters message and event
         for AsciiCode in range(97, 123):
-            Var.MapElementsData[chr(AsciiCode)]["CantMoveOn"] = Var.MessagesData["Challenge2"]["DeactivatedLetter"]
+            Var.MapElementsData[chr(AsciiCode)]["Behaviors"]["Event"] = None
+            Var.MessagesData[chr(AsciiCode)]["CantMoveOn"] = Var.MessagesData["Challenge2"]["DeactivatedLetter"]
         # free key
         Var.ObjectsData["SilverKey"]["Behaviors"]["Pickable"] = True
         # close challenge
         Var.CurrentChallengeData["Won"] = True
+
+        # show credo
+        Message += Var.MessagesData["Challenge2"]["Credo"]
+        LineOffset += RC.Print(Message,          
+            TextVP["Y"] + LineOffset, TextVP["X"],
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = TextVP["Width"],
+            Speed = RC.PrintSpeed.Fast)[0]
+
 
     else:
         # wrong answer
@@ -114,11 +132,10 @@ def SwitchLetter(
     # get map element data for current letter
     # MapElement = Var.MapElementsData[CurrentLetterPosition[0]][CurrentLetterPosition[1]]
     MapElement = Var.MapElementsData[Letter]
-    Style = MapElement["Style"]
-
-    if not SwitchOn:
-        # invert element color
-        Style = Style.replace("]", ";SI]")
+    Style = (
+        Var.CurrentChallengeData["SelectedLetterStyle"] 
+        if SwitchOn 
+        else MapElement["Style"])
 
     # draw
     RC.Print(

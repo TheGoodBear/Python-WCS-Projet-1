@@ -189,8 +189,3 @@ def SphinxStars(
             Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["Y"] + CurrentStar["Y"],
             Var.GameData["ViewPorts"][Var.MapViewPortName]["Map"]["X"] + CurrentStar["X"],
             JumpLineAfter = False)
-
-
-
-
-

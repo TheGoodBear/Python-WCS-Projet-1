@@ -335,12 +335,20 @@ def ShowView(
             TextJustify = RC.Justify.Left
             if ChallengeNumber == 1:
                 Message = (Message
-                    .replace("{Rounds}", str(Var.CurrentChallengeData["Rounds"]))
-                    .replace("{MinimumNumber}", str(Var.CurrentChallengeData["MinimumNumber"]))
-                    .replace("{MaximumNumber}", str(Var.CurrentChallengeData["MaximumNumber"]))
-                    .replace("{MaxTries}", str(Var.CurrentChallengeData["MaxTries"])))
+                    .replace("{Rounds}", 
+                        str(Var.CurrentChallengeData["Rounds"]))
+                    .replace("{MinimumNumber}", 
+                        str(Var.CurrentChallengeData["MinimumNumber"]))
+                    .replace("{MaximumNumber}", 
+                        str(Var.CurrentChallengeData["MaximumNumber"]))
+                    .replace("{MaxTries}", 
+                        str(Var.CurrentChallengeData["MaxTries"])))
             elif ChallengeNumber == 2:
                 TextJustify = RC.Justify.Center
+            elif ChallengeNumber == 3:
+                Message = (Message
+                    .replace("{PlayerChance}", 
+                        str(Var.CurrentChallengeData["PlayerChance"])))
 
             LineOffset += RC.Print(Message,          
                 TextVP["Y"] + LineOffset, TextVP["X"],
@@ -922,7 +930,7 @@ def ExecutePlayerAction(
                             + "\n\n"
                             + Var.MessagesData[CurrentObjectID]["Use"])
                         # remove prerequisite from map element
-                        Var.MapElementsData[Var.SeenElement]["Prerequisites"].remove(CurrentObjectID)
+                        Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"].remove(CurrentObjectID)
                         # remove object from backpack
                         Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
                         # refresh view

@@ -17,7 +17,8 @@
                 "SolarCharger",
                 "Knife",
                 "GlassBottle",
-                "Map"
+                "Map",
+                "Torch"
             ],
             "Spawn" : false,
             "Health" : 0,
@@ -187,6 +188,30 @@
             "Dropable" : true,
             "Usable" : true,
             "RequiredMapElementsToUse" : null,
+            "RequiredMapElementsToFill" : null,
+            "ChargeObjects" : null,
+            "Capacity" : null,
+            "Contains" : null,
+            "Spawn" : false,
+            "Health" : 0,
+            "Satiety" : 0,
+            "Hydration" : 0
+        }
+    },
+    "Torch" : {
+        "Image" : "↑",
+        "Style" : "[R;]",
+        "StartPosition" : {
+            "Map" : "Main",
+            "Y" : 2,
+            "X" : 58
+        },
+        "Behaviors" : {
+            "ForVictory" : false,
+            "Pickable" : true,
+            "Dropable" : true,
+            "Usable" : true,
+            "RequiredMapElementsToUse" : ["T"],
             "RequiredMapElementsToFill" : null,
             "ChargeObjects" : null,
             "Capacity" : null,

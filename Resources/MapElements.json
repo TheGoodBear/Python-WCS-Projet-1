@@ -86,7 +86,7 @@
             "CanMoveOn" : false,
             "CanRest" : true,
             "Event" : null,
-            "Prerequisites" : ["Torche"],
+            "Prerequisites" : ["Torch"],
             "Health" : -1,
             "Satiety" : -1,
             "Hydration" : -1,

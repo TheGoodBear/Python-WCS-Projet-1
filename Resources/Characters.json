@@ -13,8 +13,9 @@
         "MaxSatiety" : 100,
         "Satiety" : 100,
         "CurrentMap" : "Main",
-        "Position" : {"X" : 86, "Y" : 10, "Direction" : "E"},
+        "Position" : {"X" : 31, "Y" : 5, "Direction" : "N"},
         "Challenge3Position" : {"X" : 15, "Y" : 7, "Direction" : "W"},
+        "OrderInChallenge3" : 2,
         "TotalMovements" : 0,
         "TotalActions" : 0
     },
@@ -25,9 +26,10 @@
         "Images" : {"N" : "☻", "E" : "☻", "S" : "☻", "W" : "☻"},
         "Style" : "[R;]",
         "CurrentMap" : "Challenge3",
-        "Event" : "StartChallenge",
+        "Event" : "StartChallenge3",
         "Position" : {"X" : 13, "Y" : 6, "Direction" : "N"},
         "Challenge3Position" : {"X" : 15, "Y" : 5, "Direction" : "N"},
+        "OrderInChallenge3" : 1,
         "ChanceToMove" : 0,
         "ChanceMin" : 50,
         "ChanceMax" : 80
@@ -41,6 +43,7 @@
         "Event" : null,
         "Position" : {"X" : 7, "Y" : 2, "Direction" : "N"},
         "Challenge3Position" : {"X" : 14, "Y" : 9, "Direction" : "N"},
+        "OrderInChallenge3" : 3,
         "ChanceToMove" : 10,
         "ChanceMin" : 10,
         "ChanceMax" : 60
@@ -54,6 +57,7 @@
         "Event" : null,
         "Position" : {"X" : 9, "Y" : 4, "Direction" : "N"},
         "Challenge3Position" : {"X" : 5, "Y" : 6, "Direction" : "N"},
+        "OrderInChallenge3" : 7,
         "ChanceToMove" : 10,
         "ChanceMin" : 10,
         "ChanceMax" : 60
@@ -67,6 +71,7 @@
         "Event" : null,
         "Position" : {"X" : 6, "Y" : 7, "Direction" : "N"},
         "Challenge3Position" : {"X" : 5, "Y" : 4, "Direction" : "N"},
+        "OrderInChallenge3" : 8,
         "ChanceToMove" : 10,
         "ChanceMin" : 10,
         "ChanceMax" : 60
@@ -80,6 +85,7 @@
         "Event" : null,
         "Position" : {"X" : 15, "Y" : 8, "Direction" : "N"},
         "Challenge3Position" : {"X" : 10, "Y" : 3, "Direction" : "N"},
+        "OrderInChallenge3" : 10,
         "ChanceToMove" : 10,
         "ChanceMin" : 10,
         "ChanceMax" : 60
@@ -93,6 +99,7 @@
         "Event" : null,
         "Position" : {"X" : 13, "Y" : 3, "Direction" : "N"},
         "Challenge3Position" : {"X" : 6, "Y" : 3, "Direction" : "N"},
+        "OrderInChallenge3" : 9,
         "ChanceToMove" : 10,
         "ChanceMin" : 20,
         "ChanceMax" : 70
@@ -106,6 +113,7 @@
         "Event" : null,
         "Position" : {"X" : 10, "Y" : 8, "Direction" : "N"},
         "Challenge3Position" : {"X" : 14, "Y" : 3, "Direction" : "N"},
+        "OrderInChallenge3" : 11,
         "ChanceToMove" : 10,
         "ChanceMin" : 20,
         "ChanceMax" : 70
@@ -119,6 +127,7 @@
         "Event" : null,
         "Position" : {"X" : 6, "Y" : 10, "Direction" : "N"},
         "Challenge3Position" : {"X" : 5, "Y" : 8, "Direction" : "N"},
+        "OrderInChallenge3" : 6,
         "ChanceToMove" : 10,
         "ChanceMin" : 20,
         "ChanceMax" : 70
@@ -132,6 +141,7 @@
         "Event" : null,
         "Position" : {"X" : 7, "Y" : 10, "Direction" : "N"},
         "Challenge3Position" : {"X" : 6, "Y" : 9, "Direction" : "N"},
+        "OrderInChallenge3" : 5,
         "ChanceToMove" : 10,
         "ChanceMin" : 20,
         "ChanceMax" : 70
@@ -145,6 +155,7 @@
         "Event" : null,
         "Position" : {"X" : 3, "Y" : 4, "Direction" : "N"},
         "Challenge3Position" : {"X" : 10, "Y" : 9, "Direction" : "N"},
+        "OrderInChallenge3" : 4,
         "ChanceToMove" : 10,
         "ChanceMin" : 20,
         "ChanceMax" : 70

@@ -123,23 +123,28 @@
         "Image" : null,
         "Story1" : "Près des montagnes au nord-est, je trouve un petit temple taillé dans la paroi rocheuse.\n\nJ'y pénètre prudement... Une fois mes yeux habitués à l'obscurité, je distingue un gros autel vers le fond du temple.\n\nSur l'autel, est écrit un message dans une langue apparemment inconnue mais utilisant l’alphabet habituel.\n\nUne niche fermée par une solide grille renferme une magnifique [;;SB]clé en argent[;].\n\nSur le pourtour du temple, se trouvent des colonnes sur lesquelles sont gravées en relief toutes les lettres de l’alphabet.\n\nDu sable recouvre une grande partie du sol. Tout au fond du temple, une fine cascade remplie un petit bassin.",
         "Story2" : null,
-        "Switch" : "Je m'approche d'une colonne et appuie sur la lettre gravée.\n\nCelle-ci s'allume soudain, et je m'aperçois que le message écrit sur l'autel se modifie.\n\nMalgré cela, le message en lui-même reste incompréhensible.\nIl semble qu'à une lettre définie corresponde une composition spécifique du message...",
+        "Switch" : "Je m'approche d'une colonne et appuie sur la lettre gravée.\n\nCelle-ci s'allume soudain, et je m'aperçois que le message écrit sur l'autel se modifie.\n\nMalgré cela, le message en lui-même reste incompréhensible.\n\nIl semble qu'à une lettre définie corresponde une composition spécifique du message...",
         "Start" : "Au moment où je touche la grille, une voix sourde retentit dans le temple :\n\n« Une fois que tu auras décrypté le crédo du Python,\ntrace ton nom secret dans le sable. »",
         "AskUser" : "Quel est ton nom secret ? ",
-        "Success" : "La grille s'ouvre dans un petit grincement, libérant la clé en argent.\n\nToutes les lettres des colonnes se sont éteintes et le crédo du Python apparait maintenant clairement sur l'autel.\n\n[;;SI]« Préfère la beauté à la laideur,\nl'explicite à l'implicite,\nle simple au complexe... »",
+        "UserAnswerEmpty" : "Non, je ne peux pas me défiler, essayons de tracer quelque chose.",
+        "Success" : "La grille s'ouvre dans un petit grincement, libérant la clé en argent.\n\nToutes les lettres des colonnes se sont éteintes et le crédo du Python apparait maintenant clairement sur l'autel.\n\n",
         "Failure" : "Au bout de quelques secondes, le nom tracé dans le sable s'efface,\nmais la grille reste fermée.\n\nIl semble que ce ne soit pas la réponse attendue.",
-        "OriginalCredo" : "Prefere la beaute a la laideur,l'explicite à l'implicite,le simple au complexe...",
+        "Credo" : "[;;SI]« Préfère la beauté à la laideur,\nl'explicite à l'implicite,\nle simple au complexe... »",
+        "OriginalCredo" : "Prefere la beaute a la laideur,l'explicite a l'implicite,le simple au complexe...",
         "DeactivatedLetter" : "J'ai déjà trouvé mon nom secret et libéré la clé d'argent.\n\nLa lettre ne s'allume plus."
     },
     "Challenge3" : {
         "Category" : "Event",
         "Title" : "[W;R;SB]La clairière aux singes",
         "Image" : null,
-        "Story1" : "En explorant la jungle, je remarque l'entrée d'une clairière dissimulée derrière la végétation.\n\nAu centre, trône un arbre magnifique. A une grosse branche, est pendue une superbe clé en or au bout d'une liane.\n\nUne bande de singes braillards s'activent dans la clairière...",
-        "Story2" : "En écoutant avec un peu plus d’attention, je me rend compte que les singes semblent articuler des nombres et que deux sons reviennent régulièrement : Fizz et Buzz...et à force d'attention, je fini par percevoir une logique dans ces cris :\nIl suffit de dire Fizz si le nombre est un multiple de 3, Buzz si c'est un multiple de 5, FizzBuzz si c'est un multiple de 3 et 5, ou simplement le nombre lui même dans les autres cas.\n\nJ'estime mes chances de donner une bonne réponse à {PlayerChance}%, il ne me reste plus qu'à entrer dans le jeu.",
+        "Story1" : "En explorant la jungle, je remarque l'entrée d'une clairière dissimulée derrière la végétation.\n\nAu centre, trône un arbre magnifique. À une grosse branche, est pendue une superbe clé en or au bout d'une liane.\n\nUne bande de singes braillards s'activent dans la clairière...",
+        "Story2" : "En écoutant avec un peu plus d’attention, je me rend compte que les singes semblent articuler des nombres et que deux sons reviennent régulièrement : [;;SB]Fizz[;] et [;;SB]Buzz[;]...\n\nÀ force d'attention, je fini par percevoir une logique dans ces cris :\n\nIl suffit de dire [G;]Fizz[;] si le nombre est un [G;]multiple de 3[;], [C;]Buzz[;] si c'est un [C;]multiple de 5[;], [Y;]FizzBuzz[;] si c'est un [Y;]multiple de 3 et 5[;], ou simplement le nombre lui même dans les autres cas.\n\nJ'estime mes chances de donner une bonne réponse à [;;SB]{PlayerChance}%[;], il ne me reste plus qu'à entrer dans le jeu.",
         "Start" : "Le chef me regarde avec perplexité... puis m'adresse la parole :\n\n« Toi vouloir jouer pour gagner clé ? »\n\n« Toi penser plus malin que singes danseurs et Chef Maestro ? »",
+        "Start2" : "Tout le monde se met en place pour une nouvelle partie...",
+        "MonkeyAnswer" : "{Character} dit {Answer}",
+        "MonkeyWrong" : "{Character} s'est trompé(e), il/elle se recroqueville honteusement et le jeu reprend.",
         "Success" : "Je viens d'éliminer le dernier singe, et tous s’enfuient dans la jungle en criant de désespoir.\n\nPlus d'obstacle maintenant entre moi et la clé d'or !",
-        "Failure" : "Les singes se moquent copieusement de moi.\n\nLe chef me donne alors une grande claque dans le dos et m'invite à rejouer.",
+        "Failure" : "Aïe ! Mauvaise réponse de ma part.\n\nLes singes se moquent copieusement de moi.\n\nLe chef me donne alors une grande claque dans le dos et m'invite à rejouer.",
         "AskStartChallenge" : "Suis-je prêt à jouer avec les singes ? (O)ui ou (N)on : "
     },
     " " : {
@@ -559,6 +564,14 @@
         "CantUse" : "",
         "PickUp" : "Cela me sera utile pour ne pas me perdre.\nHeu, je suis où déjà ?",
         "Drop" : "Rien à faire de cette paperasse, j'ai toujours mon légendaire sens de l'orientation avec moi :-)"
+    },
+    "Torch" : {
+        "Category" : "Object",
+        "Name" : "Torche",
+        "Use" : "Et la lumière fut !",
+        "CantUse" : "Évitons de griller la torche tant que ce n'est pas utile.",
+        "PickUp" : "Moi qui ai peur du noir, cela pourra m'être bien utile.",
+        "Drop" : "Un espace de plus dans mon sac, de toutes manières il fait toujours soleil sur cette île."
     },
     "BadFood1" : {
         "Category" : "Object",

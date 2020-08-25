@@ -196,11 +196,11 @@ def GetUserInput(
 
         if ValueType.lower() == "bool" or ValueType.lower() == "boolean":
             # expect a boolean 
-            if MyData.lower() == "true" or MyData.lower() == "vrai" or MyData.lower() == "t" or  MyData == "v" or MyData.lower() == "oui" or MyData == "1":
+            if MyData.lower() == "true" or MyData.lower() == "vrai" or MyData.lower() == "t" or  MyData == "v" or MyData.lower() == "oui" or MyData.lower() == "o" or MyData == "1":
                 # user entry is True
                 # return value
                 return True
-            elif MyData.lower() == "false" or MyData.lower() == "faux" or MyData.lower() == "f" or MyData.lower() == "non" or MyData == "0":
+            elif MyData.lower() == "false" or MyData.lower() == "faux" or MyData.lower() == "f" or MyData.lower() == "non" or MyData.lower() == "n" or MyData == "0":
                 # user entry is False
                 # return value
                 return False
