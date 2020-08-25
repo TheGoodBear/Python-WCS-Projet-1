@@ -11,8 +11,8 @@
         "MapMaxWidth" : 100,
         "MapMaxHeight" : 50,
         "DashboardWidth" : 40,
-        "LoadGamePossibleValues" : {"Yes" : "O", "No" : "N", "Delete" : "S"},
-        "CurrentView" : "Start",
+        "ContinueGamePossibleValues" : {"Yes" : "O", "No" : "N", "Delete" : "S"},
+        "CurrentView" : "StartEnd",
         "Sex" : {
             "Female" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
             "Male" : {"Color" : "[C;;SB]", "Symbol" : "♂"},
@@ -71,7 +71,7 @@
         "WaitOnChallengeWon" : 2
     },
     "ViewPorts" : {
-        "Start" : {
+        "StartEnd" : {
             "Window" : {"Y" : 7, "X" : 38, "Width" : 80, "Height" : 40},
             "Title" : {"Y" : 8, "X" : 39, "Width" : 78, "Height" : 1},
             "Text" : {"Y" : 10, "X" : 40, "Width" : 76, "Height" : 34},

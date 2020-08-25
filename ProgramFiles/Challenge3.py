@@ -34,7 +34,7 @@ def StartChallenge():
     LineOffset = 0
 
     # print start message
-    LineOffset += RC.Print(Var.MessagesData["Challenge1"]["Start"] + "\n\n",          
+    LineOffset += RC.Print(Var.MessagesData["Challenge3"]["Start"] + "\n\n",          
         TextVP["Y"] + LineOffset, TextVP["X"],
         JustifyText = RC.Justify.Center, 
         MaxColumns = TextVP["Width"])[0]
@@ -44,6 +44,7 @@ def StartChallenge():
     PlayerEntersGame = Util.GetUserInput(
         Var.MessagesData["Challenge3"]["AskStartChallenge"],
         ValueType = "bool",
+        DefaultValue = False,
         RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]])
     RC.ShowCursor(False)
 

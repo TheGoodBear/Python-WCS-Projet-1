@@ -13,7 +13,7 @@
         "MaxSatiety" : 100,
         "Satiety" : 100,
         "CurrentMap" : "Main",
-        "Position" : {"X" : 31, "Y" : 5, "Direction" : "N"},
+        "Position" : {"X" : 35, "Y" : 1, "Direction" : "E"},
         "Challenge3Position" : {"X" : 15, "Y" : 7, "Direction" : "W"},
         "OrderInChallenge3" : 2,
         "TotalMovements" : 0,

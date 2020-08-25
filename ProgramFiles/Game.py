@@ -122,7 +122,7 @@ def ShowView(
         Var.GameData["Game"]["CurrentView"] = ViewName
 
     LineOffset = 0
-    if ViewParts is None:
+    if ClearScreen:
         # draw view template
         for Index, Line in enumerate(Var.ViewsData[ViewName]):
             RC.Print(Line, 
@@ -132,7 +132,7 @@ def ShowView(
                 MaxColumns = Var.GameData["ViewPorts"][ViewName]["Window"]["Width"])
 
     # show view content
-    if ViewName == "Start":
+    if ViewName == "StartEnd":
 
         RC.ShowCursor(False)
 
@@ -152,98 +152,153 @@ def ShowView(
             MaxColumns = TitleVP["Width"],
             Speed = RC.PrintSpeed.UltraFast)
 
-        # text page 1
-        LineOffset = 0
-        if Var.MessagesData["Game"]["Image"] is not None:
-            LineOffset += RC.Print(Var.MessagesData["Game"]["Image"],
-                TextVP["Y"], TextVP["X"],
-                JustifyText = RC.Justify.Center,
-                MaxColumns = TextVP["Width"],
-                Speed = RC.PrintSpeed.UltraFast)[0]
+        # show start data
+        if ViewParts is None or "Start" in ViewParts:
 
-        RC.Print(Var.MessagesData["Game"]["Story"],          
-            TextVP["Y"] + LineOffset, TextVP["X"],
-            JustifyText = RC.Justify.Left, 
-            MaxColumns = TextVP["Width"])
+            # text page 1
+            LineOffset = 0
+            if Var.MessagesData["Game"]["Image"] is not None:
+                LineOffset += RC.Print(Var.MessagesData["Game"]["Image"],
+                    TextVP["Y"], TextVP["X"],
+                    JustifyText = RC.Justify.Center,
+                    MaxColumns = TextVP["Width"],
+                    Speed = RC.PrintSpeed.UltraFast)[0]
 
-        # ask continue
-        AskContinue(AskVP)
+            RC.Print(Var.MessagesData["Game"]["Story"],          
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])
 
-        # clear text between pages
-        RC.ClearConsole(
-            TextVP["Y"], TextVP["X"], 
-            TextVP["Width"], TextVP["Height"])
-        RC.ClearConsole(
-            AskVP["Y"], AskVP["X"], 
-            AskVP["Width"], AskVP["Height"])
+            # ask continue
+            AskContinue(AskVP)
 
-        # text page 2
-        LineOffset = 0
-        Message = (Var.MessagesData["Game"]["Rules"]
-            .replace("{HealthColor}", Var.GameData["Game"]["VitalSigns"]["Health"]["Color"])
-            .replace("{HydrationColor}", Var.GameData["Game"]["VitalSigns"]["Hydration"]["Color"])
-            .replace("{SatietyColor}", Var.GameData["Game"]["VitalSigns"]["Satiety"]["Color"]))
-        LineOffset += 1 + RC.Print(Message,          
-            TextVP["Y"] + LineOffset, TextVP["X"],
-            JustifyText = RC.Justify.Left, 
-            MaxColumns = TextVP["Width"])[0]
-        
-        RC.ShowCursor()
-        Var.Player["Name"] = Util.GetUserInput(
-            Var.MessagesData["Game"]["AskName"],
-            Minimum = 3,
-            Maximum = 20,
-            SpecificErrorMessage = "Ton nom doit faire entre 3 et 20 caractères.",
-            RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]])
-        RC.ShowCursor(False)
-        RC.ClearConsole(
-            TextVP["Y"] + LineOffset, TextVP["X"], 
-            TextVP["Width"], 2)
+            # clear text between pages
+            RC.ClearConsole(
+                TextVP["Y"], TextVP["X"], 
+                TextVP["Width"], TextVP["Height"])
+            RC.ClearConsole(
+                AskVP["Y"], AskVP["X"], 
+                AskVP["Width"], AskVP["Height"])
 
-        Message = (Var.MessagesData["Game"]["Hello"]
-            .replace("{Name}", Var.Player["Name"]))
-        LineOffset += 1 + RC.Print(Message,
-            TextVP["Y"] + LineOffset, TextVP["X"],
-            JustifyText = RC.Justify.Left, 
-            MaxColumns = TextVP["Width"])[0]
+            # text page 2
+            LineOffset = 0
+            Message = (Var.MessagesData["Game"]["Rules"]
+                .replace("{HealthColor}", Var.GameData["Game"]["VitalSigns"]["Health"]["Color"])
+                .replace("{HydrationColor}", Var.GameData["Game"]["VitalSigns"]["Hydration"]["Color"])
+                .replace("{SatietyColor}", Var.GameData["Game"]["VitalSigns"]["Satiety"]["Color"]))
+            LineOffset += 1 + RC.Print(Message,          
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])[0]
+            
+            RC.ShowCursor()
+            Var.Player["Name"] = Util.GetUserInput(
+                Var.MessagesData["Game"]["AskName"],
+                Minimum = 3,
+                Maximum = 20,
+                SpecificErrorMessage = Var.MessagesData["Game"]["WrongName"],
+                RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]])
+            RC.ShowCursor(False)
+            RC.ClearConsole(
+                TextVP["Y"] + LineOffset, TextVP["X"], 
+                TextVP["Width"], 2)
 
-        LineOffset += 1 + RC.Print(Var.MessagesData["Game"]["AskSex1"], 
-            TextVP["Y"] + LineOffset, TextVP["X"],
-            JustifyText = RC.Justify.Left, 
-            MaxColumns = TextVP["Width"])[0]
+            Message = (Var.MessagesData["Game"]["Hello"]
+                .replace("{Name}", Var.Player["Name"]))
+            LineOffset += 1 + RC.Print(Message,
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])[0]
 
-        Sex = Util.GetUserInput(
-            Var.MessagesData["Game"]["AskSex2"],
-            PossibleValues = list(Var.MessagesData["Game"]["Sex"].keys()),
-            SpecificErrorMessage = "Tu dois m'indiquer l'une des lettres entre parenthèses ci-dessus.",
-            RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]]).upper()
-        Var.Player["Sex"] = Var.MessagesData["Game"]["Sex"][Sex]
-        Var.Player["Style"] = Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Color"]
-        RC.ShowCursor(False)
-        RC.ClearConsole(
-            TextVP["Y"] + LineOffset, TextVP["X"], 
-            TextVP["Width"], 2)
-        
-        Message = (Var.MessagesData["Game"]["Hello2"]
-            .replace("{ColoredName}", 
-                Var.Player["Style"] + Var.Player["Name"] + "[;]")
-            .replace("{Symbol}", 
-                Var.Player["Style"] + " ".join(set(Var.Player["Images"].values())) + "[;]"))
-        LineOffset += RC.Print(Message,          
-            TextVP["Y"] + LineOffset, TextVP["X"],
-            JustifyText = RC.Justify.Left, 
-            MaxColumns = TextVP["Width"])[0]
+            # check if a game already exists for this name
 
-        RC.Print(Var.MessagesData["Game"]["AskReady"],          
-            AskVP["Y"], AskVP["X"],
-            JustifyText = RC.Justify.Left, 
-            MaxColumns = AskVP["Width"],
-            Speed = RC.PrintSpeed.Fast)
-        RC.PlaceCursorAt(
-            AskVP["Y"], 
-            AskVP["X"] + len(Var.MessagesData["Game"]["AskReady"]))
-        input("")
-   
+
+            LineOffset += 1 + RC.Print(Var.MessagesData["Game"]["AskSex1"], 
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])[0]
+
+            Sex = Util.GetUserInput(
+                Var.MessagesData["Game"]["AskSex2"],
+                PossibleValues = list(Var.MessagesData["Game"]["Sex"].keys()),
+                SpecificErrorMessage = Var.MessagesData["Game"]["WrongAnswer"],
+                RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]]).upper()
+            Var.Player["Sex"] = Var.MessagesData["Game"]["Sex"][Sex]
+            Var.Player["Style"] = Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Color"]
+            RC.ShowCursor(False)
+            RC.ClearConsole(
+                TextVP["Y"] + LineOffset, TextVP["X"], 
+                TextVP["Width"], 2)
+            
+            Message = (Var.MessagesData["Game"]["Hello2"]
+                .replace("{ColoredName}", 
+                    Var.Player["Style"] + Var.Player["Name"] + "[;]")
+                .replace("{Symbol}", 
+                    Var.Player["Style"] + " ".join(set(Var.Player["Images"].values())) + "[;]"))
+            LineOffset += RC.Print(Message,          
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = TextVP["Width"])[0]
+
+            RC.Print(Var.MessagesData["Game"]["AskReady"],          
+                AskVP["Y"], AskVP["X"],
+                JustifyText = RC.Justify.Left, 
+                MaxColumns = AskVP["Width"],
+                Speed = RC.PrintSpeed.Fast)
+            RC.PlaceCursorAt(
+                AskVP["Y"], 
+                AskVP["X"] + len(Var.MessagesData["Game"]["AskReady"]))
+            input("")
+
+        # show end data
+        if ViewParts is not None and "End" in ViewParts:
+
+            LineOffset = 0
+
+            if "Win" in ViewParts:
+                if Var.MessagesData["Game"]["WinImage"] is not None:
+                    LineOffset += RC.Print(Var.MessagesData["Game"]["WinImage"],
+                        TextVP["Y"], TextVP["X"],
+                        JustifyText = RC.Justify.Center,
+                        MaxColumns = TextVP["Width"],
+                        Speed = RC.PrintSpeed.UltraFast)[0]
+
+                Message = (Var.MessagesData["Game"]["WinGame"]
+                    .replace("{Name}", 
+                        Var.Player["Style"] + Var.Player["Name"] + "[;]")
+                    .replace("{Title}", 
+                        Var.MessagesData["Game"]["Title"])
+                    .replace("{TotalMovements}", 
+                        str(Var.Player["TotalMovements"]))
+                    .replace("{TotalActions}", 
+                        str(Var.Player["TotalActions"])))
+                RC.Print(Message,          
+                    TextVP["Y"] + LineOffset, TextVP["X"],
+                    JustifyText = RC.Justify.Left, 
+                    MaxColumns = TextVP["Width"])
+
+            elif "Loose" in ViewParts:
+                if Var.MessagesData["Game"]["LooseImage"] is not None:
+                    LineOffset += RC.Print(Var.MessagesData["Game"]["LooseImage"],
+                        TextVP["Y"], TextVP["X"],
+                        JustifyText = RC.Justify.Center,
+                        MaxColumns = TextVP["Width"],
+                        Speed = RC.PrintSpeed.UltraFast)[0]
+
+                Message = (Var.MessagesData["Game"]["LooseGame"]
+                    .replace("{Name}", 
+                        Var.Player["Style"] + Var.Player["Name"] + "[;]")
+                    .replace("{Title}", 
+                        Var.MessagesData["Game"]["Title"]))
+                RC.Print(Message,          
+                    TextVP["Y"] + LineOffset, TextVP["X"],
+                    JustifyText = RC.Justify.Left, 
+                    MaxColumns = TextVP["Width"])
+
+            # ask quit
+            AskContinue(AskVP, Quit = True)
+
+
     elif ViewName == "Main":
 
         Var.CurrentChallengeData = None
@@ -372,6 +427,7 @@ def ShowView(
 
 def AskContinue(
     ViewPortData,
+    Quit = False,
     ClearViewPort = False):
     """
         Ask player to continue story
@@ -379,15 +435,20 @@ def AskContinue(
     """
 
     if not ClearViewPort:
+        Message = (
+            Var.MessagesData["Game"]["AskContinue"]
+            if not Quit
+            else Var.MessagesData["Game"]["AskQuit"])
+
         # ask continue
-        RC.Print(Var.MessagesData["Game"]["AskContinue"],          
+        RC.Print(Message,          
             ViewPortData["Y"], ViewPortData["X"],
             JustifyText = RC.Justify.Left, 
             MaxColumns = ViewPortData["Width"],
             Speed = RC.PrintSpeed.Instant)
         RC.PlaceCursorAt(
             ViewPortData["Y"], 
-            ViewPortData["X"] + len(Var.MessagesData["Game"]["AskContinue"]))
+            ViewPortData["X"] + len(Message))
         # wait for user entry
         input("")
         # clear viewport
@@ -929,10 +990,21 @@ def ExecutePlayerAction(
                                     + "[;]")
                             + "\n\n"
                             + Var.MessagesData[CurrentObjectID]["Use"])
-                        # remove prerequisite from map element
-                        Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"].remove(CurrentObjectID)
-                        # remove object from backpack
-                        Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
+                        # remove prerequisite from map element and backpack if specified
+                        if Var.MapElementsData[Var.SeenElement]["Behaviors"]["RemovePrerequisiteAfterUse"]:
+                            # remove from map element
+                            Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"].remove(CurrentObjectID)
+                            # remove from backpack
+                            Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
+                        # update CanMoveOn for map element if specified
+                        if (CurrentObjectData["Behaviors"]["CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites"]
+                            and (Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"] == None
+                            or Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"] == []
+                            or CurrentObjectID in Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"])):
+                            Var.MapElementsData[Var.SeenElement]["Behaviors"]["CanMoveOn"] = True
+                            if Var.SeenElement == "0":
+                                # check if final door prerequisites are completed
+                                Var.MapElementsData[Var.SeenElement]["Behaviors"]["Event"] = "WinGame"
                         # refresh view
                         ShowView(ViewParts = ["BackpackItems"])
 
@@ -1276,8 +1348,19 @@ def Move(
 
     if not ElementAtNewPosition["Behaviors"]["CanMoveOn"]:
         # move is not possible
-        return (False, 
-            f"{Var.MessagesData['Dashboard']['Actions']['Move']['Failure']}\n\n{Var.MessagesData[Var.MapLayer[NewY][NewX]]['CantMoveOn']}", 
+        Prerequisites = ""
+        # check for missing prerequisites if any
+        if ElementAtNewPosition["Behaviors"]["Prerequisites"] is not None:
+            for Prereq in ElementAtNewPosition["Behaviors"]["Prerequisites"]:
+                if Prerequisites != "":
+                    Prerequisites += ", "
+                Prerequisites += Var.ObjectsData[Prereq]["Style"] + Var.MessagesData[Prereq]["Name"] + "[;]"
+        Message = (
+            f"{Var.MessagesData['Dashboard']['Actions']['Move']['Failure']}\n\n{Var.MessagesData[Var.MapLayer[NewY][NewX]]['CantMoveOn']}"
+            .replace("{Prerequisites}", Prerequisites))
+        return (
+            False, 
+            Message, 
             ElementAtNewPosition["Behaviors"]["Event"])
     else:
         # get other character at new position
@@ -1363,6 +1446,13 @@ def CheckEvent(Event):
             # start Challenge 3
             Chal3.StartChallenge()
 
+        elif Event == "WinGame":
+            # game won
+            # stop main loop
+            Var.GameRunning = False
+            # show end screen
+            ShowView("StartEnd", ViewParts = ["End", "Win"], ClearScreen = True)
+
 
 def UpdateVitalSign(
     VitalSign,
@@ -1398,6 +1488,15 @@ def SaveGame():
         Player quits, save game
     """
     pass
+
+
+
+def WinGame():
+    """
+        Player wins game
+    """
+    pass
+
 
 
 # # Test code

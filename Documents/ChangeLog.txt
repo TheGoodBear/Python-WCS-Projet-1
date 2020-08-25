@@ -1,2 +1,11 @@
 
 10/08/2020 - V1.0 - Initial release
+
+
+Reste à faire :
+    défi 3
+    écran de fin (perdu)
+    gérer la fin (perdu)
+    action get help
+    sauvegarde partie sur Quit
+    Chargement partie
