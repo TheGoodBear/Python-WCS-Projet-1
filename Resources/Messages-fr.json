@@ -18,11 +18,22 @@
         "AskContinue" : "[B;W] Appuie sur Entrée pour poursuivre l'histoire... ",
         "AskReady" : "[B;W] Appuies sur Entrée quand tu es prêt... ",
         "WrongAnswer" : "Je n'ai pas bien saisi ta réponse, peux-tu répéter ?",
-        "WinGame" : "Félicitation {Name} !!!\n\nTu as brillament survécu à [B;G] {Title} [;] avec un nombre total de mouvements de [;;SB]{TotalMovements}[;] et d'actions de [;;SB]{TotalActions}[;].\n\nTon nom restera gravé sur la stèle des héros de l'île [G;]☺[;].",
+        "WinGame" : "Félicitation {Name} !!!\n\nTu as brillament survécu en [;;SB]{TotalMovements}[;] déplacements et [;;SB]{TotalActions}[;] actions.\n\nTon nom restera gravé sur la stèle des héros de l'île [G;]☺[;].",
         "WinImage" : null,
-        "LooseGame" : "Désolé {Name}, mais tu n'as malheureusement pas survécu à [B;G] {Title} [;].\n\nMais heureusement, tout ceci n'est... qu'un jeu [Y;]☺[;]\n\nN'hésite pas à retenter ta chance une prochaine fois.",
+        "LooseGame" : "Désolé {Name}, tu n'as pas survécu.\n\nHeureusement, tout ceci n'est... qu'un jeu [Y;]☺[;]\n\nN'hésite pas à retenter ta chance une prochaine fois.",
         "LooseImage" : null,
-        "AskQuit" : "[B;W] Appuie sur ENTRÉE pour sortir [;]"
+        "HealthZero" : "Tu viens malheureusement de tomber d'{Style}épuisement[;].\n\nMais rien ne se perd, ton cadavre servira à faire pousser de nouvelles plantes.",
+        "HydrationZero" : "La {Style}soif[;] t'a vaincu.\n\nEspérons que tes ossements servent d'avertissement aux futurs explorateurs.",
+        "SatietyZero" : "La {Style}faim[;] ronge tes entrailles.\n\nMais ton eau repart dans la terre pour abreuver les vivants.",
+        "AskQuit" : "[B;W] Appuie sur ENTRÉE pour sortir [;]",
+        "WallOfHeroes" : "[B;W] Mur des Héros [;]",
+        "HallOfFame" : "{Name} a gravé son nom sur la [Y;]stèle des héros[;] en [;;SB]{TotalMovements}[;] déplacements et [;;SB]{TotalActions}[;] actions le {Date} à {Time}",
+        "Cemetery" : "{Name} est mort {DeathStatus} après [;;SB]{TotalMovements}[;] déplacements et [;;SB]{TotalActions}[;] actions le {Date} à {Time}",
+        "Death" : {
+            "Health" : "d'épuisement",
+            "Hydration" : "de soif",
+            "Satiety" : "de faim"
+            }
     },
     "Dashboard" : {
         "Category" : "",
@@ -34,7 +45,7 @@
         "PlayerHydration" : "Hydratation.. {HydrationCounter}",
         "Satiety" : "Satiété",
         "PlayerSatiety" : "Satiété...... {SatietyCounter}",
-        "CounterMovements" : "Mouvements : {TotalMovements}",
+        "CounterMovements" : "Déplacements : {TotalMovements}",
         "CounterActions" : "Actions : {TotalActions}",
         "BackpackTitle" : "[B;W]Sac à dos   ({ItemsInBackpack} / {BackpackCapacity})",
         "Directions" : {"N" : "le Nord", "E" : "l'Est", "S" : "le Sud", "W" : "l'Ouest"},
@@ -108,6 +119,7 @@
         "YouEarn" : "Je gagne [W;G] {Number} [;] en {VitalSign}.",
         "YouLoose" : "Je perd [W;R] {Number} [;] en {VitalSign}.",
         "Empty" : "vide",
+        "Death" : "[B;Y] Je viens de mourir... [;]",
         "ConfirmQuit" : "[B;Y]Appuie sur ENTRÉE pour sortir[;]"
     },
     "Challenge1" : {
@@ -188,7 +200,7 @@
     "T" : {
         "Category" : "MapElement",
         "Name" : "Un tunnel",
-        "MoveOn" : "Je m'engage prudemment dans le tunnel à la lumière vacillante de la torche, allumant au fur et à mesure les torchères que je trouve dans le tunnel.",
+        "MoveOn" : "Je m'engage prudemment dans le tunnel à la lumière vacillantes des torches.",
         "CantMoveOn" : "Ce tunnel est beaucoup trop sombre pour m'y aventurer sans lumière."
     },
     "I" : {
@@ -576,7 +588,7 @@
     "Torch" : {
         "Category" : "Object",
         "Name" : "Torche",
-        "Use" : "Et la lumière fut !",
+        "Use" : "Et la lumière fut !\n\nJe place ma torche sur le support de l'entrée de la grotte et tout le tunnel s'illumine.",
         "CantUse" : "Évitons de griller la torche tant que ce n'est pas utile.",
         "PickUp" : "Moi qui ai peur du noir, cela pourra m'être bien utile.",
         "Drop" : "Un espace de plus dans mon sac, de toutes manières il fait toujours soleil sur cette île."

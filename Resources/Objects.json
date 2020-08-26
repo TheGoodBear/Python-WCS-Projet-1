@@ -21,7 +21,8 @@
                 "Map",
                 "SilverKey",
                 "GoldKey",
-                "BronzeKey"
+                "BronzeKey",
+                "Torch"
             ],
             "Spawn" : false,
             "Health" : 0,

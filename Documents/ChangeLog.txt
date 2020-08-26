@@ -4,8 +4,8 @@
 
 Reste à faire :
     défi 3
-    écran de fin (perdu)
-    gérer la fin (perdu)
     action get help
     sauvegarde partie sur Quit
     Chargement partie
+    pop food
+    move monkeys

@@ -3,6 +3,7 @@
 # Imports modules
 import time
 import random
+from datetime import datetime
 
 # Import application code
 import ProgramFiles.Variables as Var
@@ -22,20 +23,20 @@ def Initialization():
     # load general game data
     Var.GameData = Util.LoadJSONFile(Var.ResourcesFolder, "GameData")
     # load views data
-    Var.ViewsData = Util.LoadViews(Var.ResourcesFolder, "Views")
+    Var.ViewsData = Util.LoadViews(Var.ResourcesFolder, Var.GameData["Game"]["Files"]["ViewData"])
     # load messages (text) data matching language
-    Var.MessagesData = Util.LoadJSONFile(Var.ResourcesFolder, "Messages-" + Var.GameData["Game"]["Language"])
+    Var.MessagesData = Util.LoadJSONFile(Var.ResourcesFolder, Var.GameData["Game"]["Files"]["Dialogs"] + "-" + Var.GameData["Game"]["Language"])
     # load characters data
-    Var.CharactersData = Util.LoadJSONFile(Var.ResourcesFolder, "Characters")
+    Var.CharactersData = Util.LoadJSONFile(Var.ResourcesFolder, Var.GameData["Game"]["Files"]["Characters"])
     # get player
     Var.Player = [Character for Character in Var.CharactersData if Character["Category"] == "Player"][0]
     # load map data and prepare layers
-    Var.MapsData = Util.LoadMaps(Var.ResourcesFolder, "Maps")
+    Var.MapsData = Util.LoadMaps(Var.ResourcesFolder, Var.GameData["Game"]["Files"]["Map"])
     GetMapLayersAndViewPort()
     # load map elements data
-    Var.MapElementsData = Util.LoadJSONFile(Var.ResourcesFolder, "MapElements")
+    Var.MapElementsData = Util.LoadJSONFile(Var.ResourcesFolder, Var.GameData["Game"]["Files"]["MapElements"])
     # load objects data
-    Var.ObjectsData = Util.LoadJSONFile(Var.ResourcesFolder, "Objects")
+    Var.ObjectsData = Util.LoadJSONFile(Var.ResourcesFolder, Var.GameData["Game"]["Files"]["Objects"])
     # place objects with a start position in the corresponding map layer
     StartObjects = {ObjectKey : ObjectValue for (ObjectKey, ObjectValue) in Var.ObjectsData.items() if ObjectValue["StartPosition"] is not None}
     for ObjectKey, ObjectValue in StartObjects.items():
@@ -67,9 +68,9 @@ def Run():
         ExecutePlayerAction(ActionName, ActionArgument)
     
     # exit program
-    RC.ClearConsole()
-    print("AU REVOIR !")
-    input()
+    # RC.ClearConsole()
+    # print("AU REVOIR !")
+    # input()
     return
 
 
@@ -253,9 +254,28 @@ def ShowView(
         # show end data
         if ViewParts is not None and "End" in ViewParts:
 
+            Now = datetime.now()
             LineOffset = 0
 
             if "Win" in ViewParts:
+                # add message to wall of adventurers
+                WallText = (Var.MessagesData["Game"]["HallOfFame"]
+                    .replace("{Name}", 
+                        Var.Player["Style"] + Var.Player["Name"] + "[;]")
+                    .replace("{TotalMovements}", 
+                        str(Var.Player["TotalMovements"]))
+                    .replace("{TotalActions}", 
+                        str(Var.Player["TotalActions"]))
+                    .replace("{Date}", 
+                        Now.strftime("%d/%m/%Y"))
+                    .replace("{Time}", 
+                        Now.strftime("%H:%M:%S")))
+                Util.WriteToTextFile(
+                    Var.GameData["Game"]["SaveFolder"],
+                    Var.GameData["Game"]["Files"]["WallOfHeroes"],
+                    WallText,
+                    "a")
+
                 if Var.MessagesData["Game"]["WinImage"] is not None:
                     LineOffset += RC.Print(Var.MessagesData["Game"]["WinImage"],
                         TextVP["Y"], TextVP["X"],
@@ -272,12 +292,32 @@ def ShowView(
                         str(Var.Player["TotalMovements"]))
                     .replace("{TotalActions}", 
                         str(Var.Player["TotalActions"])))
-                RC.Print(Message,          
+                LineOffset += RC.Print(Message,          
                     TextVP["Y"] + LineOffset, TextVP["X"],
                     JustifyText = RC.Justify.Left, 
-                    MaxColumns = TextVP["Width"])
+                    MaxColumns = TextVP["Width"])[0]
 
             elif "Loose" in ViewParts:
+                # add message to wall of adventurers
+                WallText = (Var.MessagesData["Game"]["Cemetery"]
+                    .replace("{Name}", 
+                        Var.Player["Style"] + Var.Player["Name"] + "[;]")
+                    .replace("{DeathStatus}", 
+                        Var.GameData["Game"]["VitalSigns"][Var.Player["Death"]]["Color"] + Var.MessagesData["Game"]["Death"][Var.Player["Death"]] + "[;]")
+                    .replace("{TotalMovements}", 
+                        str(Var.Player["TotalMovements"]))
+                    .replace("{TotalActions}", 
+                        str(Var.Player["TotalActions"]))
+                    .replace("{Date}", 
+                        Now.strftime("%d/%m/%Y"))
+                    .replace("{Time}", 
+                        Now.strftime("%H:%M:%S")))
+                Util.WriteToTextFile(
+                    Var.GameData["Game"]["SaveFolder"],
+                    Var.GameData["Game"]["Files"]["WallOfHeroes"],
+                    WallText,
+                    "a")
+
                 if Var.MessagesData["Game"]["LooseImage"] is not None:
                     LineOffset += RC.Print(Var.MessagesData["Game"]["LooseImage"],
                         TextVP["Y"], TextVP["X"],
@@ -285,19 +325,37 @@ def ShowView(
                         MaxColumns = TextVP["Width"],
                         Speed = RC.PrintSpeed.UltraFast)[0]
 
-                Message = (Var.MessagesData["Game"]["LooseGame"]
-                    .replace("{Name}", 
-                        Var.Player["Style"] + Var.Player["Name"] + "[;]")
-                    .replace("{Title}", 
-                        Var.MessagesData["Game"]["Title"]))
-                RC.Print(Message,          
+                Message = (
+                    Var.MessagesData["Game"][f"{Var.Player['Death']}Zero"]
+                        .replace("{Style}", 
+                            Var.GameData["Game"]["VitalSigns"][Var.Player['Death']]["Color"])          
+                    + "\n\n" 
+                    + Var.MessagesData["Game"]["LooseGame"]
+                        .replace("{Name}", 
+                            Var.Player["Style"] + Var.Player["Name"] + "[;]")
+                        .replace("{Title}", 
+                            Var.MessagesData["Game"]["Title"]))
+                LineOffset += RC.Print(Message,          
                     TextVP["Y"] + LineOffset, TextVP["X"],
                     JustifyText = RC.Justify.Left, 
-                    MaxColumns = TextVP["Width"])
+                    MaxColumns = TextVP["Width"])[0]
+
+            # show wall of heroes
+            WallOfHeroes = Util.ReadFromTextFile(
+                Var.GameData["Game"]["SaveFolder"],
+                Var.GameData["Game"]["Files"]["WallOfHeroes"])
+            LineOffset += RC.Print("\n\n" + Var.MessagesData["Game"]["WallOfHeroes"] + "\n\n",
+                TextVP["Y"] + LineOffset, TextVP["X"],
+                JustifyText = RC.Justify.Center, 
+                MaxColumns = TextVP["Width"])[0]
+            for Hero in WallOfHeroes[:-(Var.GameData["Game"]["WallOfHeroesLines"] + 1):-1]:
+                LineOffset += RC.Print(Hero + "\n",
+                    TextVP["Y"] + LineOffset, TextVP["X"],
+                    JustifyText = RC.Justify.Left, 
+                    MaxColumns = TextVP["Width"])[0]
 
             # ask quit
             AskContinue(AskVP, Quit = True)
-
 
     elif ViewName == "Main":
 
@@ -914,6 +972,7 @@ def ExecutePlayerAction(
         input()
         # stop main loop
         Var.GameRunning = False
+        return
             
     elif ActionName == "Move":
         ActionOK = True
@@ -990,12 +1049,10 @@ def ExecutePlayerAction(
                                     + "[;]")
                             + "\n\n"
                             + Var.MessagesData[CurrentObjectID]["Use"])
-                        # remove prerequisite from map element and backpack if specified
-                        if Var.MapElementsData[Var.SeenElement]["Behaviors"]["RemovePrerequisiteAfterUse"]:
-                            # remove from map element
-                            Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"].remove(CurrentObjectID)
-                            # remove from backpack
-                            Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
+                        # remove from map element
+                        Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"].remove(CurrentObjectID)
+                        # remove from backpack
+                        Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
                         # update CanMoveOn for map element if specified
                         if (CurrentObjectData["Behaviors"]["CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites"]
                             and (Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"] == None
@@ -1006,7 +1063,7 @@ def ExecutePlayerAction(
                                 # check if final door prerequisites are completed
                                 Var.MapElementsData[Var.SeenElement]["Behaviors"]["Event"] = "WinGame"
                         # refresh view
-                        ShowView(ViewParts = ["BackpackItems"])
+                        ShowView(ViewParts = ["BackpackTitle", "BackpackItems"])
 
                 else:
                     Var.CurrentMessage = (
@@ -1193,7 +1250,7 @@ def ExecutePlayerAction(
                 Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]] = CurrentObjectID
                 # refresh map and view
                 ShowMap(Var.SeenCoordinates["Y"], Var.SeenCoordinates["X"])
-                ShowView(ViewParts = ["BackpackItems", "Environment"])
+                ShowView(ViewParts = ["BackpackTitle", "BackpackItems", "Environment"])
                 # get message
                 Var.CurrentMessage = (
                     Var.MessagesData["Dashboard"]["Actions"]["DropObject"]["Success"]
@@ -1250,7 +1307,7 @@ def ExecutePlayerAction(
                 Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]] = ""
                 # refresh map and view
                 ShowMap(Var.SeenCoordinates["Y"], Var.SeenCoordinates["X"])
-                ShowView(ViewParts = ["BackpackItems", "Environment"])
+                ShowView(ViewParts = ["BackpackTitle", "BackpackItems", "Environment"])
                 # get message
                 Var.CurrentMessage = (
                     Var.MessagesData["Dashboard"]["Actions"]["PickUp"]["Success"]
@@ -1317,6 +1374,21 @@ def ExecutePlayerAction(
     
     # refresh view
     ShowView(ViewParts = ["Counters", "ActionHistory", "Message"])
+
+    # check game finished
+    if not Var.GameRunning:
+        # wait for last Enter
+        AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
+        RC.Print(Var.MessagesData["Dashboard"]["ConfirmQuit"],
+            AskActionVP["Y"], AskActionVP["X"], 
+            MaxColumns = AskActionVP["Width"],
+            JustifyText = RC.Justify.Center)
+        input()
+        # show end screen
+        if Var.Player["Death"] is None:
+            ShowView("StartEnd", ViewParts = ["End", "Win"], ClearScreen = True)
+        else:
+            ShowView("StartEnd", ViewParts = ["End", "Loose"], ClearScreen = True)
 
 
 
@@ -1450,8 +1522,8 @@ def CheckEvent(Event):
             # game won
             # stop main loop
             Var.GameRunning = False
-            # show end screen
-            ShowView("StartEnd", ViewParts = ["End", "Win"], ClearScreen = True)
+            # # show end screen
+            # ShowView("StartEnd", ViewParts = ["End", "Win"], ClearScreen = True)
 
 
 def UpdateVitalSign(
@@ -1467,6 +1539,7 @@ def UpdateVitalSign(
     if Value is None and ElementData is not None and ElementData["Behaviors"][VitalSign] != 0:
         Value = ElementData["Behaviors"][VitalSign]
 
+    Message = ""
     if Value is not None:
         # update player data
         Var.Player[VitalSign] = min(
@@ -1474,12 +1547,23 @@ def UpdateVitalSign(
             Var.Player["Max" + VitalSign])
         # show appropriate message
         MessageName = "You" + ("Earn" if Value > 0 else "Loose")
-        return ("\n" +
+        Message = (
+            "\n" + 
             Var.MessagesData["Dashboard"][MessageName]
-            .replace("{Number}", str(abs(Value)))
-            .replace("{VitalSign}", Var.GameData["Game"]["VitalSigns"][VitalSign]["Color"] + Var.MessagesData["Dashboard"][VitalSign] + "[;]"))
+                .replace("{Number}", str(abs(Value)))
+                .replace("{VitalSign}", Var.GameData["Game"]["VitalSigns"][VitalSign]["Color"] + Var.MessagesData["Dashboard"][VitalSign] + "[;]"))
 
-    return ""
+        # check if vital sign goes <= 0
+        if Var.Player[VitalSign] <= 0:
+            # update game data
+            Var.Player["Death"] = VitalSign
+            # show message
+            Message += "\n" + Var.MessagesData["Dashboard"]["Death"]
+            ShowView(ViewParts = ["Counters", "VitalSigns", "Message"])
+            # stop main loop
+            Var.GameRunning = False
+
+    return Message
 
 
 
@@ -1490,12 +1574,12 @@ def SaveGame():
     pass
 
 
-
-def WinGame():
+def WallOfHeroes(
+    Add = None):
     """
-        Player wins game
+        Add entry to wall of heroes if specified
+        Else return actual entries
     """
-    pass
 
 
 

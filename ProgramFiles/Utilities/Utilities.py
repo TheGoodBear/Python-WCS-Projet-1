@@ -454,6 +454,40 @@ def LoadViews(
 
 
 
+def ReadFromTextFile(
+    Path,
+    FileName):
+    """
+        Read text file and return list of lines
+    """
+    try:
+
+        with open(Path + FileName, "r", encoding="utf-8") as MyFile:
+            return MyFile.readlines()
+            
+    except FileNotFoundError:
+        print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+
+
+
+def WriteToTextFile(
+    Path,
+    FileName,
+    Text,
+    Action = "w"):
+    """
+        Write (or append) Text to text file depending on action ("w" or "a")
+    """
+    try:
+
+        with open(Path + FileName, Action, encoding="utf-8") as MyFile:
+            MyFile.write(Text)
+            
+    except FileNotFoundError:
+        print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+
+
+
 # program main entry (for example to check the functions)
 if __name__ == "__main__":
     ClearConsole()

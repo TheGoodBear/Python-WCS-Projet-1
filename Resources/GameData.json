@@ -4,8 +4,16 @@
         "VersionDate" : "13/08/2020",
         "Author" : "AM",
         "Language" : "fr",
-        "ViewDataFile" : "Views",
-        "MapFile" : "Map",
+        "SaveFolder" : "Saves\\",
+        "Files" : {
+            "ViewData" : "Views",
+            "Map" : "Maps",
+            "Characters" : "Characters",
+            "MapElements" : "MapElements",
+            "Objects" : "Objects",
+            "Dialogs" : "Messages",
+            "WallOfHeroes" : "WallOfHeroes"
+        },
         "WindowWidth" : 153,
         "WindowHeight" : 53,
         "MapMaxWidth" : 100,
@@ -68,7 +76,7 @@
             "Quit" : {"NumberParameter" : null}
         },
         "WaitOnActionError" : 2,
-        "WaitOnChallengeWon" : 2
+        "WallOfHeroesLines" : 10
     },
     "ViewPorts" : {
         "StartEnd" : {
