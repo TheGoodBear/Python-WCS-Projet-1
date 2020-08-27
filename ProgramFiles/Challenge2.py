@@ -84,7 +84,7 @@ def StartChallenge():
         # free key
         Var.ObjectsData["SilverKey"]["Behaviors"]["Pickable"] = True
         # close challenge
-        Var.CurrentChallengeData["Won"] = True
+        Var.Player["ChallengesWon"]["2"] = True
 
         # show credo
         Message += Var.MessagesData["Challenge2"]["Credo"]

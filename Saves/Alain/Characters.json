@@ -1,0 +1,312 @@
+[
+    {
+        "Behavior": null,
+        "Category": "Player",
+        "Challenge3Chance": 80,
+        "Challenge3Position": {
+            "Direction": "W",
+            "X": 15,
+            "Y": 7
+        },
+        "ChallengesWon": {
+            "1": false,
+            "2": false,
+            "3": false
+        },
+        "CurrentMap": "Main",
+        "Death": null,
+        "Health": 100,
+        "Hydration": 100,
+        "Images": {
+            "E": "\u25ba",
+            "N": "\u25b2",
+            "S": "\u25bc",
+            "W": "\u25c4"
+        },
+        "MaxHealth": 100,
+        "MaxHydration": 100,
+        "MaxSatiety": 100,
+        "Name": "Alain",
+        "OrderInChallenge3": 2,
+        "Position": {
+            "Direction": "N",
+            "X": 30,
+            "Y": 5
+        },
+        "Satiety": 100,
+        "Sex": "Male",
+        "Style": "[C;;SB]",
+        "TotalActions": 0,
+        "TotalMovements": 0
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 15,
+            "Y": 5
+        },
+        "ChanceMax": 80,
+        "ChanceMin": 50,
+        "ChanceToMove": 0,
+        "CurrentMap": "Challenge3",
+        "Event": "StartChallenge3",
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "El Maestro",
+        "OrderInChallenge3": 1,
+        "Position": {
+            "Direction": "N",
+            "X": 13,
+            "Y": 6
+        },
+        "Style": "[R;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 14,
+            "Y": 9
+        },
+        "ChanceMax": 60,
+        "ChanceMin": 10,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Slow",
+        "OrderInChallenge3": 3,
+        "Position": {
+            "Direction": "N",
+            "X": 7,
+            "Y": 2
+        },
+        "Style": "[C;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 5,
+            "Y": 6
+        },
+        "ChanceMax": 60,
+        "ChanceMin": 10,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Rock",
+        "OrderInChallenge3": 7,
+        "Position": {
+            "Direction": "N",
+            "X": 9,
+            "Y": 4
+        },
+        "Style": "[C;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 5,
+            "Y": 4
+        },
+        "ChanceMax": 60,
+        "ChanceMin": 10,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Mambo",
+        "OrderInChallenge3": 8,
+        "Position": {
+            "Direction": "N",
+            "X": 6,
+            "Y": 7
+        },
+        "Style": "[C;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 10,
+            "Y": 3
+        },
+        "ChanceMax": 60,
+        "ChanceMin": 10,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Tango",
+        "OrderInChallenge3": 10,
+        "Position": {
+            "Direction": "N",
+            "X": 15,
+            "Y": 8
+        },
+        "Style": "[C;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 6,
+            "Y": 3
+        },
+        "ChanceMax": 70,
+        "ChanceMin": 20,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Salsa",
+        "OrderInChallenge3": 9,
+        "Position": {
+            "Direction": "N",
+            "X": 13,
+            "Y": 3
+        },
+        "Style": "[M;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 14,
+            "Y": 3
+        },
+        "ChanceMax": 70,
+        "ChanceMin": 20,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Cha-cha-cha",
+        "OrderInChallenge3": 11,
+        "Position": {
+            "Direction": "N",
+            "X": 10,
+            "Y": 8
+        },
+        "Style": "[M;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 5,
+            "Y": 8
+        },
+        "ChanceMax": 70,
+        "ChanceMin": 20,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Milonga",
+        "OrderInChallenge3": 6,
+        "Position": {
+            "Direction": "N",
+            "X": 6,
+            "Y": 10
+        },
+        "Style": "[M;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 6,
+            "Y": 9
+        },
+        "ChanceMax": 70,
+        "ChanceMin": 20,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Samba",
+        "OrderInChallenge3": 5,
+        "Position": {
+            "Direction": "N",
+            "X": 7,
+            "Y": 10
+        },
+        "Style": "[M;]"
+    },
+    {
+        "Category": "Monkey",
+        "Challenge3Position": {
+            "Direction": "N",
+            "X": 10,
+            "Y": 9
+        },
+        "ChanceMax": 70,
+        "ChanceMin": 20,
+        "ChanceToMove": 10,
+        "CurrentMap": "Challenge3",
+        "Event": null,
+        "Images": {
+            "E": "\u263b",
+            "N": "\u263b",
+            "S": "\u263b",
+            "W": "\u263b"
+        },
+        "Name": "Rhumba",
+        "OrderInChallenge3": 4,
+        "Position": {
+            "Direction": "N",
+            "X": 3,
+            "Y": 4
+        },
+        "Style": "[M;]"
+    }
+]

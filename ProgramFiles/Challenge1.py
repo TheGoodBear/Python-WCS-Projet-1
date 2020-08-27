@@ -112,7 +112,7 @@ def StartChallenge():
                 # close challenge
                 Var.MapElementsData["4"]["Behaviors"]["Event"] = None
                 Var.MessagesData["4"]["CantMoveOn"] = Var.MessagesData["1"]["CantMoveOn"]
-                Var.CurrentChallengeData["Won"] = True
+                Var.Player["ChallengesWon"]["1"] = True
 
             else:
                 # start new round

@@ -19,7 +19,7 @@
         "MapMaxWidth" : 100,
         "MapMaxHeight" : 50,
         "DashboardWidth" : 40,
-        "ContinueGamePossibleValues" : {"Yes" : "O", "No" : "N", "Delete" : "S"},
+        "SavedGameActions" : {"Continue" : "C", "Restart" : "R", "Erase" : "E"},
         "CurrentView" : "StartEnd",
         "Sex" : {
             "Female" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
@@ -76,7 +76,7 @@
             "Quit" : {"NumberParameter" : null}
         },
         "WaitOnActionError" : 2,
-        "WallOfHeroesLines" : 10
+        "WallOfHeroesLines" : 7
     },
     "ViewPorts" : {
         "StartEnd" : {
@@ -112,7 +112,6 @@
         }
     },
     "Challenge1" : {
-        "Won" : false,
         "MinimumNumber" : 1,
         "MaximumNumber" : 100,
         "Rounds" : 3,
@@ -138,16 +137,13 @@
         }
     },
     "Challenge2" : {
-        "Won" : false,
         "CurrentLetter" : null,
         "EncryptedCredo" : null,
         "EncryptedPlayerName" : null,
         "SelectedLetterStyle" : "[B;Y]"
     },
     "Challenge3" : {
-        "Won" : false,
         "DelayBetweenAnswers" : 1,
-        "PlayerChance" : 80,
         "CurrentPlayer" : null
     }
 }

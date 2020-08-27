@@ -5,7 +5,5 @@
 Reste à faire :
     défi 3
     action get help
-    sauvegarde partie sur Quit
-    Chargement partie
     pop food
     move monkeys

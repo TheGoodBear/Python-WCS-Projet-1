@@ -14,8 +14,10 @@
         "MaxSatiety" : 100,
         "Satiety" : 100,
         "CurrentMap" : "Main",
-        "Position" : {"X" : 30, "Y" : 5, "Direction" : "N"},
+        "Position" : {"X" : 61, "Y" : 38, "Direction" : "S"},
         "Challenge3Position" : {"X" : 15, "Y" : 7, "Direction" : "W"},
+        "Challenge3Chance" : 80,
+        "ChallengesWon" : {"1" : false, "2" : false, "3" : false},
         "OrderInChallenge3" : 2,
         "TotalMovements" : 0,
         "TotalActions" : 0

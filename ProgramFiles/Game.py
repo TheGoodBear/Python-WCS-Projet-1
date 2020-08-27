@@ -1,6 +1,8 @@
 # coding: utf-8
 
 # Imports modules
+import os
+import shutil
 import time
 import random
 from datetime import datetime
@@ -56,7 +58,7 @@ def Run():
     """
 
     # show start view
-    # ShowView(Var.GameData["Game"]["CurrentView"], ClearScreen = True)
+    ShowView(Var.GameData["Game"]["CurrentView"], ClearScreen = True)
 
     # show main view
     Var.GameData["Game"]["CurrentView"] = "Main"
@@ -212,25 +214,68 @@ def ShowView(
                 MaxColumns = TextVP["Width"])[0]
 
             # check if a game already exists for this name
+            SavedGameAction = Var.GameData["Game"]["SavedGameActions"]["Restart"].lower()
+            if os.path.exists(Var.GameData["Game"]["SaveFolder"] + Var.Player["Name"] + "\\"):
+                # saved game exists, ask action
+                LineOffset += RC.Print(Var.MessagesData["Game"]["SavedGameExists"], 
+                    TextVP["Y"] + LineOffset, TextVP["X"],
+                    JustifyText = RC.Justify.Left, 
+                    MaxColumns = TextVP["Width"])[0]
 
+                RC.ShowCursor()
+                SavedGameAction = Util.GetUserInput(
+                    Var.MessagesData["Game"]["AskSavedGameAction"],
+                    PossibleValues = list(Var.GameData["Game"]["SavedGameActions"].values()),
+                    SpecificErrorMessage = Var.MessagesData["Game"]["WrongAnswer"],
+                    RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]]).lower()
+                RC.ShowCursor(False)
+                LineOffset -= 1
+                RC.ClearConsole(
+                    TextVP["Y"] + LineOffset, TextVP["X"], 
+                    TextVP["Width"], 3)
+                
+                if SavedGameAction == Var.GameData["Game"]["SavedGameActions"]["Continue"].lower():
+                    # load saved game
+                    LoadGame()
+                    LineOffset += RC.Print("\n" + Var.MessagesData["Game"]["GameLoaded"] + "\n\n", 
+                        TextVP["Y"] + LineOffset, TextVP["X"],
+                        JustifyText = RC.Justify.Left, 
+                        MaxColumns = TextVP["Width"])[0]
+                elif SavedGameAction == Var.GameData["Game"]["SavedGameActions"]["Erase"].lower():
+                    # erase saved game folder
+                    shutil.rmtree(Var.GameData["Game"]["SaveFolder"] + Var.Player["Name"] + "\\", False)
+                    LineOffset += RC.Print("\n" + Var.MessagesData["Game"]["GameErased"] + "\n" + Var.MessagesData["Game"]["GameNew"] + "\n\n", 
+                        TextVP["Y"] + LineOffset, TextVP["X"],
+                        JustifyText = RC.Justify.Left, 
+                        MaxColumns = TextVP["Width"])[0]
+                elif SavedGameAction == Var.GameData["Game"]["SavedGameActions"]["Restart"].lower():
+                    LineOffset += RC.Print("\n" + Var.MessagesData["Game"]["GameNew"] + "\n\n", 
+                        TextVP["Y"] + LineOffset, TextVP["X"],
+                        JustifyText = RC.Justify.Left, 
+                        MaxColumns = TextVP["Width"])[0]
 
-            LineOffset += 1 + RC.Print(Var.MessagesData["Game"]["AskSex1"], 
-                TextVP["Y"] + LineOffset, TextVP["X"],
-                JustifyText = RC.Justify.Left, 
-                MaxColumns = TextVP["Width"])[0]
+            if (SavedGameAction == Var.GameData["Game"]["SavedGameActions"]["Restart"].lower()
+                or SavedGameAction == Var.GameData["Game"]["SavedGameActions"]["Erase"].lower()):
+                # new game, ask sex
+                LineOffset += 1 + RC.Print(Var.MessagesData["Game"]["AskSex1"], 
+                    TextVP["Y"] + LineOffset, TextVP["X"],
+                    JustifyText = RC.Justify.Left, 
+                    MaxColumns = TextVP["Width"])[0]
 
-            Sex = Util.GetUserInput(
-                Var.MessagesData["Game"]["AskSex2"],
-                PossibleValues = list(Var.MessagesData["Game"]["Sex"].keys()),
-                SpecificErrorMessage = Var.MessagesData["Game"]["WrongAnswer"],
-                RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]]).upper()
-            Var.Player["Sex"] = Var.MessagesData["Game"]["Sex"][Sex]
-            Var.Player["Style"] = Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Color"]
-            RC.ShowCursor(False)
-            RC.ClearConsole(
-                TextVP["Y"] + LineOffset, TextVP["X"], 
-                TextVP["Width"], 2)
+                RC.ShowCursor()
+                Sex = Util.GetUserInput(
+                    Var.MessagesData["Game"]["AskSex2"],
+                    PossibleValues = list(Var.MessagesData["Game"]["Sex"].keys()),
+                    SpecificErrorMessage = Var.MessagesData["Game"]["WrongAnswer"],
+                    RichConsoleParameters = [TextVP["Y"] + LineOffset, TextVP["X"], TextVP["Width"]]).upper()
+                Var.Player["Sex"] = Var.MessagesData["Game"]["Sex"][Sex]
+                Var.Player["Style"] = Var.GameData["Game"]["Sex"][Var.Player["Sex"]]["Color"]
+                RC.ShowCursor(False)
+                RC.ClearConsole(
+                    TextVP["Y"] + LineOffset, TextVP["X"], 
+                    TextVP["Width"], 2)
             
+            # continue story
             Message = (Var.MessagesData["Game"]["Hello2"]
                 .replace("{ColoredName}", 
                     Var.Player["Style"] + Var.Player["Name"] + "[;]")
@@ -258,7 +303,7 @@ def ShowView(
             LineOffset = 0
 
             if "Win" in ViewParts:
-                # add message to wall of adventurers
+                # add message to wall of heroes
                 WallText = (Var.MessagesData["Game"]["HallOfFame"]
                     .replace("{Name}", 
                         Var.Player["Style"] + Var.Player["Name"] + "[;]")
@@ -273,7 +318,7 @@ def ShowView(
                 Util.WriteToTextFile(
                     Var.GameData["Game"]["SaveFolder"],
                     Var.GameData["Game"]["Files"]["WallOfHeroes"],
-                    WallText,
+                    WallText + "\n",
                     "a")
 
                 if Var.MessagesData["Game"]["WinImage"] is not None:
@@ -298,7 +343,7 @@ def ShowView(
                     MaxColumns = TextVP["Width"])[0]
 
             elif "Loose" in ViewParts:
-                # add message to wall of adventurers
+                # add message to wall of heroes
                 WallText = (Var.MessagesData["Game"]["Cemetery"]
                     .replace("{Name}", 
                         Var.Player["Style"] + Var.Player["Name"] + "[;]")
@@ -315,7 +360,7 @@ def ShowView(
                 Util.WriteToTextFile(
                     Var.GameData["Game"]["SaveFolder"],
                     Var.GameData["Game"]["Files"]["WallOfHeroes"],
-                    WallText,
+                    WallText + "\n",
                     "a")
 
                 if Var.MessagesData["Game"]["LooseImage"] is not None:
@@ -399,7 +444,7 @@ def ShowView(
                 Speed = RC.PrintSpeed.Instant)
 
         if ((ViewParts is None or "ChallengeText1" in ViewParts)
-            and not Var.CurrentChallengeData["Won"]):
+            and not Var.Player["ChallengesWon"][str(ChallengeNumber)]):
             # challenge text
             RC.ClearConsole(
                 TextVP["Y"], TextVP["X"], 
@@ -429,7 +474,7 @@ def ShowView(
 
         if ((ViewParts is None or "ChallengeText2" in ViewParts)
             and Var.MessagesData[CurrentMap]["Story2"] is not None
-            and not Var.CurrentChallengeData["Won"]):
+            and not Var.Player["ChallengesWon"][str(ChallengeNumber)]):
 
             if ChallengeNumber == 1:
                 # light eyes
@@ -1569,17 +1614,41 @@ def UpdateVitalSign(
 
 def SaveGame():
     """
-        Player quits, save game
+        Player quits, save game in a sub-folder of Save matching player's name
     """
-    pass
+
+    # create folder if not exists
+    SaveFolder = Var.GameData["Game"]["SaveFolder"] + Var.Player["Name"] + "\\"
+    Util.CreateFolder(SaveFolder)
+
+    # save characters data
+    Util.SaveToJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["Characters"], Var.CharactersData)
+    # save map data
+    Util.SaveToJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["Map"], Var.MapsData, Indent = None)
+    # save map elements data
+    Util.SaveToJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["MapElements"], Var.MapElementsData)
+    # save objects data
+    Util.SaveToJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["Objects"], Var.ObjectsData)
 
 
-def WallOfHeroes(
-    Add = None):
+
+def LoadGame():
     """
-        Add entry to wall of heroes if specified
-        Else return actual entries
+        Load a previously saved game
     """
+
+    SaveFolder = Var.GameData["Game"]["SaveFolder"] + Var.Player["Name"] + "\\"
+
+    # load characters data
+    Var.CharactersData = Util.LoadJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["Characters"])
+    # get player
+    Var.Player = [Character for Character in Var.CharactersData if Character["Category"] == "Player"][0]
+    # load map data
+    Var.MapsData = Util.LoadJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["Map"])
+    # load map elements data
+    Var.MapElementsData = Util.LoadJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["MapElements"])
+    # load objects data
+    Var.ObjectsData = Util.LoadJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["Objects"])
 
 
 

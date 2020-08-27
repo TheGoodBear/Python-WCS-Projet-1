@@ -1,0 +1,392 @@
+{
+    "Backpack": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": 10,
+            "ChargeObjects": null,
+            "Contains": [
+                "LaptopComputer",
+                "SolarCharger",
+                "Knife",
+                "GlassBottle",
+                "Map",
+                "SilverKey",
+                "GoldKey",
+                "BronzeKey",
+                "Torch"
+            ],
+            "Dropable": false,
+            "ForVictory": true,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": false,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": false
+        },
+        "Image": " ",
+        "StartPosition": null,
+        "Style": "[;]"
+    },
+    "BadFood1": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": -20,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 0,
+            "Spawn": [
+                "A"
+            ],
+            "Usable": true
+        },
+        "Image": "\u00a4",
+        "StartPosition": null,
+        "Style": "[G;]"
+    },
+    "BadFood2": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": -10,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 0,
+            "Spawn": [
+                "+"
+            ],
+            "Usable": true
+        },
+        "Image": "\u00a4",
+        "StartPosition": null,
+        "Style": "[G;]"
+    },
+    "BadFood3": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": -10,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 0,
+            "Spawn": [
+                " "
+            ],
+            "Usable": true
+        },
+        "Image": "\u00a4",
+        "StartPosition": null,
+        "Style": "[G;]"
+    },
+    "BronzeKey": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": true,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": true,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": false,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": [
+                "0"
+            ],
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u266b",
+        "StartPosition": {
+            "Map": "Challenge1",
+            "X": 7,
+            "Y": 5
+        },
+        "Style": "[R;]"
+    },
+    "GlassBottle": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": 5,
+            "ChargeObjects": null,
+            "Contains": 0,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": [
+                "I",
+                "-",
+                "H",
+                "|",
+                "="
+            ],
+            "RequiredMapElementsToUse": null,
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u25d8",
+        "StartPosition": null,
+        "Style": "[C;]"
+    },
+    "GoldKey": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": true,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": true,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": false,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": [
+                "0"
+            ],
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u266b",
+        "StartPosition": {
+            "Map": "Challenge3",
+            "X": 10,
+            "Y": 6
+        },
+        "Style": "[Y;]"
+    },
+    "GoodFood1": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 20,
+            "Spawn": [
+                "A"
+            ],
+            "Usable": true
+        },
+        "Image": "\u00a4",
+        "StartPosition": null,
+        "Style": "[G;]"
+    },
+    "GoodFood2": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 10,
+            "Spawn": [
+                "+"
+            ],
+            "Usable": true
+        },
+        "Image": "\u00a4",
+        "StartPosition": null,
+        "Style": "[G;]"
+    },
+    "GoodFood3": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": 5,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 5,
+            "Spawn": [
+                " "
+            ],
+            "Usable": true
+        },
+        "Image": "\u00a4",
+        "StartPosition": null,
+        "Style": "[G;]"
+    },
+    "Knife": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u25d8",
+        "StartPosition": null,
+        "Style": "[;]"
+    },
+    "LaptopComputer": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": 5,
+            "ChargeObjects": null,
+            "Contains": 5,
+            "Dropable": true,
+            "ForVictory": true,
+            "Health": 10,
+            "Hydration": -2,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": -2,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u25d8",
+        "StartPosition": null,
+        "Style": "[;]"
+    },
+    "Map": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u25d8",
+        "StartPosition": null,
+        "Style": "[;]"
+    },
+    "SilverKey": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": true,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": true,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": false,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": [
+                "0"
+            ],
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u266b",
+        "StartPosition": {
+            "Map": "Challenge2",
+            "X": 10,
+            "Y": 6
+        },
+        "Style": "[W;]"
+    },
+    "SolarCharger": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
+            "Capacity": null,
+            "ChargeObjects": [
+                "LaptopComputer"
+            ],
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": null,
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u25d8",
+        "StartPosition": null,
+        "Style": "[;]"
+    },
+    "Torch": {
+        "Behaviors": {
+            "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": true,
+            "Capacity": null,
+            "ChargeObjects": null,
+            "Contains": null,
+            "Dropable": true,
+            "ForVictory": false,
+            "Health": 0,
+            "Hydration": 0,
+            "Pickable": true,
+            "RequiredMapElementsToFill": null,
+            "RequiredMapElementsToUse": [
+                "T"
+            ],
+            "Satiety": 0,
+            "Spawn": false,
+            "Usable": true
+        },
+        "Image": "\u2191",
+        "StartPosition": {
+            "Map": "Main",
+            "X": 58,
+            "Y": 2
+        },
+        "Style": "[R;]"
+    }
+}

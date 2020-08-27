@@ -18,11 +18,7 @@
                 "SolarCharger",
                 "Knife",
                 "GlassBottle",
-                "Map",
-                "SilverKey",
-                "GoldKey",
-                "BronzeKey",
-                "Torch"
+                "Map"
             ],
             "Spawn" : false,
             "Health" : 0,
