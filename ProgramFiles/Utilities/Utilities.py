@@ -196,11 +196,11 @@ def GetUserInput(
 
         if ValueType.lower() == "bool" or ValueType.lower() == "boolean":
             # expect a boolean 
-            if MyData.lower() == "true" or MyData.lower() == "vrai" or MyData.lower() == "t" or  MyData == "v" or MyData.lower() == "oui" or MyData == "1":
+            if MyData.lower() == "true" or MyData.lower() == "vrai" or MyData.lower() == "t" or  MyData == "v" or MyData.lower() == "oui" or MyData.lower() == "o" or MyData == "1":
                 # user entry is True
                 # return value
                 return True
-            elif MyData.lower() == "false" or MyData.lower() == "faux" or MyData.lower() == "f" or MyData.lower() == "non" or MyData == "0":
+            elif MyData.lower() == "false" or MyData.lower() == "faux" or MyData.lower() == "f" or MyData.lower() == "non" or MyData.lower() == "n" or MyData == "0":
                 # user entry is False
                 # return value
                 return False
@@ -286,10 +286,10 @@ def ManageMessageHistory(
     MessageList, 
     CountMessage = True):
     """
-        Show a message and save it to message history
+        Return message history
         
         Parameters :
-            Message : the message to show
+            Message : the message to add
             MessageList : the list of all messages
             CountMessage : if true, prefix message with its order number
     """
@@ -309,7 +309,9 @@ def LoadJSONFile(
     Path,
     FileName):
     """
-        Load a json file a return a dictionary
+        Load a json file and return a dictionary
+        Return False if error
+
         .json extension is optional
     """
 
@@ -329,6 +331,34 @@ def LoadJSONFile(
 
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+        return False
+
+
+
+def SaveToJSONFile(
+    Path,
+    FileName,
+    Dictionary,
+    Indent = 4,
+    SortKeys = True):
+    """
+        Save a dictionary to a json file (with pretty options Indent and SortKeys)
+        .json extension is automatically added if omitted
+        Return Success or Failure 
+    """
+
+    if not FileName.lower().endswith(".json"):
+        FileName += ".json"
+
+    try:
+
+        with open(Path + FileName, "w", encoding="utf-8") as MyFile:
+            json.dump(Dictionary, MyFile, indent = Indent, sort_keys = SortKeys)
+        return True
+            
+    except FileNotFoundError:
+        print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+        return False
 
 
 
@@ -337,7 +367,8 @@ def LoadMaps(
     FileName):
     """
         Load map from a text file
-        and return a dictionnary of 2D lists for map and blank layers
+        Return a dictionnary of 2D lists for map and blank layers
+        Return False if error
 
         Blank layer (for example for objects and characters) is initialized matching map dimensions
     """
@@ -404,6 +435,7 @@ def LoadMaps(
             
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+        return False
 
 
 
@@ -412,7 +444,8 @@ def LoadViews(
     FileName):
     """
         Load views from a text file
-        and return a dictionary of views with list of lines
+        Return a dictionary of views with list of lines
+        Return False if error
 
         # <ViewName> marks a new view
         ### marks a comment (ignore line)
@@ -451,6 +484,69 @@ def LoadViews(
 
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+        return False
+
+
+
+def ReadFromTextFile(
+    Path,
+    FileName):
+    """
+        Read text file and return list of lines
+        Return False if error
+    """
+    try:
+
+        with open(Path + FileName, "r", encoding="utf-8") as MyFile:
+            return MyFile.readlines()
+            
+    except FileNotFoundError:
+        print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+        return False
+
+
+
+def WriteToTextFile(
+    Path,
+    FileName,
+    Text,
+    Action = "w"):
+    """
+        Write (or append) Text to text file depending on action ("w" or "a")
+        Return Success or Failure
+    """
+
+    try:
+
+        with open(Path + FileName, Action, encoding="utf-8") as MyFile:
+            MyFile.write(Text)
+        return True
+            
+    except FileNotFoundError:
+        print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
+        return False
+
+
+
+def CreateFolder(
+    Path,
+    PrintError = False):
+    """
+        Create folder with intermediates
+        Optionally Prints an error if folder already exists
+
+        Return Succes of Failure
+    """
+    
+    try:
+
+        os.makedirs(Path)    
+        return True
+        
+    except FileExistsError:
+        if PrintError:
+            print(f"\nLe dossier {Path} existe déjà.\n")
+        return False
 
 
 

@@ -1,2 +1,9 @@
 
-10/08/2020 - V1.0 - Initial release
+27/08/2020 - V1.0 - Initial release
+
+Known bugs :
+    Some messages too long in history
+
+Reste à faire :
+    action get help
+    move monkeys

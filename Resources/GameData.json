@@ -4,14 +4,23 @@
         "VersionDate" : "13/08/2020",
         "Author" : "AM",
         "Language" : "fr",
-        "ViewDataFile" : "Views",
-        "MapFile" : "Map",
+        "SaveFolder" : "Saves\\",
+        "Files" : {
+            "ViewData" : "Views",
+            "Map" : "Maps",
+            "Characters" : "Characters",
+            "MapElements" : "MapElements",
+            "Objects" : "Objects",
+            "Dialogs" : "Messages",
+            "WallOfHeroes" : "WallOfHeroes"
+        },
         "WindowWidth" : 153,
         "WindowHeight" : 53,
         "MapMaxWidth" : 100,
         "MapMaxHeight" : 50,
         "DashboardWidth" : 40,
-        "CurrentView" : "Start",
+        "SavedGameActions" : {"Continue" : "C", "Restart" : "R", "Erase" : "E"},
+        "CurrentView" : "StartEnd",
         "Sex" : {
             "Female" : {"Color" : "[M;;SB]", "Symbol" : "♀"},
             "Male" : {"Color" : "[C;;SB]", "Symbol" : "♂"},
@@ -66,10 +75,11 @@
             "GetHelp" : {"NumberParameter" : null},
             "Quit" : {"NumberParameter" : null}
         },
-        "WaitOnActionError" : 2
+        "WaitOnActionError" : 2,
+        "WallOfHeroesLines" : 7
     },
     "ViewPorts" : {
-        "Start" : {
+        "StartEnd" : {
             "Window" : {"Y" : 7, "X" : 38, "Width" : 80, "Height" : 40},
             "Title" : {"Y" : 8, "X" : 39, "Width" : 78, "Height" : 1},
             "Text" : {"Y" : 10, "X" : 40, "Width" : 76, "Height" : 34},
@@ -90,39 +100,54 @@
             "Message" : {"Y" : 42, "X" : 103, "Width" : 50, "Height" : 9}
         },
         "Main" : {
-            "Window" : {"Y" : 1, "X" : 1, "Width" : 143, "Height" : 52},
+            "Window" : {"Y" : 1, "X" : 1, "Width" : 153, "Height" : 53},
             "Map" : {"Y" : 2, "X" : 2, "Width" : 100, "Height" : 50}
         },
         "Challenge" : {
-            "Window" : {"Y" : 7, "X" : 12, "Width" : 80, "Height" : 50},
-            "Map" : {"Y" : 10, "X" : 13, "Width" : 78, "Height" : 10},
+            "Window" : {"Y" : 6, "X" : 11, "Width" : 82, "Height" : 52},
             "Title" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
-            "Text" : {"Y" : 20, "X" : 13, "Width" : 78, "Height" : 34},
+            "Map" : {"Y" : 10, "X" : 13, "Width" : 76, "Height" : 16},
+            "Text" : {"Y" : 26, "X" : 14, "Width" : 76, "Height" : 17},
             "Ask" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
         }
     },
     "Challenge1" : {
-        "MinimumNumber" : 0,
+        "MinimumNumber" : 1,
         "MaximumNumber" : 100,
         "Rounds" : 3,
         "MaxTries" : 20,
         "Eyes" : {
-            "Style" : "[C;B]",
-            "1" : {"Y" : 4, "X" : 6},
-            "2" : {"Y" : 4, "X" : 8}
+            "Image" : "☼",
+            "StyleOn" : "[C;B]",
+            "StyleOff" : "[W;]",
+            "Elements" : [
+                {"Y" : 4, "X" : 6},
+                {"Y" : 4, "X" : 8}
+            ]
         },
         "Stars" : {
-            "Style" : "[Y;B]",
-            "1" : {"Y" : 2, "X" : 7},
-            "2" : {"Y" : 3, "X" : 5},
-            "3" : {"Y" : 3, "X" : 9}
+            "Image" : "*",
+            "StyleOn" : "[Y;B]",
+            "StyleOff" : "[B;B]",
+            "Elements" : [
+                {"Y" : 2, "X" : 7},
+                {"Y" : 3, "X" : 5},
+                {"Y" : 3, "X" : 9}
+            ]
         }
     },
     "Challenge2" : {
-        "CurrentLetter" : null
+        "CurrentLetter" : null,
+        "EncryptedCredo" : null,
+        "EncryptedPlayerName" : null,
+        "SelectedLetterStyle" : "[B;Y]"
     },
     "Challenge3" : {
+        "MaxChanceOfFailureForNumber" : 70,
+        "MaxChanceOfFailureForFizzBuzz" : 100,
         "DelayBetweenAnswers" : 1,
-        "PlayerChance" : 80
+        "DelayAfterBadAnswer" : 3,
+        "EliminatedStyle" : "[W;]",
+        "CurrentPlayer" : null
     }
 }

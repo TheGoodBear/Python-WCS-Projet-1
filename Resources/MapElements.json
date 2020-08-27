@@ -59,7 +59,7 @@
             "Satiety" : 0,
             "Hydration" : 0,
             "GiveFood" : 10,
-            "GivePoisonedFood" : 20,
+            "GivePoisonedFood" : 10,
             "GiveWater" : null
         }
     },
@@ -80,13 +80,13 @@
         }
     },
     "T" : {
-        "Image" : "",
+        "Image" : " ",
         "Style" : "[;]",
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : true,
             "Event" : null,
-            "Prerequisites" : ["Torche"],
+            "Prerequisites" : ["Torch"],
             "Health" : -1,
             "Satiety" : -1,
             "Hydration" : -1,
@@ -203,7 +203,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : null,
+            "Event" : "StartChallenge1",
             "Prerequisites" : null,
             "Health" : 0,
             "Satiety" : 0,
@@ -230,7 +230,7 @@
         }
     },
     "*" : {
-        "Image" : "☼",
+        "Image" : "*",
         "Style" : "[B;B]",
         "Behaviors" : {
             "CanMoveOn" : false,
@@ -275,7 +275,7 @@
             "CanRest" : false,
             "Event" : {
                 "Map" : "Challenge2",
-                "Y" : 14,
+                "Y" : 15,
                 "X" : 10,
                 "Direction" : "N"
             },
@@ -294,7 +294,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : null,
+            "Event" : "StartChallenge2",
             "Prerequisites" : null,
             "Health" : 0,
             "Satiety" : 0,
@@ -325,6 +325,7 @@
             "GiveWater" : null
         }
     },
+
     "8" : {
         "Image" : " ",
         "Style" : "[;]",
@@ -346,13 +347,14 @@
             "GiveWater" : null
         }
     },
+
     "a" : {
         "Image" : "A",
         "Style" : "[B;C]",
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -369,7 +371,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -386,7 +388,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -403,7 +405,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -420,7 +422,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -437,7 +439,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -454,7 +456,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -471,7 +473,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -488,7 +490,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -504,7 +506,7 @@
         "Style" : "[W;U]",
         "Behaviors" : {
             "CanMoveOn" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "CanRest" : false,
             "State" : false,
             "Prerequisites" : null,
@@ -522,7 +524,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -539,7 +541,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -556,7 +558,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -573,7 +575,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -590,7 +592,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -607,7 +609,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -624,7 +626,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -641,7 +643,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -658,7 +660,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -675,7 +677,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -692,7 +694,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -709,7 +711,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -726,7 +728,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -743,7 +745,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -760,7 +762,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -777,7 +779,7 @@
         "Behaviors" : {
             "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Switch",
+            "Event" : "SwitchLetter",
             "State" : false,
             "Prerequisites" : null,
             "Health" : 0,
@@ -815,13 +817,14 @@
         "Image" : " ",
         "Style" : "[;R]",
         "Behaviors" : {
-            "CanMoveOn" : true,
+            "CanMoveOn" : false,
             "CanRest" : false,
-            "Event" : "Exit",
+            "Event" : null,
             "Prerequisites" : [
                 "BronzeKey", 
                 "SilverKey", 
-                "GoldKey"],
+                "GoldKey"
+            ],
             "Health" : 0,
             "Satiety" : 0,
             "Hydration" : 0,
