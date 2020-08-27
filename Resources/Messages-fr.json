@@ -57,6 +57,7 @@
         "PlayerMovesOn" : "Sous mes pieds : {Element}",
         "PlayerSees" : "Devant moi : {Element}",
         "PlayerSeesObject" : "ainsi que {Object}",
+        "FoodPop" : "Tiens, {Object}...",
         "Actions" : {
             "Move" : {
                 "Command" : "A",
@@ -165,11 +166,12 @@
         "Story2" : "En écoutant avec un peu plus d’attention, je me rend compte que les singes semblent articuler des nombres et que deux sons reviennent régulièrement : [;;SB]Fizz[;] et [;;SB]Buzz[;]...\n\nÀ force d'attention, je fini par percevoir une logique dans ces cris :\n\nIl suffit de dire [G;]Fizz[;] si le nombre est un [G;]multiple de 3[;], [C;]Buzz[;] si c'est un [C;]multiple de 5[;], [Y;]FizzBuzz[;] si c'est un [Y;]multiple de 3 et 5[;], ou simplement le nombre lui même dans les autres cas.\n\nJ'estime mes chances de donner une bonne réponse à [;;SB]{PlayerChance}%[;], il ne me reste plus qu'à entrer dans le jeu.",
         "Start" : "Le chef me regarde avec perplexité... puis m'adresse la parole :\n\n« Toi vouloir jouer pour gagner clé ? »\n\n« Toi penser plus malin que singes danseurs et Chef Maestro ? »",
         "Start2" : "Tout le monde se met en place pour une nouvelle partie...",
-        "MonkeyAnswer" : "{Character} dit {Answer}",
-        "MonkeyWrong" : "{Character} s'est trompé(e), il/elle se recroqueville honteusement et le jeu reprend.",
-        "Success" : "Je viens d'éliminer le dernier singe, et tous s’enfuient dans la jungle en criant de désespoir.\n\nPlus d'obstacle maintenant entre moi et la clé d'or !",
+        "PlayerAnswer" : "{Character} dit {Answer}",
+        "MonkeyWrong" : "{Character} dit {Answer}, se trompe et se met à bouder.\nLe jeu reprend...",
+        "Success" : "Le dernier singe en lisse vient de se tromper, le chef me désigne alors humblement la clé :\n\n« Toi prouver toi meilleur que singes danseurs et Chef Maestro, toi pouvoir prendre clé maintenant. »\n\nPlus d'obstacle entre moi et la clé d'or !",
         "Failure" : "Aïe ! Mauvaise réponse de ma part.\n\nLes singes se moquent copieusement de moi.\n\nLe chef me donne alors une grande claque dans le dos et m'invite à rejouer.",
-        "AskStartChallenge" : "Suis-je prêt à jouer avec les singes ? (O)ui ou (N)on : "
+        "AskStartChallenge" : "Suis-je prêt à jouer avec les singes ? (O)ui ou (N)on : ",
+        "ChiefAfterChallengeWon" : "Il ne veut plus jouer avec toi..."
     },
     " " : {
         "Category" : "MapElement",
@@ -604,7 +606,7 @@
         "CantUse" : "",
         "PickUp" : "On dirait une grosse pastèque.",
         "Drop" : "On ne sait jamais, je préfère éviter de m'empoisonner."
-},
+    },
     "GoodFood1" : {
         "Category" : "Object",
         "Name" : "Une banane",
@@ -612,7 +614,7 @@
         "CantUse" : "",
         "PickUp" : "Ho, une banane !",
         "Drop" : "Soyons raisonnable, ça risque de me faire grossir."
-},
+    },
     "BadFood2" : {
         "Category" : "Object",
         "Name" : "De jolies baies rouges",
@@ -620,7 +622,7 @@
         "CantUse" : "",
         "PickUp" : "Joli, ça doit bien se grignoter ce truc.",
         "Drop" : "En fait j'ai pas trop confiance."
-},
+    },
     "GoodFood2" : {
         "Category" : "Object",
         "Name" : "Des noix",
@@ -628,15 +630,15 @@
         "CantUse" : "",
         "PickUp" : "Un noyer, ici ?",
         "Drop" : "Mieux vaut les laisser, je suis allergique."
-},
+    },
     "BadFood3" : {
         "Category" : "Object",
-        "Name" : "Un magnifique champignon rouge à poids blancs",
+        "Name" : "Un joli champignon rouge",
         "Use" : "Zut, j'aurai du prendre des cours de mycologie.",
         "CantUse" : "",
         "PickUp" : "J'adore les champignons.",
         "Drop" : "Et si il était vénéneux, hein ?"
-},
+    },
     "GoodFood3" : {
         "Category" : "Object",
         "Name" : "Des orties",

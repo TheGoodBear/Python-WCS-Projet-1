@@ -286,10 +286,10 @@ def ManageMessageHistory(
     MessageList, 
     CountMessage = True):
     """
-        Show a message and save it to message history
+        Return message history
         
         Parameters :
-            Message : the message to show
+            Message : the message to add
             MessageList : the list of all messages
             CountMessage : if true, prefix message with its order number
     """

@@ -44,6 +44,17 @@ def Initialization():
     for ObjectKey, ObjectValue in StartObjects.items():
         Var.MapsData[ObjectValue["StartPosition"]["Map"]]["Objects"][ObjectValue["StartPosition"]["Y"]][ObjectValue["StartPosition"]["X"]] = ObjectKey
 
+    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if "GoodFood" in Key]
+    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if Value["Image"] == "◘"]
+    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if Value["Behaviors"]["ForVictory"] == True]
+    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if Value["Behaviors"]["Health"] < 0]
+    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if "A" in Value["Behaviors"]["Spawn"] and Value["Behaviors"]["Health"] < 0]
+    # # Food = {Key:Value for (Key, Value) in Var.ObjectsData.items() if "A" in Value["Behaviors"]["Spawn"]}
+    # for MyFood in Food:
+    #     print(MyFood[0], MyFood[1]["Behaviors"]["Health"])
+    #     # print(MyFood.key(), MyFood.value()["Behaviors"]["Health"])
+    # return
+
     # initialize window
     # InitializeWindow()
 
@@ -101,7 +112,8 @@ def InitializeWindow():
 def ShowView(
     ViewName = None,
     ViewParts = None,
-    ClearScreen = False):
+    ClearScreen = False,
+    DrawTemplate = False):
     """
         Show specified view with associated data
         Only update specific viewparts (list) if specified
@@ -125,7 +137,7 @@ def ShowView(
         Var.GameData["Game"]["CurrentView"] = ViewName
 
     LineOffset = 0
-    if ClearScreen:
+    if ClearScreen or DrawTemplate:
         # draw view template
         for Index, Line in enumerate(Var.ViewsData[ViewName]):
             RC.Print(Line, 
@@ -290,7 +302,7 @@ def ShowView(
                 AskVP["Y"], AskVP["X"],
                 JustifyText = RC.Justify.Left, 
                 MaxColumns = AskVP["Width"],
-                Speed = RC.PrintSpeed.Fast)
+                Speed = RC.PrintSpeed.Instant)
             RC.PlaceCursorAt(
                 AskVP["Y"], 
                 AskVP["X"] + len(Var.MessagesData["Game"]["AskReady"]))
@@ -506,7 +518,7 @@ def ShowView(
             elif ChallengeNumber == 3:
                 Message = (Message
                     .replace("{PlayerChance}", 
-                        str(Var.CurrentChallengeData["PlayerChance"])))
+                        str(Var.Player["Challenge3Chance"])))
 
             LineOffset += RC.Print(Message,          
                 TextVP["Y"] + LineOffset, TextVP["X"],
@@ -526,6 +538,7 @@ def ShowView(
                 TextVP["Y"] + LineOffset, TextVP["X"],
                 JustifyText = RC.Justify.Center, 
                 MaxColumns = TextVP["Width"])[0]
+
 
 
 def AskContinue(
@@ -1039,6 +1052,9 @@ def ExecutePlayerAction(
         ActionMessage = (
             Var.MessagesData["Dashboard"]["Actions"]["Move"]["Success"]
                 .replace("{Steps}", str(ActionArgument)))
+        
+        # check food pop
+        Var.CurrentMessage += CheckFoodPop()
 
     elif ActionName == "TurnLeft":
         ActionOK = True
@@ -1094,7 +1110,7 @@ def ExecutePlayerAction(
                                     + "[;]")
                             + "\n\n"
                             + Var.MessagesData[CurrentObjectID]["Use"])
-                        # remove from map element
+                        # remove from map element prerequisites
                         Var.MapElementsData[Var.SeenElement]["Behaviors"]["Prerequisites"].remove(CurrentObjectID)
                         # remove from backpack
                         Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
@@ -1143,6 +1159,10 @@ def ExecutePlayerAction(
                         Var.Player["TotalActions"] += 1
                         Var.CurrentMessage += (
                             "\n\n" + Var.MessagesData[CurrentObjectID]["Use"] + "\n")
+                        if CurrentObjectData["Behaviors"]["RemoveAfterUse"]:
+                            # remove from backpack
+                            Var.ObjectsData["Backpack"]["Behaviors"]["Contains"].remove(CurrentObjectID)
+                            ShowView(ViewParts = ["BackpackItems"])
 
                     # check if object is a charger
                     if CurrentObjectData["Behaviors"]["ChargeObjects"] is not None:
@@ -1479,6 +1499,7 @@ def Move(
             False, 
             Message, 
             ElementAtNewPosition["Behaviors"]["Event"])
+    
     else:
         # get other character at new position
         CharacterHere = [
@@ -1521,6 +1542,50 @@ def Move(
 
 
 
+def CheckFoodPop():
+    """
+        Check if food pops in front of player
+    """
+    
+    GoodFoodChance = random.randint(1, 100)
+    BadFoodChance = random.randint(1, 100)
+    CurrentElement = Var.MapElementsData[Var.SeenElement]
+    PossibleFoods = None
+    FoundFood = None
+    Message = ""
+
+    if CurrentElement["Behaviors"]["GiveFood"] >= GoodFoodChance:
+        # good food pops
+        # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if "A" in Value["Behaviors"]["Spawn"] and Value["Behaviors"]["Health"] < 0]
+        PossibleFoods = [
+            (Key, Value) for (Key, Value) 
+            in Var.ObjectsData.items() 
+            if (Var.SeenElement in Value["Behaviors"]["Spawn"]
+                and Value["Behaviors"]["Health"] >= 0)]
+
+    elif CurrentElement["Behaviors"]["GivePoisonedFood"] >= BadFoodChance:
+        # bad food pops
+        PossibleFoods = [
+            (Key, Value) for (Key, Value) 
+            in Var.ObjectsData.items() 
+            if (Var.SeenElement in Value["Behaviors"]["Spawn"]
+                and Value["Behaviors"]["Health"] < 0)]
+    
+    # put food on map
+    if PossibleFoods is not None:
+        FoundFood = PossibleFoods[random.randint(0, len(PossibleFoods) - 1)]
+        Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]] = FoundFood[0]
+        ShowMap(Var.SeenCoordinates["Y"], Var.SeenCoordinates["X"])
+        ShowView(ViewParts = ["Environment"])
+        Message = (
+            "\n\n" + 
+            Var.MessagesData["Dashboard"]["FoodPop"]
+                .replace("{Object}", Var.MessagesData[FoundFood[0]]["Name"].lower()))
+
+    return Message
+
+
+
 def MoveOtherCharacters():
     """
         Move other characters if any on the map
@@ -1543,7 +1608,7 @@ def CheckEvent(Event):
             Var.Player["Position"]["Y"] = Event["Y"]
             Var.Player["Position"]["Direction"] = Event["Direction"]
             GetMapLayersAndViewPort()
-            ShowView()
+            ShowView(DrawTemplate = True)
 
         elif Event == "StartChallenge1":
             # start Challenge 1
@@ -1569,6 +1634,7 @@ def CheckEvent(Event):
             Var.GameRunning = False
             # # show end screen
             # ShowView("StartEnd", ViewParts = ["End", "Win"], ClearScreen = True)
+
 
 
 def UpdateVitalSign(

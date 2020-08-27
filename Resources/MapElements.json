@@ -59,7 +59,7 @@
             "Satiety" : 0,
             "Hydration" : 0,
             "GiveFood" : 10,
-            "GivePoisonedFood" : 20,
+            "GivePoisonedFood" : 10,
             "GiveWater" : null
         }
     },

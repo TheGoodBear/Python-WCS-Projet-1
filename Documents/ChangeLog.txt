@@ -1,9 +1,9 @@
 
-10/08/2020 - V1.0 - Initial release
+27/08/2020 - V1.0 - Initial release
 
+Known bugs :
+    Some messages too long in history
 
 Reste à faire :
-    défi 3
     action get help
-    pop food
     move monkeys
