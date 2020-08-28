@@ -645,8 +645,8 @@ if __name__ == "__main__":
     # code
     ClearConsole()
     # input("\nTaper Entrée pour démarrer la démo... ")
-    # _TestIntro()
-    # _CursorTest()
+    _TestIntro()
+    _CursorTest()
     # StartTime = time.time()
     _SquareTest()
     # EndTime = time.time()

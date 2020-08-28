@@ -14,6 +14,7 @@ Documentation (dossier Documents) :
     - Lien vers le Trello
     - Diagramme de flux (drawio)
     - Support de présentation PowerPoint
+    - Sujet du projet (équivalent du cahier des charges)    
 
 Fichiers Python :
     - Point d'entrée à la racine : IsleAdventure1.py

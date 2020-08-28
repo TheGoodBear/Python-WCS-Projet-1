@@ -1,11 +1,11 @@
 [
     {
         "Category" : "Player",
-        "Name" : "Alain",
+        "Name" : "",
         "Images" : {"N" : "▲", "E" : "►", "S" : "▼", "W" : "◄"},
         "DefaultStyle" : "[C;;SB]",
         "Style" : "[C;;SB]",
-        "Sex" : "Male",
+        "Sex" : null,
         "Death" : null,
         "Behavior" : null,
         "MaxHealth" : 100,

@@ -151,8 +151,6 @@ def StartChallenge():
                 SphinxEyes(False)
                 # switch off stars
                 SphinxStars()
-
-
             
 
 def SphinxEyes(

@@ -1,5 +1,5 @@
 Suivi indicatif du temps de développement de ce projet :
-Total = 
+Total = entre 60h et 70h
 
 1 - Initialisation du projet (création du repo GitHub, organisation des dossiers, rédaction des prérequis, etc.)
 15'
@@ -8,7 +8,7 @@ Total =
 1h
 
 3 - Création des diagrammes de flux
-
+30'
 
 4 - Création des fichiers de configuration (txt et json)
 Sous-total = 11h
