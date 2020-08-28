@@ -56,6 +56,8 @@ def StartChallenge():
         TextVP["Y"] + LineOffset, TextVP["X"],
         JustifyText = RC.Justify.Center, 
         MaxColumns = TextVP["Width"])[0]
+    # wait
+    time.sleep(Var.CurrentChallengeData["DelayAfterBadAnswer"])
 
     # clean text area
     RC.ClearConsole(
@@ -89,7 +91,8 @@ def StartChallenge():
             AnswerPercent = random.randint(1, Var.CurrentChallengeData["MaxChanceOfFailureForNumber"])
             if CurrentNumber % 3 == 0 or CurrentNumber % 5 == 0:
                 AnswerPercent = random.randint(1, Var.CurrentChallengeData["MaxChanceOfFailureForFizzBuzz"])
-            AnswerMessage = f"{AnswerPercent}/{CurrentPlayer['Challenge3Chance']} → "
+            AnswerMessage = ""
+            # AnswerMessage = f"{AnswerPercent}/{CurrentPlayer['Challenge3Chance']} → "
 
             if CurrentPlayer["Challenge3Chance"] >= AnswerPercent:
                 # good answer
@@ -160,6 +163,10 @@ def StartChallenge():
                     RemainingPlayers.remove(CurrentPlayer)
                     if CurrentPlayerNumber >= len(RemainingPlayers):
                         CurrentPlayerNumber = 0
+                    # clean text area
+                    RC.ClearConsole(
+                        TextVP["Y"] + TextVP["Height"] - 1, TextVP["X"], 
+                        TextVP["Width"], 1)
         
             # next number
             CurrentNumber += 1

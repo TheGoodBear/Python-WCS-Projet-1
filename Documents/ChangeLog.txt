@@ -1,9 +1,11 @@
 
+28/08/2020 - V1.01 - Minor bug fixes
 27/08/2020 - V1.0 - Initial release
 
 Known bugs :
-    Some messages too long in history
+    Objects do not appear on game load ?
 
 Reste à faire :
-    action get help
-    move monkeys
+    Aide non dynamique
+    Move monkeys
+    Ascii arts

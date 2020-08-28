@@ -44,19 +44,8 @@ def Initialization():
     for ObjectKey, ObjectValue in StartObjects.items():
         Var.MapsData[ObjectValue["StartPosition"]["Map"]]["Objects"][ObjectValue["StartPosition"]["Y"]][ObjectValue["StartPosition"]["X"]] = ObjectKey
 
-    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if "GoodFood" in Key]
-    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if Value["Image"] == "◘"]
-    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if Value["Behaviors"]["ForVictory"] == True]
-    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if Value["Behaviors"]["Health"] < 0]
-    # Food = [(Key, Value) for Key, Value in Var.ObjectsData.items() if "A" in Value["Behaviors"]["Spawn"] and Value["Behaviors"]["Health"] < 0]
-    # # Food = {Key:Value for (Key, Value) in Var.ObjectsData.items() if "A" in Value["Behaviors"]["Spawn"]}
-    # for MyFood in Food:
-    #     print(MyFood[0], MyFood[1]["Behaviors"]["Health"])
-    #     # print(MyFood.key(), MyFood.value()["Behaviors"]["Health"])
-    # return
-
     # initialize window
-    # InitializeWindow()
+    InitializeWindow()
 
     # game run
     Run()
@@ -911,7 +900,8 @@ def ShowDashboard(ViewParts = None):
             RC.Print(f"{Action}",          
                 ActionHistoryVP["Y"] + LineOffset + Index, ActionHistoryVP["X"],
                 JustifyText = RC.Justify.Left, 
-                MaxColumns = ActionHistoryVP["Width"])
+                MaxColumns = ActionHistoryVP["Width"],
+                MaxLines = 1)
     
     # message/story view part
     if ViewParts is None or "Message" in ViewParts:
@@ -1015,23 +1005,29 @@ def ExecutePlayerAction(
     ActionMessage = ""
     
     if ActionName == "Quit":
-        ActionOK = True
-        # save game
-        Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["Quit"]["Success"]
-        # refresh view
-        ShowView(ViewParts = ["Message"])
-        SaveGame()
-        # wait for last Enter
-        AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
-        RC.Print(Var.MessagesData["Dashboard"]["ConfirmQuit"],
-            AskActionVP["Y"], AskActionVP["X"], 
-            MaxColumns = AskActionVP["Width"],
-            JustifyText = RC.Justify.Center)
-        input()
-        # stop main loop
-        Var.GameRunning = False
-        return
-            
+        if Var.Player["CurrentMap"] == "Main":
+            # can save here
+            ActionOK = True
+            # save game
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["Quit"]["Success"]
+            # refresh view
+            ShowView(ViewParts = ["Message"])
+            SaveGame()
+            # wait for last Enter
+            AskActionVP = Var.GameData["ViewPorts"]["Dashboard"]["AskAction"]
+            RC.Print(Var.MessagesData["Dashboard"]["ConfirmQuit"],
+                AskActionVP["Y"], AskActionVP["X"], 
+                MaxColumns = AskActionVP["Width"],
+                JustifyText = RC.Justify.Center)
+            input()
+            # stop main loop
+            Var.GameRunning = False
+            return
+        else:
+            # cannot save here
+            ActionOK = False
+            Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["Quit"]["Failure"]
+
     elif ActionName == "Move":
         ActionOK = True
         for Index in range(ActionArgument):
@@ -1360,8 +1356,10 @@ def ExecutePlayerAction(
                     Var.MessagesData["Dashboard"]["Actions"]["PickUp"]["Failure2"]
                         .replace("{Object}", 
                             CurrentObjectData["Style"] 
-                                + Var.MessagesData[CurrentObjectID]["Name"] 
-                                + "[;]"))
+                            + Var.MessagesData[CurrentObjectID]["Name"] 
+                            + "[;]")
+                    + "\n\n"
+                    + Var.MessagesData["Backpack"]["CantUse"])
             else:
                 # pick up object
                 ActionOK = True
@@ -1395,6 +1393,7 @@ def ExecutePlayerAction(
         ShowView(ViewParts = ["Message"])
 
     elif ActionName == "Rest":
+        # rest
         ActionOK = False
         OnElement = Var.MapLayer[Var.Player["Position"]["Y"]][Var.Player["Position"]["X"]]
         OnElementData = Var.MapElementsData[OnElement]
@@ -1427,7 +1426,8 @@ def ExecutePlayerAction(
 
     elif ActionName == "GetHelp":
         # show help screen
-        pass
+        ActionOK = False
+        ShowHelp()
 
     # else:
     #     # other known action
@@ -1571,8 +1571,10 @@ def CheckFoodPop():
             if (Var.SeenElement in Value["Behaviors"]["Spawn"]
                 and Value["Behaviors"]["Health"] < 0)]
     
-    # put food on map
-    if PossibleFoods is not None:
+    # put food on map if there is not already an object here
+    if (PossibleFoods is not None
+        and Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]] == ""):
+        
         FoundFood = PossibleFoods[random.randint(0, len(PossibleFoods) - 1)]
         Var.ObjectsLayer[Var.SeenCoordinates["Y"]][Var.SeenCoordinates["X"]] = FoundFood[0]
         ShowMap(Var.SeenCoordinates["Y"], Var.SeenCoordinates["X"])
@@ -1715,6 +1717,63 @@ def LoadGame():
     Var.MapElementsData = Util.LoadJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["MapElements"])
     # load objects data
     Var.ObjectsData = Util.LoadJSONFile(SaveFolder, Var.GameData["Game"]["Files"]["Objects"])
+
+
+
+def ShowHelp():
+    """
+        Show help screen
+    """
+    
+    ViewName = "Help"
+    LineOffset = 0
+
+    # draw view template
+    for Index, Line in enumerate(Var.ViewsData[ViewName]):
+        RC.Print(Line, 
+            Var.GameData["ViewPorts"][ViewName]["Window"]["Y"] + Index, 
+            Var.GameData["ViewPorts"][ViewName]["Window"]["X"], 
+            JustifyText = RC.Justify.Center, 
+            MaxColumns = Var.GameData["ViewPorts"][ViewName]["Window"]["Width"])
+
+    RC.ShowCursor(False)
+
+    # viewports data
+    TitleVP = Var.GameData["ViewPorts"][ViewName]["Title"]
+    TextVP = Var.GameData["ViewPorts"][ViewName]["Text"]
+    AskVP = Var.GameData["ViewPorts"][ViewName]["Ask"]
+
+    # title
+    Message = Var.MessagesData["Help"]["Title"]
+    RC.Print(f"{Message}",
+        TitleVP["Y"], TitleVP["X"],
+        JustifyText = RC.Justify.Center,
+        MaxColumns = TitleVP["Width"])
+
+    # text
+    Message = (
+        "\n"
+        + Var.MessagesData["Help"]["Story1"]
+        + "\n\n\n"
+        + Var.MessagesData["Help"]["Story2"])
+    LineOffset += RC.Print(Message,          
+        TextVP["Y"] + LineOffset, TextVP["X"],
+        JustifyText = RC.Justify.Left, 
+        MaxColumns = TextVP["Width"])[0]
+
+    # ask to return to game
+    RC.Print(Var.MessagesData["Help"]["AskReady"],          
+        AskVP["Y"], AskVP["X"],
+        JustifyText = RC.Justify.Left, 
+        MaxColumns = AskVP["Width"],
+        Speed = RC.PrintSpeed.Instant)
+    RC.PlaceCursorAt(
+        AskVP["Y"], 
+        AskVP["X"] + len(Var.MessagesData["Help"]["AskReady"]))
+    input("")
+
+    # quit help
+    ShowMap(ViewName = Var.GameData["Game"]["CurrentView"])
 
 
 

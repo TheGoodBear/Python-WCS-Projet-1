@@ -87,7 +87,7 @@ def StartChallenge():
         Var.Player["ChallengesWon"]["2"] = True
 
         # show credo
-        Message += Var.MessagesData["Challenge2"]["Credo"]
+        Message = Var.MessagesData["Challenge2"]["Credo"]
         LineOffset += RC.Print(Message,          
             TextVP["Y"] + LineOffset, TextVP["X"],
             JustifyText = RC.Justify.Center, 

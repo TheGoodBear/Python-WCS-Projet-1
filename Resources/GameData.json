@@ -68,7 +68,7 @@
             "PickUp" : {"NumberParameter" : null},
             "Rest" : {
                 "NumberParameter" : "Optional",
-                "Health" : 6,
+                "Health" : 20,
                 "Hydration" : -2,
                 "Satiety" : -1
             },
@@ -108,6 +108,12 @@
             "Title" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
             "Map" : {"Y" : 10, "X" : 13, "Width" : 76, "Height" : 16},
             "Text" : {"Y" : 26, "X" : 14, "Width" : 76, "Height" : 17},
+            "Ask" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
+        },
+        "Help" : {
+            "Window" : {"Y" : 6, "X" : 11, "Width" : 82, "Height" : 52},
+            "Title" : {"Y" : 8, "X" : 13, "Width" : 78, "Height" : 1},
+            "Text" : {"Y" : 10, "X" : 14, "Width" : 76, "Height" : 33},
             "Ask" : {"Y" : 45, "X" : 13, "Width" : 78, "Height" : 1}
         }
     },
