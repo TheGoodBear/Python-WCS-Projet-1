@@ -10,8 +10,8 @@
             "Health" : -1,
             "Satiety" : -1,
             "Hydration" : -1,
-            "GiveFood" : 5,
-            "GivePoisonedFood" : 2,
+            "GiveFood" : 7,
+            "GivePoisonedFood" : 3,
             "GiveWater" : null
         }
     },
@@ -42,8 +42,8 @@
             "Health" : -2,
             "Satiety" : -1,
             "Hydration" : -1,
-            "GiveFood" : 2,
-            "GivePoisonedFood" : 4,
+            "GiveFood" : 3,
+            "GivePoisonedFood" : 5,
             "GiveWater" : null
         }
     },
@@ -58,7 +58,7 @@
             "Health" : 0,
             "Satiety" : 0,
             "Hydration" : 0,
-            "GiveFood" : 10,
+            "GiveFood" : 12,
             "GivePoisonedFood" : 10,
             "GiveWater" : null
         }

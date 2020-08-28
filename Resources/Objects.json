@@ -122,9 +122,9 @@
             "Capacity" : 5,
             "Contains" : 5,
             "Spawn" : [],
-            "Health" : 10,
-            "Satiety" : -2,
-            "Hydration" : -2
+            "Health" : 12,
+            "Satiety" : -1,
+            "Hydration" : -1
         }
     },
     "SolarCharger" : {
@@ -259,7 +259,7 @@
             "Contains" : null,
             "Spawn" : ["A"],
             "Health" : -20,
-            "Satiety" : 5,
+            "Satiety" : 10,
             "Hydration" : 0
         }
     },
@@ -281,7 +281,7 @@
             "Contains" : null,
             "Spawn" : ["A"],
             "Health" : 0,
-            "Satiety" : 20,
+            "Satiety" : 30,
             "Hydration" : 0
         }
     },
@@ -303,7 +303,7 @@
             "Contains" : null,
             "Spawn" : ["+"],
             "Health" : -10,
-            "Satiety" : 1,
+            "Satiety" : 2,
             "Hydration" : 0
         }
     },
@@ -325,7 +325,7 @@
             "Contains" : null,
             "Spawn" : ["+"],
             "Health" : 0,
-            "Satiety" : 10,
+            "Satiety" : 20,
             "Hydration" : 0
         }
     },
@@ -347,7 +347,7 @@
             "Contains" : null,
             "Spawn" : [" "],
             "Health" : -10,
-            "Satiety" : 2,
+            "Satiety" : 5,
             "Hydration" : 0
         }
     },
@@ -369,7 +369,7 @@
             "Contains" : null,
             "Spawn" : [" "],
             "Health" : 5,
-            "Satiety" : 5,
+            "Satiety" : 15,
             "Hydration" : 0
         }
     }

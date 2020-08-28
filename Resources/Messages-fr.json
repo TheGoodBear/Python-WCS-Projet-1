@@ -5,7 +5,7 @@
         "Title" : "Aventure sur l'île au Python (épisode 1)",
         "FullTitle" : "[W;G;SB]{Title}[W;G]     (v{VersionNumber} du {VersionDate})",
         "Image" : null,
-        "Story" : "\n[;;SI] Et l'histoire commence... [;] \n\nCe matin, tu n'as pas été réveillé par les mouvements du navire (ton dernier souvenir est de t’être endormi sur la confortable couchette de ta cabine à bord de l’[C;]Argo[;]), mais par le bruit des vagues, la chaleur du soleil et le champ des oiseaux...\n\nIl semble que tu ne sois plus sur le bateau.\n\nTu es allongé sur une plage !\n\nTu te redresses doucement, et, un peu aveuglé par le soleil, tu regardes autour de toi. D'un côté la mer... de l'autre un paysage sauvage, en partie steppe, en partie jungle. Assez loin, au-delà des arbres, tu aperçois des montagnes.\n\nTu fais un rapide bilan de ta situation : outre les vêtements que tu as sur toi, tu trouves un [;;SI]sac à dos[;] avec :\n• une [;;SI]bouteille vide en verre[;],\n• et un petit [;;SI]couteau multifonctions[;] de bonne facture.\n\nUn peu plus loin, posée sur une pierre, se trouve une mallette contenant :\n• ton [;;SI]ordinateur portable[;] (oui, il y a du réseau sur cette île),\n• et un [;;SI]chargeur photovoltaïque[;].\n\nEnfin, glissée à l'intérieur du couvercle de la mallette se trouve une [;;SI]carte plastifiée[;] grossièrement dessinée.\n\nIl est clair que tu n’es pas arrivé ici par hasard, ce n'est pas un naufrage, on t’a déposé sur cette plage.\nMais entre le moment où tu t’es endormi et ton réveil il y a quelques minutes, c'est le trou noir...",
+        "Story" : "\n[;;SI] Et l'histoire commence... [;] \n\nCe matin, tu n'as pas été réveillé par les mouvements du navire (ton dernier souvenir est de t’être endormi sur la confortable couchette de ta cabine à bord de l’[C;]Argo[;]), mais par le bruit des vagues, la chaleur du soleil et le champ des oiseaux...\n\nIl semble que tu ne sois plus sur le bateau.\n\nTu es allongé sur une plage !\n\nTu te redresses doucement, et, un peu aveuglé par le soleil, tu regardes autour de toi. D'un côté la mer... de l'autre un paysage sauvage, en partie steppe, en partie jungle. Assez loin, au-delà des arbres, tu aperçois des montagnes.\n\nTu fais un rapide bilan de ta situation : outre les vêtements que tu as sur toi, tu trouves un [;;SB]sac à dos[;] avec :\n• une [;;SB]bouteille vide en verre[;],\n• et un petit [;;SB]couteau multifonctions[;] de bonne facture.\n\nUn peu plus loin, posée sur une pierre, se trouve une mallette contenant :\n• ton [;;SB]ordinateur portable[;] (oui, il y a du réseau sur cette île),\n• et un [;;SB]chargeur photovoltaïque[;].\n\nEnfin, glissée à l'intérieur du couvercle de la mallette se trouve une [;;SB]carte plastifiée[;] grossièrement dessinée.\n\nIl est clair que tu n’es pas arrivé ici par hasard, ce n'est pas un naufrage, on t’a déposé sur cette plage.\nMais entre le moment où tu t’es endormi et ton réveil il y a quelques minutes, c'est le trou noir...",
         "Rules" : "\n[;;SU]Ton objectif[;] :\n\nOuvrir [;;SI] la porte [;] permettant d'atteindre le centre de l'île.\n\nPour cela tu disposes de ton [;;SB]sac à dos[;] et de différents objets.\nIl te sera possible de trouver de nouveaux objets en cours de route (par exemple de la nourriture) mais tous ne seront pas forcément utiles ou bénéfiques.\n\nMais la vie d'aventurier n'est pas de tout repos. Tu dois donc faire attention à ta {HealthColor}santé[;], à ton {HydrationColor}hydratation[;] et à ta {SatietyColor}satiété[;]. Si l'un des trois tombe à zéro, tu serviras de fertilisant !\n\nUne dernière chose importante : si tu ne sais pas quoi faire, tu peux à n'importe quel moment, demander de l'aide en tapant [B;W] ? [;] ",
         "AskName" : "Quel est ton nom aventurier ? ",
         "WrongName" : "Je n'ai pas bien saisi ta réponse, peux-tu répéter ?",
@@ -20,7 +20,7 @@
         "Sex" : { "F" : "Female", "H" : "Male", "A" : "Other" },
         "Hello2" : "Parfait, si tu permets je t'apellerai donc {ColoredName} et tu seras représenté dans le jeu par {Symbol}.",
         "AskContinue" : "[B;W] Appuie sur Entrée pour poursuivre l'histoire... ",
-        "AskReady" : "[B;W] Appuies sur Entrée quand tu es prêt... ",
+        "AskReady" : "[B;W] Appuie sur Entrée quand tu es prêt... ",
         "WrongAnswer" : "Je n'ai pas bien saisi ta réponse, peux-tu répéter ?",
         "WinGame" : "Félicitation {Name} !!!\n\nTu as brillament survécu en [;;SB]{TotalMovements}[;] déplacements et [;;SB]{TotalActions}[;] actions.\n\nTon nom restera gravé sur la stèle des héros de l'île [G;]☺[;].",
         "WinImage" : null,
@@ -115,7 +115,7 @@
                 "Command" : "Q",
                 "Description" : "Quitter l'aventure",
                 "Success" : "J'ai installé mon camp de base, je pourrai redémarrer l'aventure à partir de ce camp.\n\nIl est temps de revenir à la réalité...", 
-                "Failure" : ""}
+                "Failure" : "Ce lieu n'est pas un endroit adapté pour installer mon camp de base."}
             },
         "AskAction" : "[Y;]Que vais-je faire maintenant ? [;]",
         "AskActionUnknown" : "[W;R]Cela ne semble pas faisable.[;]",
@@ -172,6 +172,14 @@
         "Failure" : "Aïe ! Mauvaise réponse de ma part.\n\nLes singes se moquent copieusement de moi.\n\nLe chef me donne alors une grande claque dans le dos et m'invite à rejouer.",
         "AskStartChallenge" : "Suis-je prêt à jouer avec les singes ? (O)ui ou (N)on : ",
         "ChiefAfterChallengeWon" : "Il ne veut plus jouer avec toi..."
+    },
+    "Help" : {
+        "Category" : "",
+        "Title" : "[B;W]Le wiki",
+        "Image" : null,
+        "Story1" : "Les actions possibles :\n\nA  → Avancer de 1 pas (An avancer de n pas)\nG  → Touner sur ma gauche\nD  → Tourner sur ma droite\nUn → Utiliser l'objet n du sac à dos\nCn → remplir/recharger l'objet n du sac à dos\nPn → Poser à terre l'objet n du sac à dos\nR  → Rammasser l'objet devant moi\nXn → Me reposer n heures\nQ  → Sauver le jeu et quitter (seulement sur la carte principale)\n?  → Le wiki (j'y suis)",
+        "Story2" : "Notes :\n\n- Appuyer sur Entrée sans action répète la dernière action effectuée\n\n- Les différents types de terrain agissent différemment sur les signes vitaux\n\n- L'utilisation de certains objets affectent les signes vitaux (pas toujours en bien)",
+        "AskReady" : "[B;W] Appuie sur Entrée pour revenir au jeu "
     },
     " " : {
         "Category" : "MapElement",
