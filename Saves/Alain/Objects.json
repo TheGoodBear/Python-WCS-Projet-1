@@ -9,11 +9,7 @@
                 "SolarCharger",
                 "Knife",
                 "GlassBottle",
-                "Map",
-                "BronzeKey",
-                "SilverKey",
-                "Torch",
-                "GoldKey"
+                "Map"
             ],
             "Dropable": false,
             "ForVictory": true,
@@ -45,7 +41,7 @@
             "RemoveAfterUse": true,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": null,
-            "Satiety": 5,
+            "Satiety": 10,
             "Spawn": [
                 "A"
             ],
@@ -69,7 +65,7 @@
             "RemoveAfterUse": true,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": null,
-            "Satiety": 1,
+            "Satiety": 2,
             "Spawn": [
                 "+"
             ],
@@ -93,7 +89,7 @@
             "RemoveAfterUse": true,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": null,
-            "Satiety": 2,
+            "Satiety": 5,
             "Spawn": [
                 " "
             ],
@@ -113,7 +109,7 @@
             "ForVictory": true,
             "Health": 0,
             "Hydration": 0,
-            "Pickable": true,
+            "Pickable": false,
             "RemoveAfterUse": false,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": [
@@ -136,11 +132,11 @@
             "CanMoveOnRequiredMapElementAfterUseIfNoMorePrerequisites": false,
             "Capacity": 5,
             "ChargeObjects": null,
-            "Contains": 3,
+            "Contains": 0,
             "Dropable": true,
             "ForVictory": false,
             "Health": 0,
-            "Hydration": 30,
+            "Hydration": 0,
             "Pickable": true,
             "RemoveAfterUse": false,
             "RequiredMapElementsToFill": [
@@ -169,7 +165,7 @@
             "ForVictory": true,
             "Health": 0,
             "Hydration": 0,
-            "Pickable": true,
+            "Pickable": false,
             "RemoveAfterUse": false,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": [
@@ -201,7 +197,7 @@
             "RemoveAfterUse": true,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": null,
-            "Satiety": 20,
+            "Satiety": 30,
             "Spawn": [
                 "A"
             ],
@@ -225,7 +221,7 @@
             "RemoveAfterUse": true,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": null,
-            "Satiety": 10,
+            "Satiety": 20,
             "Spawn": [
                 "+"
             ],
@@ -249,7 +245,7 @@
             "RemoveAfterUse": true,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": null,
-            "Satiety": 5,
+            "Satiety": 15,
             "Spawn": [
                 " "
             ],
@@ -289,13 +285,13 @@
             "Contains": 5,
             "Dropable": true,
             "ForVictory": true,
-            "Health": 10,
-            "Hydration": -2,
+            "Health": 12,
+            "Hydration": -1,
             "Pickable": true,
             "RemoveAfterUse": false,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": null,
-            "Satiety": -2,
+            "Satiety": -1,
             "Spawn": [],
             "Usable": true
         },
@@ -335,7 +331,7 @@
             "ForVictory": true,
             "Health": 0,
             "Hydration": 0,
-            "Pickable": true,
+            "Pickable": false,
             "RemoveAfterUse": false,
             "RequiredMapElementsToFill": null,
             "RequiredMapElementsToUse": [

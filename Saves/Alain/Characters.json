@@ -9,15 +9,15 @@
             "Y": 7
         },
         "ChallengesWon": {
-            "1": true,
-            "2": true,
-            "3": true
+            "1": false,
+            "2": false,
+            "3": false
         },
         "CurrentMap": "Main",
         "Death": null,
         "DefaultStyle": "[C;;SB]",
-        "Health": 21,
-        "Hydration": 39,
+        "Health": 100,
+        "Hydration": 100,
         "Images": {
             "E": "\u25ba",
             "N": "\u25b2",
@@ -30,15 +30,15 @@
         "Name": "Alain",
         "OrderInChallenge3": 2,
         "Position": {
-            "Direction": "W",
-            "X": 33,
-            "Y": 5
+            "Direction": "S",
+            "X": 61,
+            "Y": 38
         },
-        "Satiety": 29,
+        "Satiety": 100,
         "Sex": "Male",
         "Style": "[C;;SB]",
-        "TotalActions": 47,
-        "TotalMovements": 373
+        "TotalActions": 0,
+        "TotalMovements": 0
     },
     {
         "Category": "Monkey",
@@ -53,7 +53,7 @@
         "ChanceToMove": 0,
         "CurrentMap": "Challenge3",
         "DefaultStyle": "[R;]",
-        "Event": null,
+        "Event": "StartChallenge3",
         "Images": {
             "E": "\u263b",
             "N": "\u263b",
@@ -64,8 +64,8 @@
         "OrderInChallenge3": 1,
         "Position": {
             "Direction": "N",
-            "X": 15,
-            "Y": 5
+            "X": 13,
+            "Y": 6
         },
         "Style": "[R;]"
     },
@@ -93,8 +93,8 @@
         "OrderInChallenge3": 3,
         "Position": {
             "Direction": "N",
-            "X": 14,
-            "Y": 9
+            "X": 7,
+            "Y": 2
         },
         "Style": "[C;]"
     },
@@ -122,8 +122,8 @@
         "OrderInChallenge3": 7,
         "Position": {
             "Direction": "N",
-            "X": 5,
-            "Y": 6
+            "X": 9,
+            "Y": 4
         },
         "Style": "[C;]"
     },
@@ -151,8 +151,8 @@
         "OrderInChallenge3": 8,
         "Position": {
             "Direction": "N",
-            "X": 5,
-            "Y": 4
+            "X": 6,
+            "Y": 7
         },
         "Style": "[C;]"
     },
@@ -180,8 +180,8 @@
         "OrderInChallenge3": 10,
         "Position": {
             "Direction": "N",
-            "X": 10,
-            "Y": 3
+            "X": 15,
+            "Y": 8
         },
         "Style": "[C;]"
     },
@@ -209,7 +209,7 @@
         "OrderInChallenge3": 9,
         "Position": {
             "Direction": "N",
-            "X": 6,
+            "X": 13,
             "Y": 3
         },
         "Style": "[M;]"
@@ -238,8 +238,8 @@
         "OrderInChallenge3": 11,
         "Position": {
             "Direction": "N",
-            "X": 14,
-            "Y": 3
+            "X": 10,
+            "Y": 8
         },
         "Style": "[M;]"
     },
@@ -267,8 +267,8 @@
         "OrderInChallenge3": 6,
         "Position": {
             "Direction": "N",
-            "X": 5,
-            "Y": 8
+            "X": 6,
+            "Y": 10
         },
         "Style": "[M;]"
     },
@@ -296,8 +296,8 @@
         "OrderInChallenge3": 5,
         "Position": {
             "Direction": "N",
-            "X": 6,
-            "Y": 9
+            "X": 7,
+            "Y": 10
         },
         "Style": "[M;]"
     },
@@ -325,8 +325,8 @@
         "OrderInChallenge3": 4,
         "Position": {
             "Direction": "N",
-            "X": 10,
-            "Y": 9
+            "X": 3,
+            "Y": 4
         },
         "Style": "[M;]"
     }
