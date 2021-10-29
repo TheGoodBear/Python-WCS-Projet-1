@@ -73,7 +73,8 @@
                 "Satiety" : -1
             },
             "GetHelp" : {"NumberParameter" : null},
-            "Quit" : {"NumberParameter" : null}
+            "Quit" : {"NumberParameter" : null},
+            "Cheat" : {"NumberParameter" : null}
         },
         "WaitOnActionError" : 2,
         "WallOfHeroesLines" : 7

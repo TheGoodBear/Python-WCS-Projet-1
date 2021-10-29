@@ -115,7 +115,12 @@
                 "Command" : "Q",
                 "Description" : "Quitter l'aventure",
                 "Success" : "J'ai installé mon camp de base, je pourrai redémarrer l'aventure à partir de ce camp.\n\nIl est temps de revenir à la réalité...", 
-                "Failure" : "Ce lieu n'est pas un endroit adapté pour installer mon camp de base."}
+                "Failure" : "Ce lieu n'est pas un endroit adapté pour installer mon camp de base."},
+            "Cheat" : {
+                "Command" : "+",
+                "Description" : "Tricher",
+                "Success" : "Rhooo, c'est pas beau de tricher :-D", 
+                "Failure" : ""}
             },
         "AskAction" : "[Y;]Que vais-je faire maintenant ? [;]",
         "AskActionUnknown" : "[W;R]Cela ne semble pas faisable.[;]",
