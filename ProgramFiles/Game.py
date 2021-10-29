@@ -1429,6 +1429,16 @@ def ExecutePlayerAction(
         ActionOK = False
         ShowHelp()
 
+    elif ActionName == "Cheat":
+        # fill all player stats
+        ActionOK = True
+        Var.CurrentMessage = Var.MessagesData["Dashboard"]["Actions"]["Cheat"]["Success"] + "\n"
+
+        # update vital signs
+        Var.CurrentMessage += UpdateVitalSign("Health", Value = Var.Player["MaxHealth"])
+        Var.CurrentMessage += UpdateVitalSign("Hydration", Value = Var.Player["MaxHydration"])
+        Var.CurrentMessage += UpdateVitalSign("Satiety", Value = Var.Player["MaxSatiety"])
+
     # else:
     #     # other known action
     #     ActionMessage = f"Faire {ActionArgument} fois l'action {ActionName}"
